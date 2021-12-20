@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<meta name="author" content="Stefka Asenova" />
+
+<meta name="date" content="2021-12-20" />
+
+<title>Estimation - Note 4</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Estimation - Note 4</h1>
+<h3 class="subtitle">Cliquewise likelihood estimation for models on trees</h3>
+<h4 class="author">Stefka Asenova</h4>
+<h4 class="date">2021-12-20</h4>
+
+
+
+<style type="text/css">
+  body{
+  font-size: 12pt;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>
+<p>For application of this estimator, see Vignette “Code - Note 4”.</p>
+<p><br></p>
+<ul>
+<li><p><span class="math inline">\(n\)</span> is the number of all observations in the sample</p></li>
+<li><p><span class="math inline">\(k\)</span> is the number of the upper order statistics used in the estimation</p></li>
+<li><p><span class="math inline">\(U\subseteq V\)</span> is the set of observable variables</p></li>
+<li><p>If the sample of the original variables is <span class="math inline">\(\xi_{v,i}, v\in U, i=1,\ldots, n\)</span> consider the transformation using the empirical cumulative distribution function <span class="math inline">\(\hat{F}_{v,n}(x)=\big[\sum_{i=1}^n\mathbb{1}(\xi_{v,i}\leq x)\big]/(n+1)\)</span>.</p></li>
+</ul>
+<p><span class="math display">\[\begin{equation*} 
+    \hat{X}_{v,i} = \frac{1}{1-\hat{F}_{v,n}(\xi_{v,i})}, \qquad 
+    v \in U, \quad i = 1, \ldots, n.
+\end{equation*}\]</span></p>
+<ul>
+<li><p>For given <span class="math inline">\(k\in \{1,\ldots n\}\)</span> consider the set of indices <span class="math display">\[
+I_{k,n} = \{i = 1,\ldots,n: \max_{v\in V}\hat{X}_{v,i} &gt; n/k\}
+\]</span></p></li>
+<li><p>For every <span class="math inline">\(i\in I_{k,n}\)</span> compose the ratios <span class="math display">\[\begin{equation}
+  \hat{Y}_{v,i} =
+  \hat{X}_{v,i}/(n/k),
+\end{equation}\]</span> which gives rise to a sample <span class="math inline">\((\hat{y}_{v,i}, v\in U, i\in I_{k,n})\)</span>.</p></li>
+</ul>
+<p>let <span class="math inline">\(B_i\subset V\)</span> such that <span class="math inline">\(\cup_i B_i=V\)</span> and for <span class="math inline">\(i\neq j\)</span> the sets <span class="math inline">\(B_i\)</span> and <span class="math inline">\(B_j\)</span> have only one node in common. We also need that within every subset <span class="math inline">\(B_i\)</span> the condition of identifiability of the parameters is satisfied: namely that every node with latent variable has degree at least three.</p>
+<p>An estimate of <span class="math inline">\(\theta_B=(\theta_{ij},i,j\in B, (i,j)\in E )\)</span> is obtained by maximizing <span class="math display">\[\begin{equation}
+\prod_{i=1}^kf_B(\theta_B; \hat{y}_{B,i})
+=
+\prod_{i=1}^k \frac{\psi_B(\theta_B;\hat{y}_{B,i})}{\Psi_B(\theta_B;1_{|B|})},
+\end{equation}\]</span> where <span class="math inline">\(\Psi\)</span> and <span class="math inline">\(\psi\)</span> are the Huesler-Reiss Pareto exponent measure and its density respectively as in Section 2 of <span class="citation">Engelke and Hitz (2020)</span>. We have the following terms <span class="math display">\[
+\Psi_B(\theta_B; 1_{|B|})=l_B(\theta_B; 1_{|B|})=l(\theta; \iota_B),
+\]</span> where <span class="math inline">\(l_B\)</span> is the stable tail dependence function (stdf) of the subvector <span class="math inline">\(X_B\)</span> and <span class="math inline">\(l\)</span> is the stdf of the full vector <span class="math inline">\(X=(X_v, v\in V)\)</span>, <span class="math inline">\(\iota_B=(1_{i\in B}, i\in V)\)</span>.</p>
+<p>Note that for <span class="math inline">\(i\neq j\)</span> the subvectors <span class="math inline">\(\theta_{B_i}\)</span> and <span class="math inline">\(\theta_{B_j}\)</span> do not share elements.</p>
+<p>Remember that the relation between the Huesler-Reiss stdf and the Huesler-Reiss copula with unit Frechet margins is given by <span class="math display">\[
+l(x_1, \ldots, x_d; \theta)=-\ln H_{\Lambda(\theta)}(1/x_1, \dots, 1/x_d), 
+\quad (x_1, \ldots, x_d)\in (0,\infty)^d.
+\]</span></p>
+<p>For the definition of the Huesler-Reiss distribution see Vignette “Introduction”.</p>
+<p>The density of the exponent measure <span class="math inline">\(\psi\)</span> is given by (see Section 2 in <span class="citation">Engelke and Hitz (2020)</span>) <span class="math display">\[
+\psi_B(\theta_B;\hat{y}_{B,i})= \hat{y}_{u,i}^{-2}\prod_{v\neq u}\hat{y}_{v,i}^{-1}
+\phi_{|B|-1}\Big(\ln(\hat{y}_{u,i}/\hat{y}_{v,i})+\lambda^2_{uv}(\theta_B)/2; \Sigma_{B,u}(\theta_B)\Big), 
+\]</span> for every <span class="math inline">\(u\in B\)</span>. The parameter <span class="math inline">\(\Sigma_{B,u}\)</span> is the covariance matrix defined in Vignette “Huesler-Reiss distributions” section “Parameterization on trees”.</p>
+<p>More background behind this estimator follows.</p>
+<p><br> For an extremal graphical model in the sense of <span class="citation">Engelke and Hitz (2020)</span> with respect to a special class of decomposable graphs, whose clique separator set consists of only singletons, also known as block graphs, the estimation method proposed in their section 5.2 is based on the idea to estimate the parameters in every clique separately.</p>
+<p>We summarize their idea and introduce a variation of their estimator when there are latent variables.</p>
+<p>A tree is a block graph too, and hence this estimation method consists of working with bivariate densities because each clique in a tree contains two variables. More specifically let <span class="math inline">\(Y\)</span> be an extremal graphical model in the sense of <span class="citation">Engelke and Hitz (2020)</span> with respect to a block graph <span class="math inline">\(G=(V,E)\)</span>. The vector <span class="math inline">\(Y\)</span> has positive and continuous density, and satisfies the global or pairwise Markov properties with respect to <span class="math inline">\(G\)</span> in sense of Definition 1 of their paper.</p>
+<p>The exponent measure associated to <span class="math inline">\(Y\)</span> will be denoted as in their paper by <span class="math inline">\(\Lambda\)</span> with positive and continuous density <span class="math inline">\(\lambda\)</span>. We have the cliques <span class="math inline">\(C\in \mathcal{C}\)</span> and clique separators <span class="math inline">\(D\in \mathcal{D}\)</span>, which are single nodes. If the parameter space is <span class="math inline">\(\Theta=\times_{C\in \mathcal{C}} \Theta_C\)</span> where <span class="math inline">\(\theta_C\in \Theta_C\)</span> are the parameters defining the dependence between the variables in a clique <span class="math inline">\(C\)</span> then the density of <span class="math inline">\(Y\)</span> is given by</p>
+<p><span class="math display">\[\begin{align} 
+    f(y;\theta_C, C\in\mathcal{C})&amp;=
+    \frac{1}{Z(\theta_C, C\in\mathcal{C})}
+    \frac{1}{\prod_{D\in \mathcal{D}}y_D^{-2}}
+    \prod_{C\in \mathcal{C}}\frac{\lambda_C(y_C; \theta_C)}{\Lambda_C(1_{|C|}; \theta_C)}\nonumber
+    \\&amp;\propto \frac{1}{Z(\theta_C, C\in\mathcal{C})}
+    \prod_{C\in \mathcal{C}}f_C(y_C; \theta_C).
+\end{align}\]</span></p>
+<p>The factorization into the densities in the last expression is in the origin of the <span class="citation">Engelke and Hitz (2020)</span>’s idea to estimate each <span class="math inline">\(\theta_C\)</span> from the likelihood function only of the variables in that clique <span class="math inline">\(C\)</span>. The term <span class="math inline">\(Z\)</span> depends on all the parameters and it does not factorize, but the authors say that the results based on full likelihood and clique-wise likelihood estimation show not much difference between the two.</p>
+<p>The problem with the estimation approach outlined above is that when there are latent variables the likelihood function can not be formed for the cliques containing an unobservable variable. We propose however a modification of their method but in the same spirit.</p>
+<p>We have that <span class="math inline">\(X\)</span> is a vector of variables each indexed to a node of a tree <span class="math inline">\(G=(V,E)\)</span>, which is in the max-domain of attraction of a Huesler-Reiss distribution with parameter matrix <span class="math display">\[\begin{equation}
+\lambda_{ij}^2=(1/4)\sum_{e \in p(i,j)}\theta_{e}^2
+\end{equation}\]</span> for <span class="math inline">\(i,j\in V\)</span>. The Huesler-Reiss Pareto distribution that corresponds to this max-stable distribution will be denoted by <span class="math inline">\(Y\)</span> and it is an extremal graphical model with respect to the graph <span class="math inline">\(G\)</span>. Note that this is not a trivial statement and it needs a proof. The proof is provided in <span class="citation">Asenova and Segers (2021)</span>.</p>
+<p>If <span class="math inline">\(Y\)</span> is an extremal graphical model with respect to <span class="math inline">\(G\)</span> its density factorizes over the cliques by Theorem 1 in <span class="citation">Engelke and Hitz (2020)</span>. However we can not use this result on a tree with latent variables because there will be cliques which contain a latent variable.</p>
+<p>Instead we use the fact that if <span class="math inline">\(Y\)</span> is extremal graphical model for non-empty disjoint subsets <span class="math inline">\(A,B,C\subset V\)</span> such that C is separator of <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> by Proposition 1 in <span class="citation">Engelke and Hitz (2020)</span> we have <span class="math display">\[\begin{equation}
+    f(y)=\frac{\lambda(y)}{\Lambda(1_d)}
+    =\frac{\lambda_{A\cup C}(y_{A\cup C})\lambda_{B\cup C}(y_{B\cup C})}
+    {\Lambda(1_d)\lambda_C(y_C)}.
+    \end{equation}\]</span></p>
+<p>Consider the case when <span class="math inline">\(C\)</span> contains one node only, say node <span class="math inline">\(c\)</span>, then <span class="math inline">\(\lambda_C(Y_C)=y_C^{-2}\)</span> and the above expression seen as a function of <span class="math inline">\(\theta\)</span> and for fixed <span class="math inline">\(y\)</span> becomes proportional to <span class="math display">\[\begin{equation}
+    \frac{\lambda_{A\cup C}(y_{A\cup C}; \theta)\lambda_{B\cup C}(y_{B\cup C}; \theta)}
+    {\Lambda(1_d; \theta)}.
+\end{equation}\]</span> We have <span class="math inline">\(1_d\)</span> a <span class="math inline">\(d\)</span>-variate vector of ones.</p>
+<p>Let the set of nodes with observable variables is <span class="math inline">\(U\subset V\)</span> and the complement of it denoted by <span class="math inline">\(\bar{U}\)</span>.</p>
+<p>We have for the density of <span class="math inline">\(Y_U\)</span> and if <span class="math inline">\(C\notin \bar{U}\)</span> <span class="math display">\[\begin{align*}
+    f_U(y_U)&amp;\propto
+    \int_{y_{\bar{U}}}
+    \frac{\lambda_{A\cup C}(y_{A\cup C})\lambda_{B\cup C}(y_{B\cup C})}
+    {\Lambda(1_d)}\mathrm{dy}_{\bar{U}}
+    \\&amp;=
+    \frac{1}{\Lambda(1_d)}
+    \int_{y_{(A\cup C)\cap\bar{U}}}\lambda_{A\cup C}(y_{A\cup C})\mathrm{dy}_{(A\cup C)\cap\bar{U}}
+    \int_{y_{(B\cup C)\cap\bar{U}}}\lambda_{B\cup C}(y_{B\cup C})\mathrm{dy}_{(B\cup C)\cap\bar{U}}
+    \\&amp;=
+    \frac{1}{\Lambda(1_d)} 
+    \lambda_{(A\cup C)\cap U}(y_{(A\cup C)\cap U})
+    \lambda_{(B\cup C)\cap U}(y_{(B\cup C)\cap U}).
+\end{align*}\]</span></p>
+<p>Multiplying and dividing by <span class="math inline">\(\Lambda_{(A\cup C)\cap U}(1)\)</span> and <span class="math inline">\(\Lambda_{(B\cup C)\cap U}(1)\)</span> we get an expression which as a function of <span class="math inline">\(\theta\)</span> <span class="math display">\[\begin{equation}
+    f_U(y_U; \theta)\propto
+    \frac{1}{Z(\theta)}
+    f_{(A\cup C)\cap U}(y_{(A\cup C)\cap U}; \theta_{A\cup C})
+    f_{(B\cup C)\cap U}(y_{(B\cup C)\cap U}; \theta_{B\cup C}),
+\end{equation}\]</span></p>
+<p>where <span class="math inline">\(Z\)</span> is a term that contains all the parameters <span class="math inline">\(\theta_e, e\in E\)</span> and does not factorize.</p>
+<p>This factorization is what we will use in case of latent variables.</p>
+<p>In the general case for this estimation method we have to divide the node set into subsets <span class="math inline">\(B_i\subset V\)</span> such that <span class="math inline">\(\cup_i B_i=V\)</span> and for <span class="math inline">\(i\neq j\)</span> the sets <span class="math inline">\(B_i\)</span> and <span class="math inline">\(B_j\)</span> have only one node in common. We also need that within every subset <span class="math inline">\(B_i\)</span> the condition of identifiability of the parameters is satisfied: namely that every node with latent variable has degree at least three.</p>
+<p>The density given by <span class="math display">\[
+    f_U(y_U; \theta)\propto
+    \frac{1}{Z}
+    \prod_{B_i}f_{B_i\cap U}(y_{B_i\cap U}; \theta_{B_i})
+    =
+    \frac{1}{Z}
+    \prod_{B_i}
+    \frac{\lambda_{B_i\cap U}(y_{B_i\cap U}; \theta_{B_i})}
+    {\Lambda_{B_i\cap U}(1; \theta_{B_i})}.
+    \]</span> can be used to estimate <span class="math inline">\(\theta_{B_i}\)</span> for every <span class="math inline">\(i\)</span> and thus obtain not clique-wise likelihood estimates but estimates using the smallest subgraphs from which the corresponding subset of parameters is uniquely identifiable.</p>
+<div id="references" class="section level2 unnumbered">
+<h2 class="unnumbered">References</h2>
+<div id="refs" class="references hanging-indent">
+<div id="ref-asejoh2">
+<p>Asenova, Stefka, and Johan Segers. 2021. “Estremes of Markov Random Fields on Block Graphs.”</p>
+</div>
+<div id="ref-engelke2020">
+<p>Engelke, Sebastian, and Adrien S. Hitz. 2020. “Graphical Models for Extremes.” <em>J. R. Statist. Soc. B</em> 82 (3): 1–38.</p>
+</div>
+</div>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<meta name="author" content="Stefka Asenova" />
+
+<meta name="date" content="2021-12-20" />
+
+<title>Code - Note 2</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Code - Note 2</h1>
+<h3 class="subtitle">Likelihood based estimation for models on trees</h3>
+<h4 class="author">Stefka Asenova</h4>
+<h4 class="date">2021-12-20</h4>
+
+
+
+<style type="text/css">
+  body{
+  font-size: 12pt;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="kw">library</span>(gremes)</span></code></pre></div>
+<p>Load the data.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a><span class="kw">data</span>(<span class="st">&quot;SeineData&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;gremes&quot;</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a><span class="kw">head</span>(Seine)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true"></a><span class="co">#&gt;       Paris      Meaux      Melun   Nemours     Sens</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true"></a><span class="co">#&gt; 1  2.124338  -1.736640  9.0907845 0.5187825 14.26062</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true"></a><span class="co">#&gt; 2  9.646991   2.632994  8.7440743 0.6394548 15.47040</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true"></a><span class="co">#&gt; 3 19.172176  21.584171  9.1692941 2.1770178 15.26537</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true"></a><span class="co">#&gt; 4  5.357301 -14.759895 -0.4941262 1.5233623 13.47500</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true"></a><span class="co">#&gt; 5  6.044298 -20.772417  1.0182723 2.1690976 13.39804</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true"></a><span class="co">#&gt; 6  3.805912 -40.779572 -7.3982814 1.2666607 14.60144</span></span></code></pre></div>
+<p>Generate the graph and name the nodes. Assigning names to nodes is crucial. The names of the nodes should correspond to the names of the columns in the dataset.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a>seg&lt;-<span class="st"> </span><span class="kw">graph</span>(<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a>              <span class="dv">2</span>,<span class="dv">3</span>,</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true"></a>              <span class="dv">2</span>,<span class="dv">4</span>,</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true"></a>              <span class="dv">4</span>,<span class="dv">5</span>,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true"></a>              <span class="dv">5</span>,<span class="dv">6</span>,</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true"></a>              <span class="dv">5</span>,<span class="dv">7</span>), <span class="dt">directed =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true"></a>name_stat&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Paris&quot;</span>, <span class="st">&quot;2&quot;</span>, <span class="st">&quot;Meaux&quot;</span>, <span class="st">&quot;Melun&quot;</span>, <span class="st">&quot;5&quot;</span>, <span class="st">&quot;Nemours&quot;</span>, <span class="st">&quot;Sens&quot;</span>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true"></a>seg&lt;-<span class="st"> </span><span class="kw">set.vertex.attribute</span>(seg, <span class="st">&quot;name&quot;</span>, <span class="kw">V</span>(seg), name_stat) <span class="co"># </span></span></code></pre></div>
+<p>Extract the nodes for which we do not observe realizations.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a>tobj&lt;-<span class="st"> </span><span class="kw">Tree</span>(seg, Seine)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a><span class="co">#&gt; From validate.Network: Edges have been assigned names</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a><span class="co">#&gt; From validate.Network: There are nodes with latent variables</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true"></a><span class="co">#&gt; From validate.Network: Edges have been assigned names</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true"></a><span class="co">#&gt; From validate.Network: There are nodes with latent variables</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true"></a>Uc&lt;-<span class="st"> </span><span class="kw">getNoDataNodes</span>(tobj)</span></code></pre></div>
+<p>Create the subsets.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a>subs&lt;-<span class="st"> </span><span class="kw">Neighborhood</span>()</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true"></a>subs&lt;-<span class="st"> </span><span class="kw">subset</span>(subs, <span class="dv">3</span>, seg, Uc) <span class="co"># neighborhood of order three</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true"></a><span class="co"># verify if the identifiability criterion is satisfied for every subgraph induced by a subset</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true"></a><span class="kw">is_identifiable</span>(subs, tobj) </span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true"></a><span class="co">#&gt; The nodes with latent variables {  5  } in set {  Paris 2 Meaux Melun 5  } have degree less than three.</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true"></a><span class="co">#&gt;                   The subgraph contains edge parameters that are non-identifiable.</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true"></a><span class="co">#&gt; </span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true"></a><span class="co">#&gt; The nodes with latent variables {  5  } in set {  Meaux 2 Paris Melun 5  } have degree less than three.</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true"></a><span class="co">#&gt;                   The subgraph contains edge parameters that are non-identifiable.</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true"></a><span class="co">#&gt; </span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true"></a><span class="co">#&gt; The nodes with latent variables {  2  } in set {  Nemours 5 Melun Sens 2  } have degree less than three.</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true"></a><span class="co">#&gt;                   The subgraph contains edge parameters that are non-identifiable.</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true"></a><span class="co">#&gt; </span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true"></a><span class="co">#&gt; The nodes with latent variables {  2  } in set {  Sens 5 Melun Nemours 2  } have degree less than three.</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true"></a><span class="co">#&gt;                   The subgraph contains edge parameters that are non-identifiable.</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true"></a><span class="co">#&gt; </span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true"></a></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true"></a><span class="co"># change the order of the neighborhood and verify the identifiability again</span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true"></a>subs&lt;-<span class="st"> </span><span class="kw">subset</span>(subs, <span class="dv">2</span>, seg, Uc) <span class="co"># neighborhood of order two</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true"></a><span class="kw">is_identifiable</span>(subs, tobj)</span></code></pre></div>
+<p>Subsets are created on the principle of neighborhood of order two for every observed variable.</p>
+<div id="estimate-mle-version-1" class="section level2">
+<h2>Estimate MLE Version 1</h2>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a>mle1&lt;-<span class="st"> </span><span class="kw">MLE1</span>(seg)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true"></a><span class="co">#&gt; From HRMnetwork: Edges have been assigned names</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true"></a>mle1&lt;-<span class="st"> </span><span class="kw">estimate</span>(mle1, Seine, subs, <span class="dt">k_ratio=</span><span class="fl">0.2</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true"></a><span class="co">#&gt; From validate.Network: There are nodes with latent variables</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true"></a><span class="co">#&gt; From validate.Network: There are nodes with latent variables</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true"></a><span class="co">#&gt; From setRootDepSet.RootDepSet: The order of the subset must correspond to the</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true"></a><span class="co">#&gt;             order of its corresponding root</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true"></a><span class="co">#&gt; From validate.Network: There are nodes with latent variables</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true"></a><span class="co">#&gt; From validate.Network: There are nodes with latent variables</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true"></a><span class="co">#&gt; From setRootDepSet.RootDepSet: The order of the subset must correspond to the</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true"></a><span class="co">#&gt;             order of its corresponding root</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true"></a><span class="co">#&gt; From validate.Network: There are nodes with latent variables</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true"></a><span class="co">#&gt; From validate.Network: There are nodes with latent variables</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true"></a><span class="co">#&gt; From setRootDepSet.RootDepSet: The order of the subset must correspond to the</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true"></a><span class="co">#&gt;             order of its corresponding root</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true"></a><span class="co">#&gt; From validate.Network: There are nodes with latent variables</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true"></a><span class="co">#&gt; From validate.Network: There are nodes with latent variables</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true"></a><span class="co">#&gt; From setRootDepSet.RootDepSet: The order of the subset must correspond to the</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true"></a><span class="co">#&gt;             order of its corresponding root</span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true"></a><span class="co">#&gt; From validate.Network: There are nodes with latent variables</span></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true"></a><span class="co">#&gt; From validate.Network: There are nodes with latent variables</span></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true"></a><span class="co">#&gt; From setRootDepSet.RootDepSet: The order of the subset must correspond to the</span></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true"></a><span class="co">#&gt;             order of its corresponding root</span></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true"></a><span class="co">#&gt; From validate.Network: There are nodes with latent variables</span></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true"></a><span class="co">#&gt; From validate.Network: There are nodes with latent variables</span></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true"></a><span class="co">#&gt; From setRootDepSet.RootDepSet: The order of the subset must correspond to the</span></span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true"></a><span class="co">#&gt;             order of its corresponding root</span></span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true"></a><span class="co">#&gt; From setRootDepSet.RootDepSet: The order of the subset must correspond to the</span></span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true"></a><span class="co">#&gt;             order of its corresponding root</span></span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true"></a><span class="co">#&gt; From setRootDepSet.RootDepSet: The order of the subset must correspond to the</span></span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true"></a><span class="co">#&gt;             order of its corresponding root</span></span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true"></a><span class="co">#&gt; From setRootDepSet.RootDepSet: The order of the subset must correspond to the</span></span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true"></a><span class="co">#&gt;             order of its corresponding root</span></span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true"></a><span class="co">#&gt; From setRootDepSet.RootDepSet: The order of the subset must correspond to the</span></span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true"></a><span class="co">#&gt;             order of its corresponding root</span></span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true"></a><span class="co">#&gt; From setParams.HRMtree: Names have been attributed to the vector &#39;value&#39; in the order corresponding to the order of the edges: The fist element has the name of the first edge, the second element the name of the second edge, etc.</span></span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true"></a><span class="co">#&gt; From setParams.HRMtree: The parameters have been attached to the edges according to their names</span></span></code></pre></div>
+<p>The messages are informative. They inform you about certain things but as long as they do not stop the estimation they are not errors.</p>
+</div>
+<div id="estimate-mle-version-2" class="section level2">
+<h2>Estimate MLE Version 2</h2>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"></a>mle2&lt;-<span class="st"> </span><span class="kw">MLE2</span>(seg)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true"></a><span class="co">#&gt; From HRMnetwork: Edges have been assigned names</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true"></a>mle2&lt;-<span class="st"> </span><span class="kw">estimate</span>(mle2, Seine, subs, <span class="dt">k_ratio=</span><span class="fl">0.2</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true"></a><span class="co">#&gt; From validate.Network: There are nodes with latent variables</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true"></a><span class="co">#&gt; From validate.Network: There are nodes with latent variables</span></span></code></pre></div>
+<p>The estimates from the two versions of the likelihood based estimators are very similar.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true"></a>mle1<span class="op">$</span>depParams</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true"></a><span class="co">#&gt;        e1        e2        e3        e4        e5        e6 </span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true"></a><span class="co">#&gt; 0.3111864 1.0747109 0.6152536 0.6901670 1.0305526 0.6546275</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true"></a>mle2<span class="op">$</span>depParams</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true"></a><span class="co">#&gt;        e1        e2        e3        e4        e5        e6 </span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true"></a><span class="co">#&gt; 0.4097665 1.0571181 0.6065951 0.6859331 1.0104937 0.6784847</span></span></code></pre></div>
+</div>
+<div id="the-covariance-selection-method" class="section level2">
+<h2>The Covariance selection method</h2>
+<p>The Covariance Selection Method in <span class="citation">Højsgaard (2017)</span> is not applicable when there are latent variables. To illustrate the Covariance Selection method using the dataset on Seine we create a graph without nodes with latent variables.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true"></a>seg_short&lt;-<span class="st"> </span><span class="kw">graph</span>(<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true"></a>              <span class="dv">2</span>,<span class="dv">3</span>,</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true"></a>              <span class="dv">2</span>,<span class="dv">4</span>,</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true"></a>              <span class="dv">2</span>,<span class="dv">5</span>), <span class="dt">directed =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true"></a>name_stat&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Paris&quot;</span>, <span class="st">&quot;Melun&quot;</span>, <span class="st">&quot;Meaux&quot;</span>, <span class="st">&quot;Nemours&quot;</span>, <span class="st">&quot;Sens&quot;</span>)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true"></a>seg_short&lt;-<span class="st"> </span><span class="kw">set.vertex.attribute</span>(seg_short, <span class="st">&quot;name&quot;</span>, <span class="kw">V</span>(seg_short), name_stat) <span class="co"># </span></span></code></pre></div>
+<p>Extract the nodes for which we do not observe realizations.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true"></a>tobj&lt;-<span class="st"> </span><span class="kw">Tree</span>(seg_short, Seine)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true"></a><span class="co">#&gt; From validate.Network: Edges have been assigned names</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true"></a><span class="co">#&gt; From validate.Network: No latent variables</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true"></a><span class="co">#&gt; From validate.Network: Edges have been assigned names</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true"></a><span class="co">#&gt; From validate.Network: No latent variables</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true"></a>Uc&lt;-<span class="st"> </span><span class="kw">getNoDataNodes</span>(tobj)</span></code></pre></div>
+<p>Create the subsets.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true"></a>subs_short&lt;-<span class="st"> </span><span class="kw">Neighborhood</span>()</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true"></a>subs_short&lt;-<span class="st"> </span><span class="kw">subset</span>(subs, <span class="dv">2</span>, seg_short, Uc) <span class="co"># neighborhood of level three</span></span></code></pre></div>
+<p>Estimate using Covariance Selection Model.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true"></a>mle&lt;-<span class="st"> </span><span class="kw">MLE</span>(seg_short)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true"></a><span class="co">#&gt; From HRMnetwork: Edges have been assigned names</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true"></a>mle&lt;-<span class="st"> </span><span class="kw">estimate</span>(mle, Seine, subs_short,  <span class="dt">k_ratio=</span><span class="fl">0.2</span>)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true"></a><span class="co">#&gt; From validate.Network: No latent variables</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true"></a><span class="co">#&gt; From validate.Network: No latent variables</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true"></a><span class="co">#&gt; From setRootDepSet.RootDepSet: The order of the subset must correspond to the</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true"></a><span class="co">#&gt;             order of its corresponding root</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true"></a><span class="co">#&gt; From validate.Network: There are nodes with latent variables</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true"></a><span class="co">#&gt; From validate.Network: There are nodes with latent variables</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true"></a><span class="co">#&gt; Calling &#39;ggmfit&#39; from package &#39;gRim&#39;</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true"></a><span class="co">#&gt; From setRootDepSet.RootDepSet: The order of the subset must correspond to the</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true"></a><span class="co">#&gt;             order of its corresponding root</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true"></a><span class="co">#&gt; From validate.Network: There are nodes with latent variables</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true"></a><span class="co">#&gt; From validate.Network: There are nodes with latent variables</span></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true"></a><span class="co">#&gt; Calling &#39;ggmfit&#39; from package &#39;gRim&#39;</span></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true"></a><span class="co">#&gt; From setRootDepSet.RootDepSet: The order of the subset must correspond to the</span></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true"></a><span class="co">#&gt;             order of its corresponding root</span></span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true"></a><span class="co">#&gt; From validate.Network: There are nodes with latent variables</span></span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true"></a><span class="co">#&gt; From validate.Network: There are nodes with latent variables</span></span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true"></a><span class="co">#&gt; Calling &#39;ggmfit&#39; from package &#39;gRim&#39;</span></span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true"></a><span class="co">#&gt; From setRootDepSet.RootDepSet: The order of the subset must correspond to the</span></span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true"></a><span class="co">#&gt;             order of its corresponding root</span></span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true"></a><span class="co">#&gt; From validate.Network: There are nodes with latent variables</span></span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true"></a><span class="co">#&gt; From validate.Network: There are nodes with latent variables</span></span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true"></a><span class="co">#&gt; Calling &#39;ggmfit&#39; from package &#39;gRim&#39;</span></span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true"></a><span class="co">#&gt; From setRootDepSet.RootDepSet: The order of the subset must correspond to the</span></span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true"></a><span class="co">#&gt;             order of its corresponding root</span></span>
+<span id="cb12-28"><a href="#cb12-28" aria-hidden="true"></a><span class="co">#&gt; From validate.Network: There are nodes with latent variables</span></span>
+<span id="cb12-29"><a href="#cb12-29" aria-hidden="true"></a><span class="co">#&gt; From validate.Network: There are nodes with latent variables</span></span>
+<span id="cb12-30"><a href="#cb12-30" aria-hidden="true"></a><span class="co">#&gt; Calling &#39;ggmfit&#39; from package &#39;gRim&#39;</span></span>
+<span id="cb12-31"><a href="#cb12-31" aria-hidden="true"></a><span class="co">#&gt; From setRootDepSet.RootDepSet: The order of the subset must correspond to the</span></span>
+<span id="cb12-32"><a href="#cb12-32" aria-hidden="true"></a><span class="co">#&gt;             order of its corresponding root</span></span>
+<span id="cb12-33"><a href="#cb12-33" aria-hidden="true"></a><span class="co">#&gt; From setRootDepSet.RootDepSet: The order of the subset must correspond to the</span></span>
+<span id="cb12-34"><a href="#cb12-34" aria-hidden="true"></a><span class="co">#&gt;             order of its corresponding root</span></span>
+<span id="cb12-35"><a href="#cb12-35" aria-hidden="true"></a><span class="co">#&gt; From setRootDepSet.RootDepSet: The order of the subset must correspond to the</span></span>
+<span id="cb12-36"><a href="#cb12-36" aria-hidden="true"></a><span class="co">#&gt;             order of its corresponding root</span></span>
+<span id="cb12-37"><a href="#cb12-37" aria-hidden="true"></a><span class="co">#&gt; From setRootDepSet.RootDepSet: The order of the subset must correspond to the</span></span>
+<span id="cb12-38"><a href="#cb12-38" aria-hidden="true"></a><span class="co">#&gt;             order of its corresponding root</span></span>
+<span id="cb12-39"><a href="#cb12-39" aria-hidden="true"></a><span class="co">#&gt; From setRootDepSet.RootDepSet: The order of the subset must correspond to the</span></span>
+<span id="cb12-40"><a href="#cb12-40" aria-hidden="true"></a><span class="co">#&gt;             order of its corresponding root</span></span>
+<span id="cb12-41"><a href="#cb12-41" aria-hidden="true"></a><span class="co">#&gt; From setParams.HRMtree: Names have been attributed to the vector &#39;value&#39; in the order corresponding to the order of the edges: The fist element has the name of the first edge, the second element the name of the second edge, etc.</span></span>
+<span id="cb12-42"><a href="#cb12-42" aria-hidden="true"></a><span class="co">#&gt; From setParams.HRMtree: The parameters have been attached to the edges according to their names</span></span></code></pre></div>
+<p>The messages are informative. They inform you about certain things but as long as they do not stop the estimation they are not errors.</p>
+<p>The estimates are squares of the parameters, hence take the square root.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true"></a><span class="kw">sqrt</span>(mle<span class="op">$</span>depParams)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true"></a><span class="co">#&gt;        e1        e2        e3        e4 </span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true"></a><span class="co">#&gt; 0.5010519 0.9133062 1.0333349 0.6907978</span></span></code></pre></div>
+</div>
+<div id="references" class="section level2 unnumbered">
+<h2 class="unnumbered">References</h2>
+<div id="refs" class="references hanging-indent">
+<div id="ref-grim">
+<p>Højsgaard, Søren. 2017. <em>GRim: Graphical Interaction Models</em>. <a href="https://CRAN.R-project.org/package=gRim">https://CRAN.R-project.org/package=gRim</a>.</p>
+</div>
+</div>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

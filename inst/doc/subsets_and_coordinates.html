@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<meta name="author" content="Stefka Asenova" />
+
+<meta name="date" content="2021-12-20" />
+
+<title>Subsets and Coordinates</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Subsets and Coordinates</h1>
+<h4 class="author">Stefka Asenova</h4>
+<h4 class="date">2021-12-20</h4>
+
+
+
+<style type="text/css">
+  body{
+  font-size: 12pt;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>
+<p>A collection of subsets is one of the arguments in the <code>estimate</code> method for many of the classes designed for parametric estimation. It is a key component of the estimation process. The idea is to choose a node and call it a <em>root</em>. Then to create a subset of nodes containing the root. There are three recommendations when creating the subsets from the point of view of the estimation process.</p>
+<p><strong>Every node with observable variable should be a root with some subset of nodes assigned to it.</strong></p>
+<p><strong>The subgraph induced by the subset of nodes should be connected.</strong></p>
+<p>When there are latent variables we add one more recommendation:</p>
+<p><strong>The subgraph induced by the node in the subset must be such that all edge parameters that belong to the subgraph are identifiable. This means that every node within the subgraph with latent variable must be connected to at least three nodes which are also part of the subgraph.</strong></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="kw">library</span>(gremes)</span></code></pre></div>
+<div id="creating-sets-manually" class="section level2">
+<h2>Creating sets manually</h2>
+<p>The argument which contains the roots and the subsets which is passed to the method <code>estimate</code> must be of class <code>RootDepSet</code>. This is a class containing as subclasses <code>Neighborhood</code>, <code>FlowConnect</code> and <code>Set</code>. An object of this class has one slot containing the subsets as a list, <code>$values</code>, and one slot containing the roots as vector, <code>$root</code>.</p>
+<p>We can create the subsets manually.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a>rdsobj&lt;-<span class="st"> </span><span class="kw">RootDepSet</span>()</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a>rdsobj&lt;-<span class="st"> </span><span class="kw">setRootDepSet</span>(rdsobj, <span class="dt">subset =</span> <span class="kw">list</span>(<span class="kw">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>), <span class="kw">c</span>(<span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>)), <span class="dt">root =</span> <span class="kw">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>))</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a><span class="co">#&gt; From setRootDepSet.RootDepSet: The order of the subset must correspond to the</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true"></a><span class="co">#&gt;             order of its corresponding root</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true"></a>rdsobj</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true"></a><span class="co">#&gt; $value</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true"></a><span class="co">#&gt; $value$a</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true"></a><span class="co">#&gt; [1] &quot;a&quot; &quot;b&quot; &quot;c&quot;</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true"></a><span class="co">#&gt; </span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true"></a><span class="co">#&gt; $value$b</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true"></a><span class="co">#&gt; [1] &quot;b&quot; &quot;c&quot;</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true"></a><span class="co">#&gt; </span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true"></a><span class="co">#&gt; </span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true"></a><span class="co">#&gt; $root</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true"></a><span class="co">#&gt; [1] &quot;a&quot; &quot;b&quot;</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true"></a><span class="co">#&gt; </span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true"></a><span class="co">#&gt; attr(,&quot;class&quot;)</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true"></a><span class="co">#&gt; [1] &quot;list&quot;       &quot;RootDepSet&quot;</span></span></code></pre></div>
+<p>For large graphs this will be not so handy. Below there are some tools to create subsets automatically that satisfy the first two recommendations above.</p>
+</div>
+<div id="creating-subsets-on-the-principle-of-neighborhood." class="section level2">
+<h2>Creating subsets on the principle of <strong>neighborhood</strong>.</h2>
+<p>The sets here are based on the principle of <strong>neighborhood</strong>. It makes sense for every root to take a neighborhood of some order. This can also have a bias reduction effect on the estimator.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a>seg&lt;-<span class="st"> </span><span class="kw">graph</span>(<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a>              <span class="dv">2</span>,<span class="dv">3</span>,</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true"></a>              <span class="dv">2</span>,<span class="dv">4</span>,</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true"></a>              <span class="dv">4</span>,<span class="dv">5</span>,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true"></a>              <span class="dv">5</span>,<span class="dv">6</span>,</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true"></a>              <span class="dv">5</span>,<span class="dv">7</span>), <span class="dt">directed =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true"></a>name_stat&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Paris&quot;</span>, <span class="st">&quot;2&quot;</span>, <span class="st">&quot;Meaux&quot;</span>, <span class="st">&quot;Melun&quot;</span>, <span class="st">&quot;5&quot;</span>, <span class="st">&quot;Nemours&quot;</span>, <span class="st">&quot;Sens&quot;</span>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true"></a>seg&lt;-<span class="st"> </span><span class="kw">set.vertex.attribute</span>(seg, <span class="st">&quot;name&quot;</span>, <span class="kw">V</span>(seg), name_stat)  </span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true"></a>subs&lt;-<span class="st"> </span><span class="kw">Neighborhood</span>()</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true"></a><span class="kw">subset</span>(subs, <span class="dv">3</span>, seg)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true"></a><span class="co">#&gt; $value</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true"></a><span class="co">#&gt; $value$Paris</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true"></a><span class="co">#&gt; [1] &quot;Paris&quot; &quot;2&quot;     &quot;Meaux&quot; &quot;Melun&quot; &quot;5&quot;    </span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true"></a><span class="co">#&gt; </span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true"></a><span class="co">#&gt; $value$`2`</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true"></a><span class="co">#&gt; [1] &quot;2&quot;       &quot;Paris&quot;   &quot;Meaux&quot;   &quot;Melun&quot;   &quot;5&quot;       &quot;Nemours&quot; &quot;Sens&quot;   </span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true"></a><span class="co">#&gt; </span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true"></a><span class="co">#&gt; $value$Meaux</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true"></a><span class="co">#&gt; [1] &quot;Meaux&quot; &quot;2&quot;     &quot;Paris&quot; &quot;Melun&quot; &quot;5&quot;    </span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true"></a><span class="co">#&gt; </span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true"></a><span class="co">#&gt; $value$Melun</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true"></a><span class="co">#&gt; [1] &quot;Melun&quot;   &quot;2&quot;       &quot;5&quot;       &quot;Paris&quot;   &quot;Meaux&quot;   &quot;Nemours&quot; &quot;Sens&quot;   </span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true"></a><span class="co">#&gt; </span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true"></a><span class="co">#&gt; $value$`5`</span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true"></a><span class="co">#&gt; [1] &quot;5&quot;       &quot;Melun&quot;   &quot;Nemours&quot; &quot;Sens&quot;    &quot;2&quot;       &quot;Paris&quot;   &quot;Meaux&quot;  </span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true"></a><span class="co">#&gt; </span></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true"></a><span class="co">#&gt; $value$Nemours</span></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true"></a><span class="co">#&gt; [1] &quot;Nemours&quot; &quot;5&quot;       &quot;Melun&quot;   &quot;Sens&quot;    &quot;2&quot;      </span></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true"></a><span class="co">#&gt; </span></span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true"></a><span class="co">#&gt; $value$Sens</span></span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true"></a><span class="co">#&gt; [1] &quot;Sens&quot;    &quot;5&quot;       &quot;Melun&quot;   &quot;Nemours&quot; &quot;2&quot;      </span></span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true"></a><span class="co">#&gt; </span></span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true"></a><span class="co">#&gt; </span></span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true"></a><span class="co">#&gt; $root</span></span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true"></a><span class="co">#&gt; [1] &quot;Paris&quot;   &quot;2&quot;       &quot;Meaux&quot;   &quot;Melun&quot;   &quot;5&quot;       &quot;Nemours&quot; &quot;Sens&quot;   </span></span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true"></a><span class="co">#&gt; </span></span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true"></a><span class="co">#&gt; attr(,&quot;class&quot;)</span></span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true"></a><span class="co">#&gt; [1] &quot;list&quot;         &quot;RootDepSet&quot;   &quot;Neighborhood&quot;</span></span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true"></a></span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true"></a><span class="co"># passing the latent variables</span></span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true"></a><span class="kw">subset</span>(subs, <span class="dv">2</span>, seg, <span class="dt">U_bar=</span><span class="kw">c</span>(<span class="st">&quot;2&quot;</span>, <span class="st">&quot;5&quot;</span>))</span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true"></a><span class="co">#&gt; $value</span></span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true"></a><span class="co">#&gt; $value$Paris</span></span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true"></a><span class="co">#&gt; [1] &quot;Paris&quot; &quot;2&quot;     &quot;Meaux&quot; &quot;Melun&quot;</span></span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true"></a><span class="co">#&gt; </span></span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true"></a><span class="co">#&gt; $value$Meaux</span></span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true"></a><span class="co">#&gt; [1] &quot;Meaux&quot; &quot;2&quot;     &quot;Paris&quot; &quot;Melun&quot;</span></span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true"></a><span class="co">#&gt; </span></span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true"></a><span class="co">#&gt; $value$Melun</span></span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true"></a><span class="co">#&gt; [1] &quot;Melun&quot;   &quot;2&quot;       &quot;5&quot;       &quot;Paris&quot;   &quot;Meaux&quot;   &quot;Nemours&quot; &quot;Sens&quot;   </span></span>
+<span id="cb3-51"><a href="#cb3-51" aria-hidden="true"></a><span class="co">#&gt; </span></span>
+<span id="cb3-52"><a href="#cb3-52" aria-hidden="true"></a><span class="co">#&gt; $value$Nemours</span></span>
+<span id="cb3-53"><a href="#cb3-53" aria-hidden="true"></a><span class="co">#&gt; [1] &quot;Nemours&quot; &quot;5&quot;       &quot;Melun&quot;   &quot;Sens&quot;   </span></span>
+<span id="cb3-54"><a href="#cb3-54" aria-hidden="true"></a><span class="co">#&gt; </span></span>
+<span id="cb3-55"><a href="#cb3-55" aria-hidden="true"></a><span class="co">#&gt; $value$Sens</span></span>
+<span id="cb3-56"><a href="#cb3-56" aria-hidden="true"></a><span class="co">#&gt; [1] &quot;Sens&quot;    &quot;5&quot;       &quot;Melun&quot;   &quot;Nemours&quot;</span></span>
+<span id="cb3-57"><a href="#cb3-57" aria-hidden="true"></a><span class="co">#&gt; </span></span>
+<span id="cb3-58"><a href="#cb3-58" aria-hidden="true"></a><span class="co">#&gt; </span></span>
+<span id="cb3-59"><a href="#cb3-59" aria-hidden="true"></a><span class="co">#&gt; $root</span></span>
+<span id="cb3-60"><a href="#cb3-60" aria-hidden="true"></a><span class="co">#&gt; [1] &quot;Paris&quot;   &quot;Meaux&quot;   &quot;Melun&quot;   &quot;Nemours&quot; &quot;Sens&quot;   </span></span>
+<span id="cb3-61"><a href="#cb3-61" aria-hidden="true"></a><span class="co">#&gt; </span></span>
+<span id="cb3-62"><a href="#cb3-62" aria-hidden="true"></a><span class="co">#&gt; attr(,&quot;class&quot;)</span></span>
+<span id="cb3-63"><a href="#cb3-63" aria-hidden="true"></a><span class="co">#&gt; [1] &quot;list&quot;         &quot;RootDepSet&quot;   &quot;Neighborhood&quot;</span></span></code></pre></div>
+<p>The subsets appear in the slot <code>$values</code> and roots appear in the slot <code>&amp;root</code>.</p>
+<p>In the first case for every node in the graph a subset of neighbors is created. In the second case, when latent variables are passed, a subset of neighbors is created only for <strong>nodes with observable variables</strong>. This is in line with the estimation process. However the subset itself is allowed to contain unobserved variables. This is because the subset should induce a connected subgraph. For the third recommendation regarding the identifiability of the edge parameters in every induced subgraph we can use the method <code>validate</code> - read below.</p>
+</div>
+<div id="subsets-based-on-the-principle-of-flow-connected-nodes" class="section level2">
+<h2>Subsets based on the principle of <strong>flow connected</strong> nodes</h2>
+<p>We could instead consider the set of flow connected nodes. In rivers this is reasonable as flow connection locations are highly dependent <span class="citation">Asenova, Mazo, and Segers (2021)</span>. Two nodes <span class="math inline">\(i,j\)</span> are flow connected if in a digraph directed according to the flow of the water, there is a directed path either from <span class="math inline">\(i\)</span> to <span class="math inline">\(j\)</span> or from <span class="math inline">\(j\)</span> to <span class="math inline">\(i\)</span>.</p>
+<p>A collection of subsets based on the principle of flow connection could also have a bias reduction property for the estimators.</p>
+<p>We first introduce two tools regarding flow connection.</p>
+<p><strong>Class <code>FlowConnectionMatrix</code></strong></p>
+<p>Sometimes it can happen that the information is stored in a matrix. In a matrix carrying information about flow connectedness 1 means that node <span class="math inline">\(i\)</span> is flow connected to node <span class="math inline">\(j\)</span>, and if <span class="math inline">\(i,j\)</span> are not flow connected, <span class="math inline">\(i,j\)</span>-th entry of the matrix is zero.</p>
+<p>In case flow connection information is stored in a matrix we need to create an object named <code>FlowConnectionMatrix</code>. Creating the object executes some checks on the matrix passed with respect to the graph which is also passed to the generator function: the check is about the match between the names of the graph and the names of the rows/columns of the matrix.</p>
+<p>The check is not whether the matrix is correct with respect to the graph passed or vice versa. Therefore the graph that is passed need not be directed according to the water flow, but simply the graph that is used in the application.</p>
+<p>If the matrix is available to the user already, here we show how it can be used to create subsets based on the principle of flow connection.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a><span class="co"># create a graph and name the vertices</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a>g&lt;-<span class="st"> </span><span class="kw">graph</span>(<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">2</span>, <span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">5</span>), <span class="dt">directed=</span><span class="ot">TRUE</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a>g&lt;-<span class="st"> </span><span class="kw">set.vertex.attribute</span>(g, <span class="st">&quot;name&quot;</span>, <span class="kw">V</span>(g), letters[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>])</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true"></a><span class="co"># create the flow connection matrix if not available </span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true"></a>x&lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">rep</span>(<span class="dv">1</span>,<span class="dv">25</span>), <span class="dv">5</span>, <span class="dv">5</span>)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true"></a>x[<span class="dv">1</span>,<span class="dv">3</span>]&lt;-<span class="st"> </span>x[<span class="dv">3</span>,<span class="dv">1</span>]&lt;-<span class="st"> </span><span class="dv">0</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true"></a><span class="kw">colnames</span>(x)&lt;-<span class="st"> </span><span class="kw">rownames</span>(x)&lt;-<span class="st"> </span>letters[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>] <span class="co"># note that the columns and rows should be named according to the nodes</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true"></a></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true"></a><span class="co"># create the object of class &#39;FlowConnectionMatrix&#39;</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true"></a>fcmat&lt;-<span class="st"> </span><span class="kw">FlowConnectionMatrix</span>(x,g)</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true"></a>fcmat</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true"></a><span class="co">#&gt;   a b c d e</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true"></a><span class="co">#&gt; a 1 1 0 1 1</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true"></a><span class="co">#&gt; b 1 1 1 1 1</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true"></a><span class="co">#&gt; c 0 1 1 1 1</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true"></a><span class="co">#&gt; d 1 1 1 1 1</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true"></a><span class="co">#&gt; e 1 1 1 1 1</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true"></a><span class="co">#&gt; attr(,&quot;class&quot;)</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true"></a><span class="co">#&gt; [1] &quot;matrix&quot;               &quot;FlowConnectionMatrix&quot;</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true"></a><span class="kw">plot</span>(g)</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p>Class <code>FlowConnectionGraph</code></p>
+<p>If the flow connection information is stored in a graph, we can create the flow connection matrix from this graph by applying the method <code>flowConnection</code> to an object of class <code>FlowConnectionGraph</code>.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true"></a>g&lt;-<span class="st"> </span><span class="kw">graph</span>(<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">2</span>, <span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">5</span>), <span class="dt">directed=</span><span class="ot">TRUE</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true"></a>g&lt;-<span class="st"> </span><span class="kw">set.vertex.attribute</span>(g, <span class="st">&quot;name&quot;</span>, <span class="kw">V</span>(g), <span class="kw">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>, <span class="st">&quot;d&quot;</span>, <span class="st">&quot;e&quot;</span>))</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true"></a>fcg&lt;-<span class="st"> </span><span class="kw">FlowConnectionGraph</span>(g)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true"></a><span class="kw">plot</span>(g)</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a><span class="kw">flowConnection</span>(fcg)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true"></a><span class="co">#&gt;   a b c d e</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true"></a><span class="co">#&gt; a 1 1 0 1 1</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true"></a><span class="co">#&gt; b 1 1 1 1 1</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true"></a><span class="co">#&gt; c 0 1 1 1 1</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true"></a><span class="co">#&gt; d 1 1 1 1 1</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true"></a><span class="co">#&gt; e 1 1 1 1 1</span></span></code></pre></div>
+<p><br></p>
+<p>Next we create the collection of subsets based on flow connection.</p>
+<p>We use real dataset on Danube. We thank Adrien Hitz for providing us with the data. They were first used in <span class="citation">Asadi, Davison, and Engelke (2015)</span>.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"></a><span class="kw">data</span>(<span class="st">&quot;DanubeGraph&quot;</span>, <span class="st">&quot;DanubeFlowConnectedNodes&quot;</span>, <span class="st">&quot;DanubeData&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;gremes&quot;</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true"></a><span class="kw">plot</span>(DanubeTree, <span class="dt">layout=</span><span class="kw">layout_as_tree</span>(DanubeTree, <span class="dt">root=</span><span class="kw">c</span>(<span class="dv">1</span>)))</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p>Create the source from which information on the flow connection is taken. The source can be a matrix containing the flow connection information or a directed graph. If it is a matrix, the entry <span class="math inline">\(ij\)</span> is one if location <span class="math inline">\(i\)</span> is connected to location <span class="math inline">\(j\)</span>. If it is a graph, the direction must correspond to the water flow.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true"></a><span class="co"># if the source object is a matrix, create an object &quot;FlowConnectionMatrix&quot;</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true"></a>fcmat&lt;-<span class="st"> </span><span class="kw">FlowConnectionMatrix</span>(DanubeFlow, DanubeTree)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true"></a>rds&lt;-<span class="st"> </span><span class="kw">FlowConnect</span>()</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true"></a>sets&lt;-<span class="st"> </span><span class="kw">subset</span>(rds, <span class="dt">from =</span> fcmat, DanubeTree)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true"></a>sets<span class="op">$</span>value<span class="op">$</span>X3</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true"></a><span class="co">#&gt;  [1] &quot;X1&quot;  &quot;X2&quot;  &quot;X3&quot;  &quot;X4&quot;  &quot;X5&quot;  &quot;X6&quot;  &quot;X7&quot;  &quot;X8&quot;  &quot;X9&quot;  &quot;X10&quot; &quot;X11&quot; &quot;X12&quot;</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true"></a><span class="co">#&gt; [13] &quot;X13&quot; &quot;X20&quot; &quot;X21&quot; &quot;X22&quot; &quot;X23&quot; &quot;X24&quot; &quot;X25&quot; &quot;X26&quot; &quot;X27&quot;</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true"></a>sets<span class="op">$</span>value<span class="op">$</span>X21</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true"></a><span class="co">#&gt;  [1] &quot;X1&quot;  &quot;X2&quot;  &quot;X3&quot;  &quot;X4&quot;  &quot;X5&quot;  &quot;X6&quot;  &quot;X7&quot;  &quot;X8&quot;  &quot;X13&quot; &quot;X20&quot; &quot;X21&quot; &quot;X22&quot;</span></span></code></pre></div>
+<p>To illustrate the object of class <code>FlowConnectionGraph</code> we use a fictive graph.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true"></a><span class="co"># if the source object is a directed graph, create an object &quot;FlowConnectionGraph&quot;</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true"></a>fcg&lt;-<span class="st"> </span><span class="kw">FlowConnectionGraph</span>(g)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true"></a>sets&lt;-<span class="st"> </span><span class="kw">subset</span>(rds, fcg, g)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true"></a>sets</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true"></a><span class="co">#&gt; $value</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true"></a><span class="co">#&gt; $value$a</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true"></a><span class="co">#&gt; [1] &quot;a&quot; &quot;b&quot; &quot;d&quot; &quot;e&quot;</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true"></a><span class="co">#&gt; </span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true"></a><span class="co">#&gt; $value$b</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true"></a><span class="co">#&gt; [1] &quot;a&quot; &quot;b&quot; &quot;c&quot; &quot;d&quot; &quot;e&quot;</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true"></a><span class="co">#&gt; </span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true"></a><span class="co">#&gt; $value$c</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true"></a><span class="co">#&gt; [1] &quot;b&quot; &quot;c&quot; &quot;d&quot; &quot;e&quot;</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true"></a><span class="co">#&gt; </span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true"></a><span class="co">#&gt; $value$d</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true"></a><span class="co">#&gt; [1] &quot;a&quot; &quot;b&quot; &quot;c&quot; &quot;d&quot; &quot;e&quot;</span></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true"></a><span class="co">#&gt; </span></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true"></a><span class="co">#&gt; $value$e</span></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true"></a><span class="co">#&gt; [1] &quot;a&quot; &quot;b&quot; &quot;c&quot; &quot;d&quot; &quot;e&quot;</span></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true"></a><span class="co">#&gt; </span></span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true"></a><span class="co">#&gt; </span></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true"></a><span class="co">#&gt; $root</span></span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true"></a><span class="co">#&gt; [1] &quot;a&quot; &quot;b&quot; &quot;c&quot; &quot;d&quot; &quot;e&quot;</span></span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true"></a><span class="co">#&gt; </span></span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true"></a><span class="co">#&gt; attr(,&quot;class&quot;)</span></span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true"></a><span class="co">#&gt; [1] &quot;list&quot;        &quot;RootDepSet&quot;  &quot;FlowConnect&quot;</span></span></code></pre></div>
+<p><br></p>
+<p>A matrix of coordinates is an argument of the method <code>estimate.EKS</code>. We show here how to create easy this matrix.</p>
+</div>
+<div id="creating-the-set-of-evaluation-points-for-the-extremal-coefficients-estimator." class="section level2">
+<h2>Creating the set of evaluation points for the Extremal Coefficients estimator.</h2>
+<p>As the name suggests this estimator is based on extremal coefficients. An extremal coefficient for a set <span class="math inline">\(J\)</span> is the stable tail dependence function evaluated at a vector <span class="math inline">\(1_J=(1_{i\in J}, i\in V)\)</span>. Usually we take <span class="math inline">\(|J|=2\)</span> or <span class="math inline">\(|J|=3\)</span>.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true"></a>tup&lt;-<span class="st"> </span><span class="kw">Tuples</span>()</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true"></a>seg&lt;-<span class="st"> </span><span class="kw">make_tree</span>(<span class="dv">8</span>,<span class="dv">2</span>, <span class="dt">mode =</span> <span class="st">&quot;undirected&quot;</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true"></a>seg&lt;-<span class="st"> </span><span class="kw">set.vertex.attribute</span>(seg, <span class="st">&quot;name&quot;</span>, <span class="kw">V</span>(seg), letters[<span class="dv">1</span><span class="op">:</span><span class="dv">8</span>]) <span class="co"># </span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true"></a>data&lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">rnorm</span>(<span class="dv">10</span><span class="op">*</span><span class="dv">8</span>), <span class="dv">10</span>,<span class="dv">8</span>)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true"></a><span class="kw">colnames</span>(data)&lt;-<span class="st"> </span>letters[<span class="dv">1</span><span class="op">:</span><span class="dv">8</span>]</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true"></a>tobj&lt;-<span class="st"> </span><span class="kw">Tree</span>(seg, data)</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true"></a><span class="co">#&gt; From validate.Network: Edges have been assigned names</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true"></a><span class="co">#&gt; From validate.Network: No latent variables</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true"></a><span class="co">#&gt; From validate.Network: Edges have been assigned names</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true"></a><span class="co">#&gt; From validate.Network: No latent variables</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true"></a>x&lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="dv">1</span>,<span class="dv">8</span>)</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true"></a><span class="kw">names</span>(x)&lt;-<span class="st"> </span><span class="kw">get.vertex.attribute</span>(tobj<span class="op">$</span>graph, <span class="st">&quot;name&quot;</span>, <span class="kw">V</span>(tobj<span class="op">$</span>graph))</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true"></a>ep&lt;-<span class="st"> </span><span class="kw">evalPoints</span>(tup, tobj, x)</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true"></a><span class="kw">head</span>(ep)</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true"></a><span class="co">#&gt;      a b c d e f g h</span></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true"></a><span class="co">#&gt; [1,] 1 1 0 0 0 0 0 0</span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true"></a><span class="co">#&gt; [2,] 1 0 1 0 0 0 0 0</span></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true"></a><span class="co">#&gt; [3,] 1 0 0 1 0 0 0 0</span></span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true"></a><span class="co">#&gt; [4,] 1 0 0 0 1 0 0 0</span></span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true"></a><span class="co">#&gt; [5,] 1 0 0 0 0 1 0 0</span></span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true"></a><span class="co">#&gt; [6,] 1 0 0 0 0 0 1 0</span></span></code></pre></div>
+<p>We can also create evaluation points with different values than only ones.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true"></a>x&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">8</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true"></a><span class="kw">names</span>(x)&lt;-<span class="st"> </span><span class="kw">get.vertex.attribute</span>(tobj<span class="op">$</span>graph, <span class="st">&quot;name&quot;</span>, <span class="kw">V</span>(tobj<span class="op">$</span>graph))</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true"></a>ep&lt;-<span class="st"> </span><span class="kw">evalPoints</span>(tup, tobj, x)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true"></a><span class="kw">head</span>(ep)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true"></a><span class="co">#&gt;      a b c d e f g h</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true"></a><span class="co">#&gt; [1,] 1 2 0 0 0 0 0 0</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true"></a><span class="co">#&gt; [2,] 1 0 3 0 0 0 0 0</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true"></a><span class="co">#&gt; [3,] 1 0 0 4 0 0 0 0</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true"></a><span class="co">#&gt; [4,] 1 0 0 0 5 0 0 0</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true"></a><span class="co">#&gt; [5,] 1 0 0 0 0 6 0 0</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true"></a><span class="co">#&gt; [6,] 1 0 0 0 0 0 7 0</span></span></code></pre></div>
+<p>In a similar manner we can create evaluation points based on triples or quadruples or adjacent nodes.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true"></a>tri&lt;-<span class="st"> </span><span class="kw">Triples</span>()</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true"></a>ep&lt;-<span class="st"> </span><span class="kw">evalPoints</span>(tri, tobj, x)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true"></a><span class="kw">head</span>(ep)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true"></a><span class="co">#&gt;      a b c d e f g h</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true"></a><span class="co">#&gt; [1,] 1 2 3 0 0 0 0 0</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true"></a><span class="co">#&gt; [2,] 1 2 0 4 0 0 0 0</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true"></a><span class="co">#&gt; [3,] 1 2 0 0 5 0 0 0</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true"></a><span class="co">#&gt; [4,] 1 2 0 0 0 6 0 0</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true"></a><span class="co">#&gt; [5,] 1 2 0 0 0 0 7 0</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true"></a><span class="co">#&gt; [6,] 1 2 0 0 0 0 0 8</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true"></a></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true"></a>quad&lt;-<span class="st"> </span><span class="kw">Quadruples</span>()</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true"></a>ep&lt;-<span class="st"> </span><span class="kw">evalPoints</span>(quad, tobj, x)</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true"></a><span class="kw">head</span>(ep)</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true"></a><span class="co">#&gt;      a b c d e f g h</span></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true"></a><span class="co">#&gt; [1,] 1 2 3 4 0 0 0 0</span></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true"></a><span class="co">#&gt; [2,] 1 2 3 0 5 0 0 0</span></span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true"></a><span class="co">#&gt; [3,] 1 2 3 0 0 6 0 0</span></span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true"></a><span class="co">#&gt; [4,] 1 2 3 0 0 0 7 0</span></span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true"></a><span class="co">#&gt; [5,] 1 2 3 0 0 0 0 8</span></span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true"></a><span class="co">#&gt; [6,] 1 2 0 4 5 0 0 0</span></span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true"></a></span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true"></a>adj&lt;-<span class="st"> </span><span class="kw">Adjacent</span>()</span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true"></a>ep&lt;-<span class="st"> </span><span class="kw">evalPoints</span>(adj, tobj, x)</span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true"></a><span class="kw">head</span>(ep)</span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true"></a><span class="co">#&gt;      a b c d e f g h</span></span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true"></a><span class="co">#&gt; [1,] 1 2 0 0 0 0 0 0</span></span>
+<span id="cb12-28"><a href="#cb12-28" aria-hidden="true"></a><span class="co">#&gt; [2,] 0 2 0 4 0 0 0 0</span></span>
+<span id="cb12-29"><a href="#cb12-29" aria-hidden="true"></a><span class="co">#&gt; [3,] 0 0 0 4 0 0 0 8</span></span>
+<span id="cb12-30"><a href="#cb12-30" aria-hidden="true"></a><span class="co">#&gt; [4,] 0 2 0 0 5 0 0 0</span></span>
+<span id="cb12-31"><a href="#cb12-31" aria-hidden="true"></a><span class="co">#&gt; [5,] 1 0 3 0 0 0 0 0</span></span>
+<span id="cb12-32"><a href="#cb12-32" aria-hidden="true"></a><span class="co">#&gt; [6,] 0 0 3 0 0 6 0 0</span></span></code></pre></div>
+<p>Using only evaluation points based on adjacent nodes is not recommended when there are latent variables. The reason is that the evaluation points might not be enough to identify all the edge weights. Therefore it is recommended to use evaluation points based on adjacent nodes in combination with evaluation points based on tuples or triples.</p>
+</div>
+<div id="subsets-and-latent-variables" class="section level2">
+<h2>Subsets and latent variables</h2>
+<p>When there are no latent variables any subsets or set of evaluation points is good. But when there are latent variables the choice of subsets is more important. Although not necessary the following rule is useful when creating subsets:</p>
+<p><strong>The subgraph induced by the node in the subset must be such that all edge parameters that belong to the subgraph are identifiable. This means that every node within the subgraph with latent variable must be connected to at least three nodes which are also part of the subgraph.</strong></p>
+<p>Consider the following example:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true"></a>seg&lt;-<span class="st"> </span><span class="kw">graph</span>(<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true"></a>              <span class="dv">2</span>,<span class="dv">3</span>,</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true"></a>              <span class="dv">2</span>,<span class="dv">4</span>,</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true"></a>              <span class="dv">4</span>,<span class="dv">5</span>,</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true"></a>              <span class="dv">5</span>,<span class="dv">6</span>,</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true"></a>              <span class="dv">5</span>,<span class="dv">7</span>), <span class="dt">directed =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true"></a>name_stat&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Paris&quot;</span>, <span class="st">&quot;2&quot;</span>, <span class="st">&quot;Meaux&quot;</span>, <span class="st">&quot;Melun&quot;</span>, <span class="st">&quot;5&quot;</span>, <span class="st">&quot;Nemours&quot;</span>, <span class="st">&quot;Sens&quot;</span>)</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true"></a>seg&lt;-<span class="st"> </span><span class="kw">set.vertex.attribute</span>(seg, <span class="st">&quot;name&quot;</span>, <span class="kw">V</span>(seg), name_stat) </span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true"></a><span class="kw">plot</span>(seg)</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p>The nodes 2 and 5 contain latent variables. A model on the graph induced by the nodes <span class="math inline">\(\{Paris, 2, Meaux\}\)</span> will have not uniquely identifiable edge parameters, because node 2 is connected within this graph to only two other nodes. We should add the node <span class="math inline">\(Melun\)</span> and then the model on the four nodes <span class="math inline">\(\{Paris, 2, Meaux, Melun\}\)</span> has uniquely identifiable edge parameters.</p>
+<p>If we create subsets on the principle of neighborhood of order two there are subsets to</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true"></a><span class="co"># we need some data to create the object of class &quot;Tree&quot;</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true"></a>seg_data&lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">rnorm</span>(<span class="dv">10</span><span class="op">*</span><span class="dv">7</span>), <span class="dv">10</span>, <span class="dv">7</span>)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true"></a><span class="kw">colnames</span>(seg_data)&lt;-<span class="st"> </span>name_stat</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true"></a>tobj&lt;-<span class="st"> </span><span class="kw">Tree</span>(seg, seg_data[,<span class="kw">c</span>(<span class="st">&quot;Paris&quot;</span>, <span class="st">&quot;Meaux&quot;</span>, <span class="st">&quot;Melun&quot;</span>, <span class="st">&quot;Nemours&quot;</span>, <span class="st">&quot;Sens&quot;</span>)])</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true"></a><span class="co">#&gt; From validate.Network: Edges have been assigned names</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true"></a><span class="co">#&gt; From validate.Network: There are nodes with latent variables</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true"></a><span class="co">#&gt; From validate.Network: Edges have been assigned names</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true"></a><span class="co">#&gt; From validate.Network: There are nodes with latent variables</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true"></a></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true"></a><span class="co"># create the neighborhood of order one and call the function &quot;is_identifiable&quot; </span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true"></a>nobj&lt;-<span class="st"> </span><span class="kw">Neighborhood</span>()</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true"></a>nobj&lt;-<span class="st"> </span><span class="kw">subset</span>(nobj, <span class="dv">1</span>, seg, <span class="dt">U_bar=</span><span class="kw">getNoDataNodes</span>(tobj))</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true"></a><span class="kw">is_identifiable</span>(nobj, tobj)</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true"></a><span class="co">#&gt; The nodes with latent variables {  2  } in set {  Paris 2  } have degree less than three.</span></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true"></a><span class="co">#&gt;                   The subgraph contains edge parameters that are non-identifiable.</span></span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true"></a><span class="co">#&gt; </span></span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true"></a><span class="co">#&gt; The nodes with latent variables {  2  } in set {  Meaux 2  } have degree less than three.</span></span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true"></a><span class="co">#&gt;                   The subgraph contains edge parameters that are non-identifiable.</span></span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true"></a><span class="co">#&gt; </span></span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true"></a><span class="co">#&gt; The nodes with latent variables {  2 5  } in set {  Melun 2 5  } have degree less than three.</span></span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true"></a><span class="co">#&gt;                   The subgraph contains edge parameters that are non-identifiable.</span></span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true"></a><span class="co">#&gt; </span></span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true"></a><span class="co">#&gt; The nodes with latent variables {  5  } in set {  Nemours 5  } have degree less than three.</span></span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true"></a><span class="co">#&gt;                   The subgraph contains edge parameters that are non-identifiable.</span></span>
+<span id="cb14-25"><a href="#cb14-25" aria-hidden="true"></a><span class="co">#&gt; </span></span>
+<span id="cb14-26"><a href="#cb14-26" aria-hidden="true"></a><span class="co">#&gt; The nodes with latent variables {  5  } in set {  Sens 5  } have degree less than three.</span></span>
+<span id="cb14-27"><a href="#cb14-27" aria-hidden="true"></a><span class="co">#&gt;                   The subgraph contains edge parameters that are non-identifiable.</span></span>
+<span id="cb14-28"><a href="#cb14-28" aria-hidden="true"></a><span class="co">#&gt; </span></span></code></pre></div>
+<p>We receive messages that there are subsets whose induced subgraphs contain edge weights that are not identifiable.</p>
+<p>If the neighborhoods are of order two then all subsets are such that the induced subgraphs contains non identifiable edge weights. We get no message from the function <code>is_identifiable</code>.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true"></a>nobj&lt;-<span class="st"> </span><span class="kw">subset</span>(nobj, <span class="dv">2</span>, seg, <span class="dt">U_bar=</span><span class="kw">getNoDataNodes</span>(tobj))</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true"></a><span class="kw">is_identifiable</span>(nobj, tobj)</span></code></pre></div>
+</div>
+<div id="references" class="section level2 unnumbered">
+<h2 class="unnumbered">References</h2>
+<div id="refs" class="references hanging-indent">
+<div id="ref-asadi">
+<p>Asadi, P., A. Davison, and S. Engelke. 2015. “Extremes on River Networks.” <em>The Annals of Applied Statistics</em> 9: 2023–50.</p>
+</div>
+<div id="ref-asenova2021">
+<p>Asenova, Stefka, Gildas Mazo, and Johan Segers. 2021. “Inference on Extremal Dependence in the Domain of Attraction of a Structured Hüsler–Reiss Distribution Motivated by a Markov Tree with Latent Variables.” <em>Extremes</em>. <a href="https://doi.org/10.1007/s10687-021-00407-5">https://doi.org/10.1007/s10687-021-00407-5</a>.</p>
+</div>
+</div>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

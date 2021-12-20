@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<meta name="author" content="Stefka Asenova" />
+
+<meta name="date" content="2021-12-20" />
+
+<title>gremes - Introduction</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">gremes - Introduction</h1>
+<h4 class="author">Stefka Asenova</h4>
+<h4 class="date">2021-12-20</h4>
+
+
+
+<style type="text/css">
+  body{
+  font-size: 12pt;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>
+<p>The package <code>gremes</code> provides tools for estimation of the tail dependence parameters in graphical models parameterized by family of Huesler-Reiss distributions.</p>
+<p>The only supported parameterization is through <strong>Huesler-Reiss</strong> distributions.</p>
+<p>The only supported graphs are <strong>trees</strong> and <strong>block graphs</strong>.</p>
+<p>The estimation methods are variations of method of moments, maximum likelihood and a method based on extremal coefficients.</p>
+<p><br></p>
+<p>Based mainly on <span class="citation">Asenova, Mazo, and Segers (2021)</span>, <span class="citation">Segers (2020)</span>, <span class="citation">Engelke and Hitz (2020)</span>, <span class="citation">Einmahl, Kiriliouk, and Segers (2017)</span> and references therein.</p>
+<p><br></p>
+<p>Consult section <strong>Setting</strong> hereunder to understand what is the model, what are the parameters that represent the scope of the estimation and how they characterize the tail dependence structure of the model.</p>
+<p>Consult Vignette <strong>Detailed contents</strong> for a detailed guide into the documentation of the package and a summary of the main functionalities of the package. We recommend to have a look at this document next.</p>
+<p>Consult Vignette <strong>Huesler-Reiss distributions</strong> to for the particular parameterizations used of the Huesler-Reiss distributions.</p>
+<p>The main scope of the package is <strong>estimation</strong>. These vignettes provide the theory and the functionalities related to estimation:</p>
+<ul>
+<li><p>Vignettes <strong>Estimation - Note</strong> 1-6 for detailed description of the estimation methods.</p></li>
+<li><p>Vignettes <strong>Code - Note</strong> 1-6 for use of the estimation tools (the methods, classes and functions) of the package.</p></li>
+</ul>
+<p>Vignette <strong>Additional functionalities</strong> provides explanation and illustrates the functions related to additional functionalities such as generating random sample from a model, computing extremal coefficients, tail dependence coefficients, confidence intervals for one of the estimators.</p>
+<p><br></p>
+<p>Some of the information may be repeating across these documents, but this can do no harm for understanding better the purpose of the package.</p>
+<div id="setting" class="section level2">
+<h2>Setting</h2>
+<div id="trees" class="section level3">
+<h3>Trees</h3>
+<p>Let <span class="math inline">\(T=(V,E)\)</span> be a tree with node set <span class="math inline">\(V\)</span> and edge set <span class="math inline">\(E\)</span>. Consider a <span class="math inline">\(|V|\)</span>-variate random vector <span class="math inline">\(X=(X_v, v\in V)\)</span> for which it holds:</p>
+<ul>
+<li><p><span class="math inline">\(X\)</span> satisfies the global Markov property with respect to the tree <span class="math inline">\(T\)</span></p></li>
+<li><p>every bivariate distribution between two adjacent variables is a bivariate Huesler-Reiss distribution with parameter <span class="math inline">\(\theta_e\)</span> for some <span class="math inline">\(e\in E\)</span>. For the particular parameterization please refer to Vignette “Distributions”.</p></li>
+<li><p>standardized to unit-Pareto marginal distributions.</p></li>
+</ul>
+<p>Based on different asymptotic results on <span class="math inline">\(X\)</span> we can have different estimators of the parameters <span class="math inline">\(\theta_e, e\in E\)</span> which we collect in a vector <span class="math inline">\(\theta\in (0,\infty)^{|E|}\)</span>.</p>
+<ol style="list-style-type: decimal">
+<li><p>Consider the limiting distribution of <span class="math display">\[
+\ln (X/X_u)\mid X_u&gt;t, \qquad t\rightarrow\infty.
+\]</span> It can be shown that the limiting distribution is multivariate Gaussian distribution with mean vector <span class="math inline">\(\mu_u(\theta)\)</span> and covariance matrix <span class="math inline">\(\Sigma_{u}(\theta)\)</span>. One can consult <span class="citation">Asenova, Mazo, and Segers (2021)</span> and references therein. Based on this asymptotic result we come up with method of moments type estimator and a maximum likelihood (rather composite likelihood function) estimator which both aim at estimating <span class="math inline">\(\Sigma_{u}\)</span> and accordingly <span class="math inline">\(\theta\)</span>.</p></li>
+<li><p>Consider the limiting distribution of the componentwise maxima if we dispose of a random sample of size <span class="math inline">\(n\)</span> of <span class="math inline">\(X\)</span> <span class="math display">\[
+\Big(\frac{1}{n}\max_{i=1, \ldots, n}X_{v,i}, v\in V\Big), \qquad n\rightarrow \infty.
+\]</span> The limit is a max-stable Huesler-Reiss copula with unit Frechet margins and with parameter matrix <span class="math inline">\(\Lambda\)</span> given by <span class="math display">\[\begin{equation} 
+ \big(\Lambda(\theta)\big)_{ij}
+ = \lambda^2_{ij}(\theta)
+ = \frac{1}{4}\sum_{e \in p(i,j)} \theta_e^2\, , \qquad i,j\in V, \ i \ne j, e\in E.
+\end{equation}\]</span> he notation <span class="math inline">\(p(i,j)\)</span> means the unique shortest path between <span class="math inline">\(i,j\)</span>. On the basis of this result we come up with an estimator using the stable tail dependence function associated to the max-stable Huesler-Reiss distribution. This estimator is introduced in <span class="citation">Einmahl, Kiriliouk, and Segers (2017)</span> and it is named extremal coefficients estimator by the fact that it uses extremal coefficients, which are basically stable tail dependence functions.</p></li>
+<li><p>Consider the limiting distribution of <span class="math display">\[
+(X/t)\mid \max_{v\in V}X_v&gt;t, \qquad t\rightarrow \infty. 
+\]</span> The limit is a so called Huesler-Reiss Pareto distribution with the same matrix <span class="math inline">\(\Lambda\)</span> as above. For such distributions <span class="citation">Engelke and Hitz (2020)</span> have a cliquewise estimator which here it is implemented and called simply Engelke and Hitz estimator. More theoretical background behind the stated limit can be found in <span class="citation">Asenova and Segers (2021)</span> and <span class="citation">Engelke and Hitz (2020)</span>.</p></li>
+<li><p>Consider the limiting distribution of <span class="math display">\[
+(\ln X_v-\overline{\ln X}, v\in V)\mid \overline{\ln X}&gt;t, \qquad t\rightarrow \infty. 
+\]</span> where <span class="math inline">\(\overline{\ln X}=(1/|V|)\sum_{v\in V}\ln X_v\)</span>. The limit of this vector is also a multivariate Gaussian distribution with mean and covariance matrix, say <span class="math inline">\(\bar{\Sigma}\)</span>, that contain the matrix <span class="math inline">\(\Lambda(\theta)\)</span> above. We use again sort of MME and MLE to estimate the covariance matrix <span class="math inline">\(\bar{\Sigma}\)</span>, and accordingly <span class="math inline">\(\theta\)</span>, because <span class="math inline">\(\bar{\Sigma}\)</span> depends on <span class="math inline">\(\theta\)</span> through <span class="math inline">\(\Lambda\)</span>. This asymptotic result is shown in an unpublished note <span class="citation">Segers (2019)</span>.</p></li>
+</ol>
+<!--Let $T=(V,E)$ be a tree with node set $V$ and edge set $E$. Consider a $|V|$-variate Huesler-Reiss distribution with parameter matrix $\Lambda$ with 
+\begin{equation} 
+\label{eqn:lambda}
+    \big(\Lambda(\theta)\big)_{ij}
+    = \lambda^2_{ij}(\theta)
+    = \frac{1}{4}\sum_{e \in p(i,j)} \theta_e^2\, , \qquad i,j\in V, \ i \ne j, e\in E.
+\end{equation}
+
+The notation $p(i,j)$ means the unique shortest path between $i,j$. Since in trees there are only unique paths between two nodes then the $p(i,j)$ in the only path. Because the elements $\lambda_{ij}$ depend on the paths between $i$ and $j$ we may say that there is structure in $\Lambda$ or that $\Lambda$ is a structured parameter matrix, or that the Huesler-Reiss distribution is structured. 
+
+It can be shown that such a distribution is an extreme value attractor of a parametric model $X=(X_v, v\in V)$ with the following characteristics:
+
+- $X$ satisfies the global Markov property with respect to the tree $T=(V,E)$
+
+- every bivariate distribution between two adjacent variables is a bivariate Huesler-Reiss distribution with parameter $\theta$ as stated below.
+
+- unit-Pareto marginal distributions.
+-->
+<p>To illustrate the idea: suppose we have the tree with nodes <span class="math inline">\(V=\{Paris, 2, Meaux, Melun, 5, Nemours, Sens\}\)</span> and edge weights <span class="math inline">\((t1, \ldots, t6)\)</span> which are aliases for <span class="math inline">\((\theta_1, \ldots, \theta_6)\)</span>.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a>seg&lt;-<span class="st"> </span><span class="kw">graph</span>(<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a>              <span class="dv">2</span>,<span class="dv">3</span>,</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a>              <span class="dv">2</span>,<span class="dv">4</span>,</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a>              <span class="dv">4</span>,<span class="dv">5</span>,</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true"></a>              <span class="dv">5</span>,<span class="dv">6</span>,</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true"></a>              <span class="dv">5</span>,<span class="dv">7</span>), <span class="dt">directed =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true"></a>name_stat&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Paris&quot;</span>, <span class="st">&quot;2&quot;</span>, <span class="st">&quot;Meaux&quot;</span>, <span class="st">&quot;Melun&quot;</span>, <span class="st">&quot;5&quot;</span>, <span class="st">&quot;Nemours&quot;</span>, <span class="st">&quot;Sens&quot;</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true"></a>seg&lt;-<span class="st"> </span><span class="kw">set.vertex.attribute</span>(seg, <span class="st">&quot;name&quot;</span>, <span class="kw">V</span>(seg), name_stat) </span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true"></a><span class="kw">plot</span>(seg, <span class="dt">edge.label=</span><span class="kw">c</span>(<span class="st">&quot;t1&quot;</span>, <span class="st">&quot;t2&quot;</span>, <span class="st">&quot;t3&quot;</span>, <span class="st">&quot;t4&quot;</span>, <span class="st">&quot;t5&quot;</span>, <span class="st">&quot;t6&quot;</span>))</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p>We suppose that <span class="math inline">\((X_{Paris}, X_2)\)</span> have bivariate Huesler-Reiss distribution with parameter <span class="math inline">\(t1\)</span> or <span class="math inline">\(\theta_1\)</span>. We make the analogous assumptions for all adjacent pair of variables. Then for <span class="math inline">\(X\)</span> the four asymptotic results above hold and they all depend on the edge weights <span class="math inline">\((\theta_1, \ldots, \theta_6)\)</span>.</p>
+<p>To estimate tail dependence in <span class="math inline">\(X\)</span> we need to estimate <span class="math inline">\((t1, \ldots, t6)\)</span> (aliases for <span class="math inline">\(\theta_1, \ldots, \theta_6\)</span>).</p>
+<p>For estimation we need to choose between one of the following methods - <code>estimate.MME</code>, <code>estimate.MLE</code>, <code>estimate.MLE1</code>, <code>estimate.MLE2</code>, <code>estimate.EKS</code>, <code>estimate.EKS_part</code>, <code>estimate.EngHitz</code>, <code>estimate.MMEave</code>, <code>estimate.MLEave</code>.</p>
+</div>
+<div id="block-graphs" class="section level3">
+<h3>Block graphs</h3>
+<p>Let <span class="math inline">\(G=(V,E)\)</span> be a block graph with node set <span class="math inline">\(V\)</span> and edge set <span class="math inline">\(E\)</span>. Let <span class="math inline">\(X\)</span> be a random vector on <span class="math inline">\(V\)</span> with the following characteristics:</p>
+<ul>
+<li><p><span class="math inline">\(X\)</span> satisfies the global Markov property with respect to the block graph <span class="math inline">\(G=(V,E)\)</span></p></li>
+<li><p>every distribution of variables belonging to the same maximal clique (or block), say <span class="math inline">\(C\subset V\)</span>, is a multivariate Huesler-Reiss distribution with parameter matrix <span class="math inline">\(\{\delta^2_{ij}\}, i,j\in C\)</span>.</p></li>
+<li><p>unit-Pareto marginal distributions.</p></li>
+</ul>
+<ol style="list-style-type: decimal">
+<li>Consider the limiting distribution of <span class="math display">\[
+\ln (X/X_u)\mid X_u&gt;t, \qquad t\rightarrow\infty.
+\]</span> It can be shown that the limiting distribution is multivariate Gaussian distribution with mean vector <span class="math inline">\(\mu_u(\delta)\)</span> and covariance matrix <span class="math inline">\(\Sigma_{u}(\delta)\)</span> where <span class="math inline">\(\delta=(\delta_e^2, e\in E)\)</span>. One can consult <span class="citation">Asenova, Mazo, and Segers (2021)</span> and references therein. Based on this asymptotic result we come up with method of moments type estimator for <span class="math inline">\(\Sigma_{u}\)</span> and subsequently of <span class="math inline">\(\delta\)</span>.</li>
+</ol>
+<p>Similar results as in 2-4 for trees exist for block graphs however we do not implement an estimator based on these results. <!--
+2. Consider the limiting distribution of the componentwise maxima if we dispose of a random sample of size $n$ of $X$
+\[
+\Big(\frac{1}{n}\max_{i=1, \ldots, n}X_{v,i}, v\in V\Big), \qquad n\rightarrow \infty.
+\]
+The limit is a max-stable Huesler-Reiss copula with unit Frechet margins and with parameter matrix $\Lambda$ given by 
+\begin{equation} 
+    \big(\Lambda(\delta)\big)_{ij}
+    = \lambda^2_{ij}(\delta)
+    = \sum_{e \in p(i,j)} \delta_e^2, \qquad i,j\in V, \ i \ne j, e\in E.
+\end{equation}
+The notation $p(i,j)$ means the unique shortest path between $i,j$. On the basis of this result it is possible to use an estimator based on extremal coefficients, however we do not implement such a procedure. 
+The notation $p(i,j)$ means the **unique shortest path** between $i,j$. The vector $\delta$ collects all edge weights $\big(\delta^2_{ab}, (a,b)\in E\big)$. Note that the parameterization is different up to a constant with respect to the parameterization used in case of trees. This is just a matter of choice as in the paper @asejoh2 we have used a different parameterization.
+
+Consider a $|V|$-variate Huesler-Reiss distribution with parameter matrix $\Lambda$ with 
+\begin{equation} 
+    \big(\Lambda(\delta)\big)_{ij}
+    = \lambda^2_{ij}(\delta)
+    = \sum_{e \in p(i,j)} \delta_e^2\, , \qquad i,j\in V, \ i \ne j, e\in E.
+\end{equation}
+--></p>
+<p>To illustrate the idea. Consider the following block graph with three cliques (or blocks) and nine edge parameters: three per each clique.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a>g&lt;-<span class="st"> </span><span class="kw">graph</span>(<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">3</span>,</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a>            <span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">5</span>,<span class="dv">3</span>,</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a>            <span class="dv">3</span>,<span class="dv">7</span>,<span class="dv">3</span>,<span class="dv">6</span>,<span class="dv">6</span>,<span class="dv">7</span>), <span class="dt">directed=</span><span class="ot">FALSE</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true"></a>g&lt;-<span class="st"> </span><span class="kw">set.vertex.attribute</span>(g, <span class="st">&quot;name&quot;</span>, <span class="kw">V</span>(g), letters[<span class="dv">1</span><span class="op">:</span><span class="dv">7</span>])</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true"></a><span class="kw">plot</span>(g, <span class="dt">edge.label=</span><span class="kw">c</span>(<span class="st">&quot;d1&quot;</span>, <span class="st">&quot;d2&quot;</span>, <span class="st">&quot;d3&quot;</span>, <span class="st">&quot;d4&quot;</span>, <span class="st">&quot;d5&quot;</span>, <span class="st">&quot;d6&quot;</span>, <span class="st">&quot;d7&quot;</span>, <span class="st">&quot;d8&quot;</span>, <span class="st">&quot;d9&quot;</span>))</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p>We suppose that the subvector <span class="math inline">\((X_a, X_b, X_c)\)</span> has a Huesler-Reiss distribution with parameter matrix <span class="math inline">\(\Delta_1\)</span> which is symmetric, with zero diagonal and non-zero parameters <span class="math inline">\((d2, d1, d3)\)</span> which is alias for <span class="math inline">\((\delta_{ab}, \delta_{ac}, \delta_{bc})\)</span>. Similarly for the other two block vectors <span class="math inline">\((X_c, X_e, X_d)\)</span> and <span class="math inline">\((X_c, X_f, X_g)\)</span>.</p>
+<p>To estimate tail dependence in <span class="math inline">\(X\)</span> we need to estimate the edge weights (or edge parameters) <span class="math inline">\((d1, \ldots, d9)\)</span> (aliases for <span class="math inline">\(\delta_{ab}, (a,b)\in E\)</span>).</p>
+<p>For estimation we need to choose method <code>estimate.HRMBG</code>.</p>
+</div>
+</div>
+<div id="object-oriented-style" class="section level2">
+<h2>Object oriented style</h2>
+<p>The package is developed in an object-oriented style. There are two main types of objects.</p>
+<ul>
+<li><p>An object containing <strong>the graph and the dataset</strong> is created using classes <code>Network</code>, <code>Tree</code> and possibly other subclasses of these.</p></li>
+<li><p>An object containing <strong>the graph and the edge weights</strong> is created with classes <code>HRMnetwork</code>, <code>HRMtree</code>, <code>HRMBG</code> and possibly subclasses of these.</p></li>
+</ul>
+<p>We can look at the first type of objects as one representing the non-parametric view on the problem - all we know is the graph and the data.</p>
+<p>We can look at the second type of objects as representing the Huesler-Reiss parametric model: every clique is parameterized by a Huesler-Reiss distribution with parameters - the edge weights within this clique. Hence all that characterizes the parametric model is the graph and the edge weights.</p>
+<p>Consider for instance a method <code>extrCoeff</code> which is written both for classes <code>Tree</code> and <code>HRMtree</code>. If we pass an object of class <code>Tree</code> to the method <code>extrCoeff</code> the command will return non-parametric estimates of the extremal coefficients. If the object passed is of class <code>HRMtree</code> the command will return parametric extremal coefficients.</p>
+</div>
+<div id="naming-nodes-and-edges" class="section level2">
+<h2>Naming nodes and edges</h2>
+<p>A key principle is the following:</p>
+<p><strong>The nodes of the graph should be named. The edges of the graph should be named. Vectors and dataframes referring to quantities attributed to the nodes should be named according to the names of the nodes. Vectors and dataframes referring to quantities attributed to the edges of the graph should be named according to the edges of the graph.</strong></p>
+</div>
+<div id="the-method-estimate" class="section level2">
+<h2>The method <code>estimate</code></h2>
+<p>The main goal of the package is estimation, therefore the method  is the key functionality of the tools provided in the package. Estimation in <code>gremes</code> happens by using the method <code>estimate</code> on an object from one of the following classes:</p>
+<ul>
+<li><p><code>MME</code>, <code>MLE</code>, <code>MLE1</code>, <code>MLE2</code>, <code>EKS</code>, <code>EKS_part</code>, <code>EngHitz</code>, <code>MMEave</code>, <code>MLEave</code> in which case it estimates the edge weights <span class="math inline">\((\theta_e, e\in E)\)</span> according to a <strong>tree</strong>. See Vignettes “Code - Node” 1-4 and 6.</p></li>
+<li><p><code>HRMBG</code> in which case it estimates the edge weights <span class="math inline">\((\delta_e^2, \in E)\)</span> according to a <strong>block graph</strong>. See Vignettes “Code - Node 5”.</p></li>
+</ul>
+</div>
+<div id="in-summary" class="section level2">
+<h2>In summary:</h2>
+<!--- Estimation of edge weights according to a **tree** use one of the following classes `MME`, `MLE`, `MLE1`, `MLE2`, `EKS`, `EKS_part`, `EngHitz`, `MMEave`, `MLEave`. -->
+<p>For models on <strong>trees</strong>:</p>
+<ul>
+<li><p><code>MME</code> provides method of moments estimates and it is based on the asymptotics in 1. See Vignettes “Estimation - Note 1” and “Code - Note 1”.</p></li>
+<li><p><code>MLE</code>, <code>MLE1</code>, <code>MLE2</code> provide maximum Likelihood estimates and are based on the asymptotics in 1. See Vignettes “Estimation - Note 2” and “Code - Note 2”.</p></li>
+<li><p><code>EKS</code>, <code>EKS_part</code> provide estimates based on extremal coefficients and are based on the asymptotics in 2. See Vignettes “Estimation - Note 3” and “Code - Note 3”.</p></li>
+<li><p><code>EngHitz</code> provides a type of maximum likelihood estimate too and is based on the asymptotics in 3. See Vignettes “Estimation - Note 4” and “Code - Note 4”.</p></li>
+<li><p><code>MMEave</code> and <code>MLEave</code> apply the method of moments estimator and a maximum likelihood estimator and are based on the asymptotics in 4. See Vignettes “Estimation - Note 6” and “Code - Note 6”.</p></li>
+</ul>
+<p>Estimation of edge weights according to a <strong>block graph</strong> uses the class <code>HRMBG</code>. The only supported method is Method of Moments. See Vignettes “Estimation - Note 5” and “Code - Note 5”.</p>
+<p>For estimation we need first to create an object of the corresponding class, then call method <code>estimate</code> on that object.</p>
+<p>For instance:</p>
+<p><code>mmeobj&lt;- MME(g); estimate(mmeobj, ...)</code></p>
+<p>where <code>g</code> is the graph of the tree and <code>...</code> are additional arguments passed to method <code>estimate</code>.</p>
+<p>For detailed examples in <code>R</code> see Vignettes “Code - Note” 1-6.</p>
+<p>For detailed explanation of estimators see Vignettes “Estimation - Note” 1-6.</p>
+</div>
+<div id="references" class="section level2 unnumbered">
+<h2 class="unnumbered">References</h2>
+<div id="refs" class="references hanging-indent">
+<div id="ref-asenova2021">
+<p>Asenova, Stefka, Gildas Mazo, and Johan Segers. 2021. “Inference on Extremal Dependence in the Domain of Attraction of a Structured Hüsler–Reiss Distribution Motivated by a Markov Tree with Latent Variables.” <em>Extremes</em>. <a href="https://doi.org/10.1007/s10687-021-00407-5">https://doi.org/10.1007/s10687-021-00407-5</a>.</p>
+</div>
+<div id="ref-asejoh2">
+<p>Asenova, Stefka, and Johan Segers. 2021. “Estremes of Markov Random Fields on Block Graphs.”</p>
+</div>
+<div id="ref-eks16">
+<p>Einmahl, J., A. Kiriliouk, and J. Segers. 2017. “A Continuous Updating Weighted Least Squares Estimator of Tail Dependence in High Dimensions.” <em>Extremes</em>.</p>
+</div>
+<div id="ref-engelke2020">
+<p>Engelke, Sebastian, and Adrien S. Hitz. 2020. “Graphical Models for Extremes.” <em>J. R. Statist. Soc. B</em> 82 (3): 1–38.</p>
+</div>
+<div id="ref-segers2019mean">
+<p>Segers, Johan. 2019. “On the Property of the Domain of Attraction of the Simple Huesler-Reiss Distribution: Lognormal Limit When Conditioning on the Geometric Mean Being Large.” <em>Unpublished - Contact the Author: Johan.segers@uclouvain.be</em>.</p>
+</div>
+<div id="ref-segers2019versus">
+<p>———. 2020. “One- Versus Multi-Component Regular Variation and Extremes of Markov Trees.” <em>Advances in Applied Probability</em> 52: 855–78.</p>
+</div>
+</div>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

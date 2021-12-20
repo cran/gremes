@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<meta name="author" content="Stefka Asenova" />
+
+<meta name="date" content="2021-12-20" />
+
+<title>Estimation - Note 3</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Estimation - Note 3</h1>
+<h3 class="subtitle">Extremal Coefficients Estimator for models on trees</h3>
+<h4 class="author">Stefka Asenova</h4>
+<h4 class="date">2021-12-20</h4>
+
+
+
+<style type="text/css">
+  body{
+  font-size: 12pt;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>
+<p><br></p>
+<p>For application of this estimator, see Vignette “Code - Note 3”.</p>
+<p><br></p>
+<div id="extremal-coefficient-estimator-ece" class="section level2">
+<h2>Extremal coefficient estimator (ECE)</h2>
+<p>The pairwise extremal coefficients estimator is introduced in <span class="citation">Einmahl, Kiriliouk, and Segers (2017)</span>, is based on the bivariate stable tail dependence function (stdf). It is described in Section 4.3 in <span class="citation">Asenova, Mazo, and Segers (2021)</span>. More on the stdf can be found in <span class="citation">Haan and Ferreira (2006)</span>.</p>
+<p>For the Huesler–Reiss distribution with parameter matrix <span class="math inline">\(\Lambda(\theta)\)</span> and for a pair of nodes <span class="math inline">\(J = \{u, v\}\)</span>, the bivariate extremal coefficient is just <span class="math display">\[\begin{equation}
+l_J(1, 1) = 2 \Phi(\lambda_{uv}(\theta)),
+\end{equation}\]</span> with <span class="math inline">\(\Phi\)</span> the standard normal cumulative distribution function (cdf) and <span class="math display">\[\begin{equation} 
+    \big(\Lambda(\theta)\big)_{ij}
+    = \lambda^2_{ij}(\theta)
+    = \frac{1}{4}\sum_{e \in p(i,j)} \theta_e^2\, , \qquad i,j\in V, \ i \ne j, e\in E.
+\end{equation}\]</span></p>
+<p>The non-parametric estimator of the stdf dates back to <span class="citation">Drees and Huang (1998)</span> and yields the following estimator for the extremal coefficient <span class="math inline">\(l_J(1, \ldots, 1)\)</span> for <span class="math inline">\(J \subseteq V\)</span>: <span class="math display">\[\begin{equation} 
+\label{eqn:lJkn}
+  \hat{l}_{J;n,k}(1,\ldots,1)
+  =
+  \frac{1}{k}\sum_{i=1}^n
+  \mathbb{1}\left( \max_{j \in J} n\hat{F}_{j,n}(\xi_{j,i}) &gt;n+1/2-k \right).
+\end{equation}\]</span></p>
+<p>Let <span class="math inline">\(\mathcal{Q} \subseteq \{ J \subseteq U : |J| = 2 \}\)</span> be a collection of pairs of nodes associated to observable variables and put <span class="math inline">\(q = |\mathcal{Q}|\)</span>, ensuring that <span class="math inline">\(q \ge |E| = d-1\)</span>, the number of free edge parameters. The pairwise extremal coefficients estimator (ECE) of <span class="math inline">\(\theta\)</span> is <span class="math display">\[\begin{equation} 
+\label{eqn:ECE}
+    \hat{\theta}^{\mathrm{ECE}}_{n,k}
+    =
+    \arg\min_{\theta \in (0,\infty)^{|E|}}
+    \sum_{J \in \mathcal{Q}} \left( \hat{l}_{J;n,k}(1,1) - l_J(1, 1;\theta) \right)^2.
+\end{equation}\]</span></p>
+<p>The <span class="math inline">\(\mathcal{Q}\)</span> must be the collection of all possible pairs of nodes in <span class="math inline">\(U\)</span>. One may include also tri-variate extremal coefficients, in which case we will have <span class="math inline">\(|J|=3\)</span>.</p>
+<ul>
+<li><p><span class="math inline">\(n\)</span> is the number of all observations in the sample</p></li>
+<li><p><span class="math inline">\(k\)</span> is the number of the upper order statistics used in the estimation</p></li>
+<li><p>If the sample of the original variables is <span class="math inline">\(\xi_{v,i}, v\in U, i=1,\ldots, n\)</span> consider the transformation using the empirical cumulative distribution function <span class="math inline">\(\hat{F}_{v,n}(x)=\big[\sum_{i=1}^n\mathbb{1}(\xi_{v,i}\leq x)\big]/(n+1)\)</span>.</p></li>
+</ul>
+</div>
+<div id="ece-version-2" class="section level2">
+<h2>ECE Version 2</h2>
+<p>The second version of the ECE which is implemented with object of class <code>EKS_part</code> uses the subsets <span class="math inline">\(W_u\)</span> for every <span class="math inline">\(u\in U\)</span> where <span class="math inline">\(U\)</span> is the set of noted with observable variables. It is similar to the MLE Version 1 explained in Vignette “Estimation - Note 2”.</p>
+<p>For fixed <span class="math inline">\(u\)</span> and <span class="math inline">\(W_u\)</span> such that <span class="math inline">\(G(W_u)\)</span> is a connected subgraph we apply the EC estimator of <span class="math inline">\(\theta_{W_u}\)</span> which is the collection of all edge weights within the subgraph <span class="math inline">\(G(W_u)\)</span>.</p>
+<p>In the first step we solve for every <span class="math inline">\(u\in U\)</span> and given <span class="math inline">\(W_u\)</span> <span class="math display">\[\begin{equation}
+    \hat{\theta}_{W_u,n,k}
+    =
+    \arg\min_{\theta \in (0,\infty)^{|W_u|-1}}
+    \sum_{J \in \mathcal{Q_u}} \left( \hat{l}_{J;n,k}(1,1) - l_J(1, 1;\theta) \right)^2.
+\end{equation}\]</span><br />
+where <span class="math inline">\(\mathcal{Q_u}\)</span> is the collection of all possible pairs (and possibly triples) of nodes in <span class="math inline">\(W_u\)</span>.</p>
+<p>In a second step combine all estimates to obtain one estimate of <span class="math inline">\((\theta_e, e\in E)\)</span></p>
+<p><span class="math display">\[\begin{equation} 
+    \hat{\theta}^{\mathrm{ECEp}}_{k,n}
+    =
+    \min_{\theta\in [0,\infty)^{|E|}}
+    \sum_{u\in U}\sum_{e\in E}(\hat{\theta}_{e,W_u}-\theta_{e})^2.
+    \end{equation}\]</span></p>
+</div>
+<div id="references" class="section level2 unnumbered">
+<h2 class="unnumbered">References</h2>
+<div id="refs" class="references hanging-indent">
+<div id="ref-asenova2021">
+<p>Asenova, Stefka, Gildas Mazo, and Johan Segers. 2021. “Inference on Extremal Dependence in the Domain of Attraction of a Structured Hüsler–Reiss Distribution Motivated by a Markov Tree with Latent Variables.” <em>Extremes</em>. <a href="https://doi.org/10.1007/s10687-021-00407-5">https://doi.org/10.1007/s10687-021-00407-5</a>.</p>
+</div>
+<div id="ref-drees1998">
+<p>Drees, Holger, and Xin Huang. 1998. “Best Attainable Rates of Convergence for Estimators of the Stable Tail Dependence Function.” <em>Journal of Multivariate Analysis</em> 64 (1): 25–46. <a href="https://doi.org/https://doi.org/10.1006/jmva.1997.1708">https://doi.org/https://doi.org/10.1006/jmva.1997.1708</a>.</p>
+</div>
+<div id="ref-eks16">
+<p>Einmahl, J., A. Kiriliouk, and J. Segers. 2017. “A Continuous Updating Weighted Least Squares Estimator of Tail Dependence in High Dimensions.” <em>Extremes</em>.</p>
+</div>
+<div id="ref-haan">
+<p>Haan, L. de, and A. Ferreira. 2006. <em>Extreme Value Theory: An Introduction</em>. Springer-Verlag New York.</p>
+</div>
+</div>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

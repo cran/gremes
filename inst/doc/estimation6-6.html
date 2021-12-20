@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<meta name="author" content="Stefka Asenova" />
+
+<meta name="date" content="2021-12-20" />
+
+<title>Estimation - Note 6</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Estimation - Note 6</h1>
+<h3 class="subtitle">Estimation based on large average for models on trees</h3>
+<h4 class="author">Stefka Asenova</h4>
+<h4 class="date">2021-12-20</h4>
+
+
+
+<style type="text/css">
+  body{
+  font-size: 12pt;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>
+<p>This estimator differs from the others because the conditioning event does not depend on a particular node <span class="math inline">\(u\)</span> but it depends on the event that the <strong>geometric mean</strong> exceeds a high threshold.</p>
+<p><br></p>
+<p>For application of this estimator, see Vignette “Code - Note 6”.</p>
+<p><br></p>
+<p>In an unpublished note of Johan Segers (<span class="citation">Segers (2019)</span>) it is shown that if <span class="math inline">\(X= (X_1, \ldots, X_d)\)</span> with unit Pareto margins and in the domain of attraction of a Huesler-Reiss distribution with parameter matrix <span class="math inline">\(\Lambda=(\lambda^2)_{ij}\)</span>, then it holds<br />
+<span class="math display">\[\begin{equation}
+ \mathcal{L}\Big((Y_v-\bar{Y})_{v=1}^d|\bar{Y}&gt;y\Big)
+ \rightarrow
+ \mathcal{N}_d(\bar{\mu}, \bar{\Sigma}),
+\end{equation}\]</span> with <span class="math inline">\(Y=(Y_1,\ldots, Y_d)=(\ln X_1,\ldots, \ln X_d )\)</span> and <span class="math display">\[\bar{\Sigma} =-M_d\Lambda M_d,\qquad 
+\bar{\mu}=-(1/d)\Lambda 1_d + (1/d)1_d^T \Lambda 1_d 1_d\]</span> where <span class="math inline">\(M_d=I_d-(1/d)1_d1_d^T\)</span>, <span class="math inline">\(I_d\)</span> is an identity matrix of size <span class="math inline">\(d\)</span> and <span class="math inline">\(1_d\)</span> is a a vector of ones of length <span class="math inline">\(d\)</span>.</p>
+<p>Consider a tree <span class="math inline">\(T=(V,E)\)</span> and edge weights <span class="math inline">\(\theta=(\theta_e, e\in E)\)</span>. Under the assumption that <span class="math inline">\(X=(X_v, v\in V)\)</span> is in the domain of attraction of a Huesler-Reiss copula with unit Frechet margins and structured parameter matrix <span class="math inline">\(\Lambda(\theta)\)</span> <span class="math display">\[\begin{equation} 
+    \big(\Lambda(\theta)\big)_{ij}
+    = \lambda^2_{ij}(\theta)
+    = \frac{1}{4}\sum_{e \in p(i,j)} \theta_e^2\, , \qquad i,j\in V, \ i \ne j, e\in E.
+\end{equation}\]</span> we can employ the method of moments or the composite likelihood method to estimate <span class="math inline">\(\theta=(\theta_e, e\in E)\)</span> from <span class="math inline">\(\bar{\Sigma}(\theta)\)</span>.</p>
+<div id="the-method-of-moments-estimator" class="section level2">
+<h2>The method of moments estimator</h2>
+<p>The method of moments estimator is given by</p>
+<p><span class="math display">\[
+\hat{\theta}^{\mathrm{MMave}}_{k,n}=\arg\min_{\theta\in (0,\infty)^{|E|}}
+ \|\hat{\Sigma}-\bar{\Sigma}(\theta)\|^2_F
+\]</span></p>
+<ul>
+<li><p><span class="math inline">\(n\)</span> is the number of all observations in the sample</p></li>
+<li><p><span class="math inline">\(k\)</span> is the number of the upper order statistics used in the estimation</p></li>
+<li><p><span class="math inline">\(\| \cdot \|_F\)</span> is the Frobenius norm</p></li>
+<li><p><span class="math inline">\(U\subseteq V\)</span> is the set of observable variables</p></li>
+<li><p><span class="math inline">\(\hat{\Sigma}\)</span> is the non-parametric covariance matrix</p></li>
+<li><p><span class="math inline">\(\bar{\Sigma}(\theta)\)</span> is the parametric covariance matrix</p></li>
+<li><p>The parametric matrix <span class="math inline">\(\bar{\Sigma}(\theta)\)</span> is given by <span class="math display">\[\begin{equation} 
+ \big(\bar{\Sigma}(\theta)\big)_{ij}
+  =
+  -M\big(\Lambda(\theta)\big)_{i,j\in U}M
+\end{equation}\]</span> with <span class="math display">\[\begin{equation} 
+  \big(\Lambda(\theta)\big)_{ij}
+  = \lambda^2_{ij}(\theta)
+  = \frac{1}{4}\sum_{e \in p(i,j)} \theta_e^2\, ,  i \ne j, e\in E.
+\end{equation}\]</span> (See also the parameterization used for trees in Vignette “Introduction”.)</p></li>
+<li><p>If the sample of the original variables is <span class="math inline">\(\xi_{v,i}, v\in U, i=1,\ldots, n\)</span> consider the transformation using the empirical cumulative distribution function <span class="math inline">\(\hat{F}_{v,n}(x)=\big[\sum_{i=1}^n\mathbb{1}(\xi_{v,i}\leq x)\big]/(n+1)\)</span>. <span class="math display">\[\begin{equation*} 
+  \hat{X}_{v,i} = \frac{1}{1-\hat{F}_{v,n}(\xi_{v,i})}, \qquad 
+  v \in U, \quad i = 1, \ldots, n.
+\end{equation*}\]</span> Then consider their logarithm <span class="math display">\[
+\hat{Y}_{v,i}=\ln \hat{X}_{v,i}
+\]</span></p></li>
+<li><p>For given <span class="math inline">\(k\in \{1,\ldots n\}\)</span> consider the set of indices <span class="math display">\[
+I = \Big\{i = 1,\ldots,n: \overline{\hat{Y}}_{i}=(1/|U|)\sum_{v\in U} \hat{Y}_{v,i}&gt; n/k \Big\}
+\]</span></p></li>
+<li><p>For every <span class="math inline">\(v\in U\)</span> and <span class="math inline">\(i\in I\)</span> compose the differences <span class="math display">\[\begin{equation}
+  \Delta_{v,i} =
+ \hat{Y}_{v,i}-\overline{\hat{Y}}_{i}.
+\end{equation}\]</span></p></li>
+<li><p>The vector of means of these differences is given by <span class="math display">\[\begin{equation*} 
+\hat{\mu}
+  =
+  \frac{1}{|I|}\sum_{i\in I}(\Delta_{v,i}, v\in U ).
+\end{equation*}\]</span></p></li>
+<li><p>The non-parametric covariance matrix <span class="math inline">\(\hat{\Sigma}\)</span> is given by</p></li>
+</ul>
+<p><span class="math display">\[\begin{equation*}
+    \hat{\Sigma}
+    =
+    \frac{1}{|I|}\sum_{i\in I}(\Delta_{v,i}-\hat{\mu}, v\in U)
+    (\Delta_{v,i}-\hat{\mu}, v\in U)^\top\, .
+%\end{split}
+\end{equation*}\]</span></p>
+<p>A non-parametric estimator of this type <span class="math inline">\(\hat{\mu}\)</span> and <span class="math inline">\(\hat{\Sigma}\)</span> has been suggested in <span class="citation">Engelke et al. (2015)</span>.</p>
+</div>
+<div id="the-composite-likelihood-estimator" class="section level2">
+<h2>The composite likelihood estimator</h2>
+<p>The composite likelihood estimator is given by <span class="math display">\[
+\hat{\theta}^{\mathrm{MLEave}}_{k,n}=\arg\max_{\theta\in(0,\infty)^{|E|}}
+L\Big(\bar{\mu}(\theta), \bar{\Sigma}(\theta); \{\Delta_{v,i}, i\in I, v\in U\}\Big).
+\]</span> The likelihood function <span class="math inline">\(L\)</span> above is the one of <span class="math inline">\(|U|\)</span>-variate Gaussian probability density function with mean <span class="math inline">\(\bar{\mu}\)</span> and covariance matrix <span class="math inline">\(\bar{\Sigma}\)</span>.</p>
+</div>
+<div id="references" class="section level2 unnumbered">
+<h2 class="unnumbered">References</h2>
+<div id="refs" class="references hanging-indent">
+<div id="ref-engelke">
+<p>Engelke, S., A. Malinowski, Z. Kabluchko, and M. Schlather. 2015. “Estimation of Hüsler-Reiss Distributions and Brown-Resnick Processes.” <em>Journal of the Royal Statistical Society. B</em> 77: 239–65.</p>
+</div>
+<div id="ref-segers2019mean">
+<p>Segers, Johan. 2019. “On the Property of the Domain of Attraction of the Simple Huesler-Reiss Distribution: Lognormal Limit When Conditioning on the Geometric Mean Being Large.” <em>Unpublished - Contact the Author: Johan.segers@uclouvain.be</em>.</p>
+</div>
+</div>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

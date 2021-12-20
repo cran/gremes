@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>Additional functionalities</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Additional functionalities</h1>
+
+
+
+<style type="text/css">
+  body{
+  font-size: 12pt;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>
+<p>The main scope of the package is the estimation of the parameters of tail dependence in the framework of a particular parametric model, namely using a family of Huesler-Reiss distributions. The package provides some few other functionalities which may be useful for post-estimation analysis or for simulations. Here we explain these functionalities.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="kw">library</span>(gremes)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a><span class="co">#&gt; Loading required package: igraph</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a><span class="co">#&gt; </span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a><span class="co">#&gt; Attaching package: &#39;igraph&#39;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true"></a><span class="co">#&gt; The following objects are masked from &#39;package:stats&#39;:</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true"></a><span class="co">#&gt; </span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true"></a><span class="co">#&gt;     decompose, spectrum</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true"></a><span class="co">#&gt; The following object is masked from &#39;package:base&#39;:</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true"></a><span class="co">#&gt; </span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true"></a><span class="co">#&gt;     union</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true"></a><span class="co">#&gt; </span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true"></a><span class="co">#&gt; Attaching package: &#39;gremes&#39;</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true"></a><span class="co">#&gt; The following object is masked from &#39;package:stats&#39;:</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true"></a><span class="co">#&gt; </span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true"></a><span class="co">#&gt;     sigma</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true"></a><span class="co">#&gt; The following object is masked from &#39;package:base&#39;:</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true"></a><span class="co">#&gt; </span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true"></a><span class="co">#&gt;     subset</span></span></code></pre></div>
+<div id="generate-random-sample-from-a-markov-tree-parameterized-cliquewise-by-huesler-reiss-distributions" class="section level2">
+<h2>Generate random sample from a Markov tree parameterized cliquewise by Huesler-Reiss distributions</h2>
+<p>Estimation in this package is based on different limit results of a random vector <span class="math inline">\(X=(X_v, v\in V)\)</span> which satisfies the global Markov property with respect to a tree <span class="math inline">\(T=(V,E)\)</span>, and every two adjacent nodes have Huesler-Reiss distribution with some parameter <span class="math inline">\(\theta_e, e\in E\)</span>. The univariate margins of <span class="math inline">\(X\)</span> are unit Frechet, <span class="math inline">\(F(x)=\exp(-1/x)\)</span>. For simulation purposes it is useful to be able to generate from the model for <span class="math inline">\(X\)</span>. The method that does this is <code>rHRM.HRMtree</code>.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a>seg&lt;-<span class="st"> </span><span class="kw">make_tree</span>(<span class="dv">8</span>,<span class="dv">3</span>, <span class="dt">mode =</span> <span class="st">&quot;undirected&quot;</span>) <span class="co"># create the tree</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a>seg&lt;-<span class="st"> </span><span class="kw">set.vertex.attribute</span>(seg, <span class="st">&quot;name&quot;</span>, <span class="kw">V</span>(seg), letters[<span class="dv">1</span><span class="op">:</span><span class="dv">8</span>]) <span class="co"># name the nodes</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a>hrm&lt;-<span class="st"> </span><span class="kw">HRMtree</span>(seg) <span class="co"># initialize the object of of class HRMtree </span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true"></a><span class="co">#&gt; From HRMnetwork: Edges have been assigned names</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true"></a>hrm&lt;-<span class="st"> </span><span class="kw">setParams</span>(hrm, <span class="kw">seq</span>(<span class="fl">0.1</span>, <span class="fl">0.7</span>, <span class="fl">0.1</span>)) <span class="co"># set its parameters</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true"></a><span class="co">#&gt; From setParams.HRMtree: Names have been attributed to the vector &#39;value&#39; in the order corresponding to the order of the edges: The fist element has the name of the first edge, the second element the name of the second edge, etc.</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true"></a><span class="co">#&gt; From setParams.HRMtree: The parameters have been attached to the edges according to their names</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true"></a>X&lt;-<span class="st"> </span><span class="kw">rHRM</span>(hrm, <span class="dv">1000</span>) <span class="co"># generate a random sample </span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true"></a><span class="kw">round</span>(<span class="kw">head</span>(X), <span class="dv">4</span>)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true"></a><span class="co">#&gt;            a       b       c       d       e       f        g        h</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true"></a><span class="co">#&gt; [1,]  1.8692  2.1469  2.0065  2.3768  2.5014  1.5870   0.9685   0.7240</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true"></a><span class="co">#&gt; [2,]  1.0766  0.9182  1.2031  1.0067  1.1593  0.5553   0.3814   2.1101</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true"></a><span class="co">#&gt; [3,]  0.6033  0.6964  0.4981  0.6768  0.8434  0.5766   0.9804   0.6564</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true"></a><span class="co">#&gt; [4,]  0.2462  0.2642  0.2455  0.2539  0.2426  0.4375   0.2726   0.3020</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true"></a><span class="co">#&gt; [5,] 15.0055 13.2065 12.4480 19.8718 12.6126  9.8795   5.2257   6.3734</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true"></a><span class="co">#&gt; [6,] 48.8067 54.7761 63.5704 32.3952 60.2125 45.1931 112.2504 132.1870</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true"></a>XX&lt;-<span class="st"> </span><span class="kw">rHRM</span>(hrm, <span class="dv">1000</span>, <span class="dt">noise =</span> <span class="ot">TRUE</span>) <span class="co"># generate a random samle with independent normal noise</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true"></a><span class="kw">round</span>(<span class="kw">head</span>(XX), <span class="dv">4</span>)</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true"></a><span class="co">#&gt;            a       b       c       d       e       f       g       h</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true"></a><span class="co">#&gt; [1,]  0.8104  0.8441  1.1761  1.9181  1.9220  1.3317  2.0744  1.7071</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true"></a><span class="co">#&gt; [2,]  3.3121  2.2565  1.6495  2.7237  1.1940  1.9143  2.6707  7.7247</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true"></a><span class="co">#&gt; [3,]  4.7561  5.1619  5.2354  6.4824  3.0279  3.6450  3.7447  7.8001</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true"></a><span class="co">#&gt; [4,]  6.8318  6.3265  5.7582  6.5390  3.8876  3.5500  5.5230  3.8294</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true"></a><span class="co">#&gt; [5,]  0.6354  1.5704  1.8781  0.8013  1.6061  3.2571  0.5868  3.0302</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true"></a><span class="co">#&gt; [6,] 15.8685 14.4768 17.2546 12.7576 23.0225 10.5399 16.7631 10.9172</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true"></a><span class="kw">plot</span>(seg)</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p>For any <span class="math inline">\(u\in V\)</span> the joint density function of <span class="math inline">\(X\)</span> is <span class="math display">\[\begin{equation} \label{eq:jdf}
+f(x)=
+f_{u}(x_u)\prod_{(v,j)\in E_u}f_{j\mid v}(x_j\mid x_v),
+\end{equation}\]</span> with <span class="math inline">\(E_u \subseteq E\)</span> the set of edges directed away from <span class="math inline">\(u\)</span>, i.e., <span class="math inline">\((v,j) \in E_u\)</span> if and only if <span class="math inline">\(v = u\)</span> or <span class="math inline">\(v\)</span> separates <span class="math inline">\(u\)</span> and <span class="math inline">\(j\)</span>. The joint density <span class="math inline">\(f\)</span> is determined by <span class="math inline">\(d-1\)</span> bivariate densities <span class="math inline">\(f_{vj}\)</span>. The univariate margins <span class="math inline">\(f_u\)</span> are unit Frechet densities, <span class="math inline">\(f_j(x_j)=\exp(-1/x_j)/x_j^2\)</span> for <span class="math inline">\(x_j \in (0, \infty)\)</span>, and the bivariate margins for each pair of variables on adjacent vertices <span class="math inline">\(j,v\)</span> are Huesler–Reiss distributions with parameter <span class="math inline">\(\theta_{jv}\)</span>.</p>
+<p>To generate an observation from the left hand-side of the equation above we use the right hand-side of that equation, proceeding iteratively, walking along paths starting from <span class="math inline">\(u\)</span> using the conditional densities. An observation of <span class="math inline">\(X_j\)</span> given <span class="math inline">\(X_v = x_v\)</span> is generated via the inverse function of the cdf <span class="math inline">\(x_j \mapsto F_{j|v}(x_j \mid x_v)\)</span>, the conditional cdf of <span class="math inline">\(x_j\)</span> given <span class="math inline">\(x_v\)</span>. To do so, the equation <span class="math inline">\(F_{j|v}(x_j \mid x_v)-p=0\)</span> is solved numerically as a function in <span class="math inline">\(x_j\)</span> for fixed <span class="math inline">\(p\in(0,1)\)</span>. The choice of the Huesler–Reiss bivariate distribution gives the following expression for <span class="math inline">\(F_{j\mid v}(x_j\mid x_v)\)</span>: <span class="math display">\[\begin{equation*}
+\begin{split}
+%   F_{l|k}(x_l|x_k)&amp;=
+&amp;\Phi\left(
+\frac{\theta_{jv}}{2}+\frac{1}{\theta_{jv}}\ln\frac{x_j}{x_v}
+\right)
+\cdot
+\exp\left[
+-\frac{1}{x_v}\left\{\Phi\left(\frac{\theta_{jv}}{2}+\frac{1}{\theta_{jv}}\ln\frac{x_j}{x_v}\right)-1\right\}
+-
+\frac{1}{x_j}\Phi\left(\frac{\theta_{jv}}{2}+\frac{1}{\theta_{jv}}\ln\frac{x_v}{x_j}\right)
+\right].
+\end{split}
+\end{equation*}\]</span></p>
+</div>
+<div id="diagnostic-for-the-random-sample-generated-as-above" class="section level2">
+<h2>Diagnostic for the random sample generated as above</h2>
+<p>As a diagnostic tool we provide comparison between the bivariate true copula and the bivariate empirical copula. We fix a node, say <span class="math inline">\(a\)</span> and if <span class="math inline">\(b\)</span> and <span class="math inline">\(c\)</span> are adjacent to <span class="math inline">\(a\)</span> we compute the true bivariate copulas and the empirical copulas of pairs <span class="math inline">\((X_a, X_b)\)</span> and <span class="math inline">\((X_a, X_c)\)</span> and compare them. We also provide plot of the true and the empirical cumulative distribution function of the selected variable, e.g., of <span class="math inline">\(a\)</span> in the preceding example.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a><span class="kw">diagnost</span>(hrm, X, <span class="st">&quot;b&quot;</span>, <span class="dt">y =</span> <span class="kw">c</span>(<span class="fl">0.3</span>,<span class="fl">0.5</span>))</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<pre><code>#&gt; [1] &quot;variable  b adj. variable  a ; true copula  0.299999999921372 ; empirical copula  0.3&quot;
+#&gt; [1] &quot;variable  b adj. variable  e ; true copula  0.29589026650931 ; empirical copula  0.289&quot;
+#&gt; [1] &quot;variable  b adj. variable  f ; true copula  0.291002999050035 ; empirical copula  0.285&quot;
+#&gt; [1] &quot;variable  b adj. variable  g ; true copula  0.28491676575979 ; empirical copula  0.28&quot;</code></pre>
+<p>When we add some noise to the model the univariate empirical curve is a bit below the true one, but in the tail the difference diminishes.</p>
+<p>Similarly for the tail of the bivariate copulas: for higher coordinates, (0.8, 0.9), the bivariate true and empirical copulas become closer to each other than for smaller values of the coordinates (0.3, 0.5):</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a><span class="kw">diagnost</span>(hrm, XX, <span class="st">&quot;b&quot;</span>, <span class="dt">y =</span> <span class="kw">c</span>(<span class="fl">0.3</span>, <span class="fl">0.5</span>))</span></code></pre></div>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAbAAAAGwCAMAAAD/kMAYAAAAw1BMVEUAAAAAADoAAGYAOjoAOmYAOpAAZpAAZrYAzQA6AAA6ADo6OgA6OmY6ZpA6ZrY6kLY6kNtmAABmADpmAGZmOgBmOjpmOpBmZmZmkJBmkNtmtrZmtttmtv+QOgCQOmaQZgCQZjqQkDqQkGaQkLaQtpCQttuQ2/+zs7O2ZgC2Zjq2kDq2kGa225C227a229u22/+2/7a2///bkDrbtmbbtpDb27bb29vb2//b/7bb/9vb////tmb/25D/27b//7b//9v///9fpPx4AAAACXBIWXMAAA7DAAAOwwHHb6hkAAATBklEQVR4nO2dC3fjthGFr511bedVO01fWbtN28RR+kiyStM2K8fm//9VJfgS9aCEIQa4IDnfOVk78mjmmtcDgpAIoTAmBdgCDBlgCzBkgC3AkAG2AEMG2AIMGWALMGSALcCQAbYAQwbYAgwZYAswZIAtwJABtgBDBtgCDBlgCzBkgC3AkAG2AEMG2AIMGWALMGSALcCQAbYAQwbYAgwZYAswZIAtwJABtgBDBtgCDBlgCzBkgC3AkAG2AEMG2AIMGWALMGSALcCQAbYAQwbYApKxwuW74vXbW+DT4uX+4qn3o+fb8kdneH3E1fuDfAM/O3iwF3w8hTeQPmGyVEdng5K7Yr17gMtje3fu6WZYaqqjs4ZrrQOD1kcOuFe+mqOGDQWfffQ0kD4ha16/BS4+rY/djx8BH7ytH73Fm6/d0Vm5Brt42jjbnm+rMfLR/Vt+/9AevrIJH4ri35+XkR+7cbP0+KvPcfldbcr28TL8X78FPvm+M6xfvfdgW/xok7YpvEHwQcqIl3tnCN64415544Y/d5xqOsPWlTXrenB09pRPvGucKp9YHtVN/QzXjuvqu6ufH/ceX3VZGyf61YvWsF7xY4Z1P/MGakcrA8q/2O9dt9xVffLr97/cN+et6/fur78dEssDd11UR/Tiq9v6GDqX6ocr78pvf/W+yVQadvV98Z/qaPcfX1WP/1gmb5zoVS+K1rB+8WOGtSm8gdrR4lMda3eEy4NTj2/rT75rzxQv951h5bfVESoPbt0s3QmuO8uV/PSPj6ojWffg9mi3j6/qQPfM6mf96kX3hH7xA3opvH9JjD48+VEZUI9YvT/mpp96k46uC1b1mFkU3eMP7ZnnyzrTddE62Ixw28ebw7xuq/Wqt3Xbrj0z6ej+RnzAuGOTJc0JpjGsHWbafjpi2Oa2PVTdUFn/zJ153vztp/t9w/qPr+o/ic6wXvUqZdt2Jw3rUnj/khh1aPKkmuvV7HZYc5raN6yaENRh62Z+cfmX6ps64uXAsP7jRzrsoa+mdXhb/ICld1j75+yoj8Xm46+PnMNaw8qz00dov218qh2sJ4ztpGNrWP/xVTup3J7DduYOXuewLoX3L4kRByZbypP426KcGtazs0+rEeyhmaitsD/pKI/71f/ud8777qT20Pzo/S+PB+ew/uMu4d4ssateFLuzxNXgLPFyybPE9kqosaCdHfQvd3rTejerf6oOaNGdTTbNNVF39XTkHLaddBy/DmuHt8aeg7Aei78OK3758rZbOKhWOv7ovnv9+y0+eNtbmlo3f/tuNKyGpXatqhvW3Gzwzdf9ef52ltg8frjS0a++XenYFreVjrFs9s/yz7eC0z4XsAUwKP/UdyZ0pYPyxV8SYAugsN47za/Ov7ySC2ALoPByv3Oe93kBMxfAFmDIAFuAIQNsAYYMsAUYMsAWYMgAW4AhA2wBhgywBRgywBZgyABbgCEDbAGGDLAFGDLAFmDIAFuAIQNsAYYMsAUYMsAWYMgAW4AhA2wBhgywBRgywBZgyABbgCEDbAGGDLAFGDLAFmDIAFuAIQNsAYYMiKLbG9oG34oOYyRRDFu3N3lshu72EKUztkA9sHD91dm0HrifSpLO6AH1wMLdpNPdBrcZGBQl6YweUA8srMNiAvVAx7q909TOYdpAPbCi2dlg+I5gWTqjA+qBlHTLAeqBlHTLAeqBu6xtlqgL1ANPZ2n5xlE+YF+rr/XxaI+L+3qzQ+/n3od6vEsJ0k2K9o/25hSDT/auoiE1Wrqs2a4D+nlyOpl6ICVdRuwv1gZbtJdePZCSLg/6y+maJu3UUA8stpfNjkXMEnsvfUTyaVtKPdDx+nhuTyZRuqzpuiquUV059cCK18czm53K0mVLNwQmsKqpqB5Ys9nbaDAwXY40rZWmsbZV1QMp6RLTP2OlLq0eSEmXFEZjbYurB1LSJaNuLYpVjQD1QEq6VDTjIFOBeiAlXSK4zVVLUA+kpEtCtcxEF6EeSEmXAGcXW0NhhvmSiV1mmCe52GWG+ZGNXWaYDzc3/rcgRAfqgZR0EcnKLjPsHKVdbAm7QD2Qki4SmXWXA+qBlHRxuMlQJ9QDKeli4KaG2TWYGTbITfM6SmZAPZCSTp8s26sww4a4ybK9CjPsODc3ebZXYYYdJdv2KsywI9zkOJvvgHogJZ0imc4OW6AeSEmnRp4XXz2gHkhJp4V7GSVrv8ywHaqXvUAWcRqoB1LS6VD3F9gyTgL1QEo6FfIfD4tohq2A62oLvqFbImTpUnAzCb8iGeZ2mFrh2t3aN5Wti+rTF8gqzgP1wKLZHGxz8VRMZ3Ow+l024IrwAeqBRbP9Xr3x3kS232v8AleFD1APLCbYYdPxK/Y5rLdzYkC62EzIL5slFtPyy67DWr9yUnQKqAdS0gXQ+gWqCm+gHrhL9tvvTcyv1B0m3y8/NpM6gRU2JE7Nr6UbNq0JhwPqgRXnP3tFlC4ak2uwWBfOE/nslen5FXFpqibrpanpDYgxF39rcl78ndqMvgLqgcVkOmyKDRbtHDaBz16ZZIPFmiVO4LNX2o0BwBQhB+qBlHRyOr/AVCEH6oGUdHKmOSAu17CJDoiLNWyqA+JSDet2IgJRxDigHkhJJ2S6DbZMwybcYIs0bOsXU8VIoB5ISSdh0n4t2zCehvFAPZCSTsC0G2x5hm33FqVJCALqgZR0/ky8wRZn2NQbbLmGTbTBlmbY5BtsYYb1/OIICAfqgZR0nkx+QFyYYdMfEJdq2HQbbFGGzaHBlmTYDGYcxVINS19cDagHUtJ50PuAovTF9YB6ICWdB2ZYmrpa9P1KXlwRqAdS0p2l/4ltqWurAvXAitXlu+L5Fqi2LwpPF44ZdpLKrw+fdu4UC0gXzo5fiWvrAvXAotklcXXtvs3k/rDZNFgswx7am/ryuANz5zNH05bWBuqBDtdd63w6bNevpKXVgXqg4+X+8l1v08TQdKHMqMGiTes39R2Y10rpgtj9EOaUlSMA9UBKupPMaURcgmGzarDohmWw/Z4ZFlKOsP3erEbEBQyJ82owM2xqQD2wIp/t93b9MsOOk9H2e2aYBxltDrbvV6q60YB6YJHV9ntza7AxhjWrToMf+pBTh+35tUDDXu7b9cFyXjE4pchm+73ZjYhSw15+0/do9//6ZLL93vwabObXYWZYyet/k9YNwgwr3GhXn8Re/zQ0HqrWDWHfr2UaVk4k3MvI6+Eph2rdEA4aLEnVuGBEYL3uNDD9064bwBwbbNykwzk2fBWmWzcAM6xhBbx9HJ6x69Ydz6FfCYpGB+LA8hLLjYab7M9hs2ywMYb9rm6t3GeJB34t1bDEdUdjhjl8l6b06o7liF/Ra6YAwkC/xV/FumOZaYPFeXlFs+5IDv1armFp645kriPikgyLXDERkAeefUeUat1xzHZEHGPYKsgpad1xmGH9lY6wZV9h3VEc8ytuxWRAHDh4n3mcuqOYb4ONecX5cfAuvRh1x3DErwUbVl6HKbSYd90xmGHFzpCIzGeJR/2KWTAlUA+kpNthzg02R8Nm3WDi1XqVKaKkrpxZN9gow3pvnY9fV8wxv8ywdHXFzHtEXIph0aolB7JAmWHPt4NnPO+6UmY+IsYxrLtUG75a864rxQzbCfTssOa2MEKHHfcrVjUCkAV69E4T595nmo1hkYoxgHpgw+riiWDY7Bss4krHGne5GBanFgeoB3Y8336QhWGzarCoa4mvj8MvxIxI58H8G2xmi79m2IjAXZLul3jULzMsqFzU/RLNsDGBlHQVA37FKMUD6oGUdBVLaLBYhlH2SzTDRgU6KPslLmJEjGMYZze3RTRYHMMo+yUe98sM84HSYcsYEaOdw5Lvl7iQBos1S0y/X6IZNjaQkm4xI+JsDFtKg5lhUwPqgZR0A36ZYenr+jHUYMplMgDqgYx0y2kwM2xqQD2Qkc4MCwgkpBv0S7VKHkA9kJBuQQ1mhk0NqAemTzfklxnGqOuBGRYUmD7dkuYcczBsUQ1mhk0NqAemTjfolxlGqXsWMywwMHG6E36p1cgJqAcmTrewBjPDpgbUA9OmG/bLDOPUPcPSTmFTN2xxDWaGTQ2oB6ZMd8ovnQrZAfXAlOmW12CxDFu3H1cVdReBBTZYrLtXLp6aT1SnGaaRP0egHli094e9Pl69j2rYCb/MMNERaO/AXF29Jxk22xExZoeVrK4jGrbIBot1DmtsermPuIWsGaYTWNHeM/v6GM2wU36ZYRleh51ssPD0uQL1wETpFtpg0Q2LNumgNBgywFur8m8cmIjTYNES+wP1wDTpOGewaIn9gXpgknSkM1i8zN5APbAi9vZ7pClivMzeQD3QEXv7PdYUMWJqX6AeWCTYHMwMUwws4m+/d9qvoNSniZjaF6gHFvE7jHbRHDO3J1APdMTdfo/WYPM1LO72e7xVqajJ/YB6YPR0J/0yw8SB0dPxRkQzbAzEBjPDRnDGr9F5vYib3QuoB0ZOx2ywkPQrnJ6GddeuvYvYIz+dnGHUBgsybHDC7MNMDYv+zoCA/As1jOuXjmHPt1+UV6l3z7fu3ezPH35Vfr2rLXn57K+4/KHyxr3X3b1z2o2kD9M1jHoCO6wgeS2/b9jFU2nI5Tv3/onStodiU/5XGeY+/brypn6v+12xum6/n6FhCd4qFVChnXTclYbdFe0/D9VXt+JaG9a22n29ovfy2VP98eUTNYzdYFpD4sP2n/qjrjcXT7VPzejX/wDsDTBPw1K8FzGgxJBhH5Y9dGhY9WhRncou/znZDqP7lc6wpsO60EkaRh8Q4wyJd/UPdwxrz2HVy7+biQ6J3Evmpsr4pw4aVs4Bt7PEdgbvZoavj9d1c5UTlRkaNk6GkIAq7Szx4mnPsD/cdldaW8Pa67C1e8KqHjCFEgK0qqTLocEi/Fn054O6ErwD46Q77VeqZXT9Mgs1LFGDmWHe5NFg9nqYN2cuwYTZRpOqzgmgHhgjHf+SuSmVrNIgUA+MkC6HGX3qUkNAPVA/XSbjYRFwENr3aQ7fzqMuwTtQPV0u42EReBC6Fd00ErwDtdNlMx6GVluIYadv3UvbYBqGbd8GUC8aVq9pxpDgHVihdgdmXrtx7BW8Ocn+kxvDurcBuH/cIm+9YD9SgkKgQ+0OzJP7f4kkqRBUsTWseRuA+6d+GWXoHrowCd6BheL9YbltJxVUszXsYfvP5sI9JFqe8pbgHVio3YF5OKpsn87orwiGNZN9tmEqHXbaLoEaRYLKDnZYHAnegY7wOzBP2EWYbHSVQ568Y1j9Jrej76NXkuAdWBF4B2Z+g2FTPOTJPcPc7rrlRLqeJRYrSZ95S/AODE83aJfGJlVBBBXvGVb9QX/RXoeJlqu8JXgHhqQ7fgGzfUu0rgY5dAHxDfPefu+kVeNq6wO2gOQd1vXKN47ma+VV7/8PvpZPzOOrzkEIAuqBlHSJAFuAGSYDbAH5L/7mBdgCsl/8zQywBeS8NJUjYAvIe/E3P8AWYB0mA2wB+S7+5gnYAnJd/M0VsAUQr8OMkZAM08+bXyKuJLXisfLml8gMm1giM2xiicywiSUywyaWyAybWCIzbGKJzLCJJZqnYUYkwBZgyABbgCEDbAGGDLAFGDLAFmDIAFuAIQNsAYYMsAUYMsAWYMgAW4AhA2wBhgywBRgyECdtdZuLaLOlo2zcduH5yGkI+8ywFve5Vdfyp0Gh9CGvj9VHM43Qs4Pb72LEnhex5DRsht9HK8lS7U0ll4Tw0keod+0ZuhHal/q9/Kvw46wjp+HlXsOw+ncbIQnBpYcJbQ7V4xwup2F99WcFw0bvsojg0sOsAg918xFBWoaFyqkpRWmcwzaXP9yPOq0iuPQgg7e4eCe4eCrUGiNcToUbyjQMqz578fUxl3OYY6My51AzLFxOhbsxTsWwi5GjB4JLD6DwB605JOr0Vy1JxbDqtxJ/4kcEw5rdbtcKB0hx0qEhp85TIz7O+9R/hiOmHgitfJx1+K+kOK3XkdOh0WH1/eLZDImyDYoH0bpwVpLTorLS4U6GvZvGvUF46SM0I0fwsV7rLE1pyWnQWZrajFstg0JpIyFgCzBkgC3AkAG2AEMG2AIMGWALMGSALcCQAbYAQwbYAgwZYAswZIAtwJABtgBDBtgCDBlgCzBkgC3AkAG2AEMG2AIMGWALMGSALcCQAbYAQwbYAgwZYAswZIAtwJABtgBDBtgCDBlgCzBkgC3AkAG2AEMG2AIMGWALMGSALSAR7j7Ol3vV28Q4gC0gEe7euaFPWp0UYAtIxebyh8+UbuijAraAZKy09priAraAZGxUb0ynAbaAVLw+/l5rDyQqYAtIxfrq5xH37OcH2AIS4fbFUNtmjAnYAhKxqrbFmMG0A2wBhgywBRgywBZgyABbgCEDbAGGDLAFGDLAFmDIAFuAIQNsAYYMsAUYMsAWYMgAW4AhA2wBhgywBRgywBZgyABbgCEDbAGGDLAFGDLAFmDIAFuAIQNsAYYMsAUYMsAWYMgAW4Ah4//ok/xunoPkawAAAABJRU5ErkJggg==" /><!-- --></p>
+<pre><code>#&gt; [1] &quot;variable  b adj. variable  a ; true copula  0.299999999921372 ; empirical copula  0.27&quot;
+#&gt; [1] &quot;variable  b adj. variable  e ; true copula  0.29589026650931 ; empirical copula  0.263&quot;
+#&gt; [1] &quot;variable  b adj. variable  f ; true copula  0.291002999050035 ; empirical copula  0.263&quot;
+#&gt; [1] &quot;variable  b adj. variable  g ; true copula  0.28491676575979 ; empirical copula  0.258&quot;</code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"></a><span class="kw">diagnost</span>(hrm, XX, <span class="st">&quot;b&quot;</span>, <span class="dt">y =</span> <span class="kw">c</span>(<span class="fl">0.8</span>, <span class="fl">0.9</span>))</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<pre><code>#&gt; [1] &quot;variable  b adj. variable  a ; true copula  0.8 ; empirical copula  0.8&quot;
+#&gt; [1] &quot;variable  b adj. variable  e ; true copula  0.799431996325495 ; empirical copula  0.799&quot;
+#&gt; [1] &quot;variable  b adj. variable  f ; true copula  0.798248020703279 ; empirical copula  0.795&quot;
+#&gt; [1] &quot;variable  b adj. variable  g ; true copula  0.796402838196817 ; empirical copula  0.795&quot;</code></pre>
+</div>
+<div id="generate-a-random-sample-from-max-stable-huesler-reiss-distribution-with-structured-matrix" class="section level2">
+<h2>Generate a random sample from max-stable Huesler-Reiss distribution with structured matrix</h2>
+<p>When <span class="math inline">\(X\)</span> is Markov with respect to a block graph and parameterized cliquewise by a family with Huesler-Reiss distributions we do not dispose of a method to generate from the exact distribution of such a model as we do when the graph is a tree. We can generate from the max-stable attractor of this model. To do this we use the package <code>mev</code> <span class="citation">Belzile et al. (2020)</span>.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true"></a>bg&lt;-<span class="st"> </span><span class="kw">graph</span>(<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">1</span>,<span class="dv">3</span>,</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true"></a>             <span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">5</span>,<span class="dv">4</span>,<span class="dv">5</span>,</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true"></a>             <span class="dv">3</span>,<span class="dv">7</span>,<span class="dv">3</span>,<span class="dv">6</span>,<span class="dv">6</span>,<span class="dv">7</span>), <span class="dt">directed =</span> <span class="ot">FALSE</span>) <span class="co"># create the graph</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true"></a>bg&lt;-<span class="st"> </span><span class="kw">set.vertex.attribute</span>(bg, <span class="st">&quot;name&quot;</span>, <span class="kw">V</span>(bg), letters[<span class="dv">1</span><span class="op">:</span><span class="dv">7</span>]) <span class="co"># name the nodes</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true"></a>hrbg&lt;-<span class="st"> </span><span class="kw">HRMBG</span>(bg) <span class="co"># initialize an object with zero dependence parameters</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true"></a><span class="co">#&gt; From HRMnetwork: Edges have been assigned names</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true"></a>hrbg&lt;-<span class="st"> </span><span class="kw">setParams</span>(hrbg, <span class="kw">seq</span>(<span class="fl">0.1</span>, <span class="fl">0.9</span>, <span class="fl">0.1</span>)) <span class="co"># set the parameters</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true"></a><span class="co">#&gt; From setParams.HRMtree: Names have been attributed to the vector &#39;value&#39; in the order corresponding to the order of the edges: The fist element has the name of the first edge, the second element the name of the second edge, etc.</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true"></a><span class="co">#&gt; From setParams.HRMtree: The parameters have been attached to the edges according to their names</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true"></a>lam&lt;-<span class="st"> </span><span class="kw">HRLambda</span>(hrbg) <span class="co"># compute the structured matrix Lambda, see Vignette &quot;Huesler-Reiss distributions&quot;</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true"></a>XB&lt;-<span class="st"> </span><span class="kw">rHRM</span>(hrbg, lam, <span class="dv">1000</span>, <span class="dt">noise =</span> <span class="ot">TRUE</span>) </span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true"></a><span class="kw">round</span>(<span class="kw">head</span>(XB), <span class="dv">4</span>)</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true"></a><span class="co">#&gt;            a       b       c       d       e       f       g</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true"></a><span class="co">#&gt; [1,] 10.9412 18.8850 17.2628  7.0735 21.5392 11.5176  4.0433</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true"></a><span class="co">#&gt; [2,]  0.9845  2.6075  3.2652  1.2174  1.6419  2.0720  0.6765</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true"></a><span class="co">#&gt; [3,]  5.5508  2.6182  3.0553  2.0455  7.5519  9.4241  1.3535</span></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true"></a><span class="co">#&gt; [4,]  1.4310  3.3049  0.6547  1.5199  2.0167  1.2011  1.2025</span></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true"></a><span class="co">#&gt; [5,] 10.6181  2.0861  1.9392  2.5833  0.6134  2.7883 14.1331</span></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true"></a><span class="co">#&gt; [6,]  7.2875  5.4020 10.0414 12.3525 19.3196  3.7363  8.3526</span></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true"></a><span class="kw">plot</span>(bg)</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p>This code samples from a max-stable Huesler-Reiss copula with unit Frechet univariate margins and with parameter matrix <span class="math display">\[
+\lambda_{ij}^2=\sum_{e\in p(i,j)}\delta_e^2, 
+\]</span> where <span class="math inline">\(p(i,j)\)</span> is the unique shortest path between two nodes <span class="math inline">\(i,j\)</span>. See Vignette “Huesler-Reiss distributions” also.</p>
+<p>Of course the matrix Lambda can be one corresponding to a tree, given that tree is a special case of a block graph.</p>
+</div>
+<div id="the-stable-tail-dependence-function-stdf" class="section level2">
+<h2>The stable tail dependence function (stdf)</h2>
+<p>The stdf is a key quantity in the topics of multivariate extremal dependence. It is defined as the following limit <span class="math display">\[
+l(x_v, v\in V)=\lim_{t\rightarrow\infty}t P\Big(\bigcup_{v\in V} \{X_v&gt;t/x_v\}\Big), x\in (0,\infty)^{|V|}
+\]</span> where <span class="math inline">\(X\)</span> has unit Pareto univariate margins. The relation between the stdf and a max-stable (extreme value) distribution is given by <span class="math display">\[
+G(x_v, v\in V)=\exp\big\{-l(1/x_v, v\in V)\big\},
+\]</span> if <span class="math inline">\(G\)</span> is an extreme value distribution with unit Frechet margins. More about the stdf can be read in <span class="citation">Drees and Huang (1998)</span>, <span class="citation">Beirlant et al. (2004)</span>, <span class="citation">Haan and Ferreira (2007)</span>. The distribution <span class="math inline">\(G\)</span> can have a parametric model such as the Huesler-Reiss model used throughout this package (see Vignette “Huesler-Reiss distributions” for their particular parameterizations).</p>
+<p>The package provides tools for computing parametric and non-parametric stdf for models on trees and block graphs.</p>
+<p>The parametric estimate of <span class="math inline">\(l\)</span> when <span class="math inline">\(l\)</span> is parameterized using the Huesler-Reiss distribution is <span class="math inline">\(l(x_v, v\in V; \hat{\theta}_{n,k})\)</span> in case of tree models and <span class="math inline">\(l(x_v, v\in V; \hat{\delta}_{n,k})\)</span> in case of models on block graphs. The vector <span class="math inline">\(\hat{\theta}_{n,k}=(\hat{\theta}_{e; n,k}, e\in E)\)</span> is any estimate of the edge weights on a tree, and <span class="math inline">\(\hat{\delta}_{n,k}=(\hat{\delta}_{e; n,k}, e\in E)\)</span> is any estimate of the edge weights on a block graph.</p>
+<p>The non-parametric estimate of the stdf is given in <span class="citation">Drees and Huang (1998)</span> <span class="math display">\[\begin{equation} 
+  \hat{l}_{n,k}(x_v, v\in V)
+  =
+  \frac{1}{k}\sum_{i=1}^n
+  1\left( \bigcup_{v \in V}\Big\{ n\hat{F}_{v,n}(X_{v,i}) &gt;n+1/2-kx_v\Big\} \right),
+\end{equation}\]</span> where <span class="math inline">\(\hat{F}_{v,n}(x)=(1/n)\sum_{i=1}^n1(X_{v,i}\leq x)\)</span>, i.e., the non-parametric estimate of the cumulative distribution function.</p>
+<p>The methods which compute stdf are</p>
+<ul>
+<li><p><code>stdf.Network</code> for non-parametric estimates of the stdf disregarding of the graph, tree of block graph.</p></li>
+<li><p><code>stdf.HRMtree</code> for parametric estimates for models on trees.</p></li>
+<li><p><code>stdf.HRMBG</code> for parametric estimates for models on block graphs.</p></li>
+</ul>
+<p>Here we have some examples for these.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true"></a><span class="co"># non-parametric estimates on an object containing a tree </span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true"></a>x&lt;-<span class="st"> </span><span class="kw">runif</span>(<span class="dv">8</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true"></a><span class="kw">names</span>(x)&lt;-<span class="st"> </span>letters[<span class="dv">1</span><span class="op">:</span><span class="dv">8</span>]</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true"></a>tobj&lt;-<span class="st"> </span><span class="kw">Tree</span>(seg, XX) <span class="co"># an object of containing block graph and the data associated to it</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true"></a><span class="co">#&gt; From validate.Network: Edges have been assigned names</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true"></a><span class="co">#&gt; From validate.Network: No latent variables</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true"></a><span class="co">#&gt; From validate.Network: Edges have been assigned names</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true"></a><span class="co">#&gt; From validate.Network: No latent variables</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true"></a><span class="kw">stdf</span>(tobj, x, <span class="fl">0.2</span>)</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true"></a><span class="co">#&gt; [1] 1.14</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true"></a>x&lt;-<span class="st"> </span>x[<span class="dv">3</span><span class="op">:</span><span class="dv">8</span>] <span class="co"># with latent variables on nodes &quot;a&quot; and &quot;b&quot;</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true"></a><span class="kw">names</span>(x)&lt;-<span class="st"> </span>letters[<span class="dv">3</span><span class="op">:</span><span class="dv">8</span>] </span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true"></a>XU&lt;-<span class="st"> </span>X[,<span class="dv">3</span><span class="op">:</span><span class="dv">8</span>] </span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true"></a>tobjU&lt;-<span class="st"> </span><span class="kw">Tree</span>(seg, XU) <span class="co"># an object containing a tree an the data associated to it</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true"></a><span class="co">#&gt; From validate.Network: Edges have been assigned names</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true"></a><span class="co">#&gt; From validate.Network: There are nodes with latent variables</span></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true"></a><span class="co">#&gt; From validate.Network: Edges have been assigned names</span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true"></a><span class="co">#&gt; From validate.Network: There are nodes with latent variables</span></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true"></a><span class="kw">stdf</span>(tobjU, x, <span class="fl">0.25</span>) </span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true"></a><span class="co">#&gt; [1] 1.024</span></span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true"></a>x&lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">runif</span>(<span class="dv">40</span>), <span class="dv">5</span>,<span class="dv">8</span>)</span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true"></a><span class="kw">colnames</span>(x)&lt;-<span class="st"> </span>letters[<span class="dv">1</span><span class="op">:</span><span class="dv">8</span>]</span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true"></a><span class="kw">stdf</span>(tobj, x, <span class="fl">0.25</span>)</span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true"></a><span class="co">#&gt; [1] 1.192 1.192 1.204 1.252 1.080</span></span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true"></a></span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true"></a><span class="co"># non-parametric estimates on an object containing a block graph</span></span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true"></a>x&lt;-<span class="st"> </span><span class="kw">runif</span>(<span class="dv">7</span>)</span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true"></a><span class="kw">names</span>(x)&lt;-<span class="st"> </span>letters[<span class="dv">1</span><span class="op">:</span><span class="dv">7</span>]</span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true"></a>bgobj&lt;-<span class="st"> </span><span class="kw">BlockGraph</span>(bg, XB) <span class="co"># an object containing a tree an the data associated to it</span></span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true"></a><span class="co">#&gt; From validate.Network: Edges have been assigned names</span></span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true"></a><span class="co">#&gt; From validate.Network: No latent variables</span></span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true"></a><span class="co">#&gt; From validate.Network: Edges have been assigned names</span></span>
+<span id="cb10-33"><a href="#cb10-33" aria-hidden="true"></a><span class="co">#&gt; From validate.Network: No latent variables</span></span>
+<span id="cb10-34"><a href="#cb10-34" aria-hidden="true"></a><span class="kw">stdf</span>(bgobj, x, <span class="fl">0.15</span>)</span>
+<span id="cb10-35"><a href="#cb10-35" aria-hidden="true"></a><span class="co">#&gt; [1] 2.173333</span></span>
+<span id="cb10-36"><a href="#cb10-36" aria-hidden="true"></a></span>
+<span id="cb10-37"><a href="#cb10-37" aria-hidden="true"></a><span class="co"># parametric estimates on model with respect to a tree</span></span>
+<span id="cb10-38"><a href="#cb10-38" aria-hidden="true"></a>x&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">0.1</span>, <span class="dv">0</span>, <span class="fl">2.5</span>, <span class="dv">0</span>, <span class="fl">1.3</span>, <span class="fl">2.3</span>, <span class="fl">1.5</span>)</span>
+<span id="cb10-39"><a href="#cb10-39" aria-hidden="true"></a><span class="kw">names</span>(x)&lt;-<span class="st"> </span>letters[<span class="dv">1</span><span class="op">:</span><span class="dv">8</span>]</span>
+<span id="cb10-40"><a href="#cb10-40" aria-hidden="true"></a><span class="kw">stdf</span>(hrm, x )</span>
+<span id="cb10-41"><a href="#cb10-41" aria-hidden="true"></a><span class="co">#&gt; From setRootDepSet.RootDepSet: The order of the subset must correspond to the</span></span>
+<span id="cb10-42"><a href="#cb10-42" aria-hidden="true"></a><span class="co">#&gt;             order of its corresponding root</span></span>
+<span id="cb10-43"><a href="#cb10-43" aria-hidden="true"></a><span class="co">#&gt;        b </span></span>
+<span id="cb10-44"><a href="#cb10-44" aria-hidden="true"></a><span class="co">#&gt; 3.253923 </span></span>
+<span id="cb10-45"><a href="#cb10-45" aria-hidden="true"></a><span class="co">#&gt; attr(,&quot;error&quot;)</span></span>
+<span id="cb10-46"><a href="#cb10-46" aria-hidden="true"></a><span class="co">#&gt; [1] 1.094964e-43</span></span>
+<span id="cb10-47"><a href="#cb10-47" aria-hidden="true"></a><span class="co">#&gt; attr(,&quot;msg&quot;)</span></span>
+<span id="cb10-48"><a href="#cb10-48" aria-hidden="true"></a><span class="co">#&gt; [1] &quot;Normal Completion&quot;</span></span>
+<span id="cb10-49"><a href="#cb10-49" aria-hidden="true"></a></span>
+<span id="cb10-50"><a href="#cb10-50" aria-hidden="true"></a><span class="co"># parametric estimates on a model with respect to a block graph</span></span>
+<span id="cb10-51"><a href="#cb10-51" aria-hidden="true"></a>x&lt;-<span class="st"> </span><span class="kw">runif</span>(<span class="dv">7</span>)</span>
+<span id="cb10-52"><a href="#cb10-52" aria-hidden="true"></a><span class="kw">names</span>(x)&lt;-<span class="st"> </span>letters[<span class="dv">1</span><span class="op">:</span><span class="dv">7</span>]</span>
+<span id="cb10-53"><a href="#cb10-53" aria-hidden="true"></a><span class="kw">stdf</span>(hrbg, x)</span>
+<span id="cb10-54"><a href="#cb10-54" aria-hidden="true"></a><span class="co">#&gt; From setRootDepSet.RootDepSet: The order of the subset must correspond to the</span></span>
+<span id="cb10-55"><a href="#cb10-55" aria-hidden="true"></a><span class="co">#&gt;             order of its corresponding root</span></span>
+<span id="cb10-56"><a href="#cb10-56" aria-hidden="true"></a><span class="co">#&gt; From setRootDepSet.RootDepSet: The order of the subset must correspond to the</span></span>
+<span id="cb10-57"><a href="#cb10-57" aria-hidden="true"></a><span class="co">#&gt;             order of its corresponding root</span></span>
+<span id="cb10-58"><a href="#cb10-58" aria-hidden="true"></a><span class="co">#&gt; From setRootDepSet.RootDepSet: The order of the subset must correspond to the</span></span>
+<span id="cb10-59"><a href="#cb10-59" aria-hidden="true"></a><span class="co">#&gt;             order of its corresponding root</span></span>
+<span id="cb10-60"><a href="#cb10-60" aria-hidden="true"></a><span class="co">#&gt; From setRootDepSet.RootDepSet: The order of the subset must correspond to the</span></span>
+<span id="cb10-61"><a href="#cb10-61" aria-hidden="true"></a><span class="co">#&gt;             order of its corresponding root</span></span>
+<span id="cb10-62"><a href="#cb10-62" aria-hidden="true"></a><span class="co">#&gt; From setRootDepSet.RootDepSet: The order of the subset must correspond to the</span></span>
+<span id="cb10-63"><a href="#cb10-63" aria-hidden="true"></a><span class="co">#&gt;             order of its corresponding root</span></span>
+<span id="cb10-64"><a href="#cb10-64" aria-hidden="true"></a><span class="co">#&gt; From setRootDepSet.RootDepSet: The order of the subset must correspond to the</span></span>
+<span id="cb10-65"><a href="#cb10-65" aria-hidden="true"></a><span class="co">#&gt;             order of its corresponding root</span></span>
+<span id="cb10-66"><a href="#cb10-66" aria-hidden="true"></a><span class="co">#&gt; From setRootDepSet.RootDepSet: The order of the subset must correspond to the</span></span>
+<span id="cb10-67"><a href="#cb10-67" aria-hidden="true"></a><span class="co">#&gt;             order of its corresponding root</span></span>
+<span id="cb10-68"><a href="#cb10-68" aria-hidden="true"></a><span class="co">#&gt;        a </span></span>
+<span id="cb10-69"><a href="#cb10-69" aria-hidden="true"></a><span class="co">#&gt; 1.583135 </span></span>
+<span id="cb10-70"><a href="#cb10-70" aria-hidden="true"></a><span class="co">#&gt; attr(,&quot;error&quot;)</span></span>
+<span id="cb10-71"><a href="#cb10-71" aria-hidden="true"></a><span class="co">#&gt; [1] 0.0001540846</span></span>
+<span id="cb10-72"><a href="#cb10-72" aria-hidden="true"></a><span class="co">#&gt; attr(,&quot;msg&quot;)</span></span>
+<span id="cb10-73"><a href="#cb10-73" aria-hidden="true"></a><span class="co">#&gt; [1] &quot;Normal Completion&quot;</span></span></code></pre></div>
+</div>
+<div id="extremal-coefficients" class="section level2">
+<h2>Extremal coefficients</h2>
+<p>We look at extremal coefficients as some tools for post-estimation analysis. A typical analysis includes a comparison between estimates of extremal coefficients using the estimates of the edge weights and non-parametric extremal coefficients.</p>
+<p>The extremal coefficient of variables in the set <span class="math inline">\(J\subseteq V\)</span> is given by <span class="math display">\[
+l_J=l(1_J),
+\]</span> where <span class="math inline">\(l\)</span> is the stable tail dependence function and <span class="math inline">\(1_J=(1_{i\in J}, i\in V)\)</span>, i.e., a vector of length <span class="math inline">\(|V|\)</span> whose elements are zero or one. An element <span class="math inline">\(i\)</span> will be one if it belongs to <span class="math inline">\(J\)</span> and zero otherwise. The range of a <span class="math inline">\(J\)</span>-variate extremal coefficient is between 1 and <span class="math inline">\(|J|\)</span> with dependence decreasing for large value of the coefficient.</p>
+<p>There are three methods for computing extremal coefficients:</p>
+<ul>
+<li><p><code>extrCoeff.Network</code> can be used to compute non-parametric extremal coefficients for data related to tree or to block graphs. Here the graph it doesn’t matter, as the only input in the computation is the data.</p></li>
+<li><p><code>extrCoeff.HRMtree</code> for parametric extremal coefficients of models on trees</p></li>
+<li><p><code>extrCoeff.HRMBG</code> for parametric extremal coefficients of models on block graphs</p></li>
+</ul>
+<div id="non-parametric-extremal-coefficients---trees-and-block-graphs" class="section level4">
+<h4>Non-parametric extremal coefficients - trees and block graphs</h4>
+<p>Given two objects of classes <code>BlockGraph</code> or <code>Tree</code> respectively we can compute the bivariate extremal coefficients as follows (k-ratio = 0.2).</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true"></a><span class="kw">extrCoeff</span>(bgobj, <span class="fl">0.2</span>) </span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true"></a><span class="co">#&gt;   a     b     c     d     e     f     g</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true"></a><span class="co">#&gt; a 0 1.205 1.315 1.495 1.505 1.575 1.575</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true"></a><span class="co">#&gt; b 0 0.000 1.315 1.465 1.480 1.575 1.575</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true"></a><span class="co">#&gt; c 0 0.000 0.000 1.385 1.430 1.550 1.495</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true"></a><span class="co">#&gt; d 0 0.000 0.000 0.000 1.480 1.605 1.530</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true"></a><span class="co">#&gt; e 0 0.000 0.000 0.000 0.000 1.630 1.560</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true"></a><span class="co">#&gt; f 0 0.000 0.000 0.000 0.000 0.000 1.590</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true"></a><span class="co">#&gt; g 0 0.000 0.000 0.000 0.000 0.000 0.000</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true"></a><span class="kw">extrCoeff</span>(tobj, <span class="fl">0.2</span>)  </span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true"></a><span class="co">#&gt;   a     b     c     d     e     f     g     h</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true"></a><span class="co">#&gt; a 0 1.065 1.090 1.105 1.145 1.210 1.210 1.290</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true"></a><span class="co">#&gt; b 0 0.000 1.105 1.130 1.150 1.180 1.200 1.290</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true"></a><span class="co">#&gt; c 0 0.000 0.000 1.135 1.180 1.210 1.225 1.270</span></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true"></a><span class="co">#&gt; d 0 0.000 0.000 0.000 1.185 1.205 1.250 1.305</span></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true"></a><span class="co">#&gt; e 0 0.000 0.000 0.000 0.000 1.235 1.265 1.320</span></span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true"></a><span class="co">#&gt; f 0 0.000 0.000 0.000 0.000 0.000 1.275 1.325</span></span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true"></a><span class="co">#&gt; g 0 0.000 0.000 0.000 0.000 0.000 0.000 1.345</span></span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true"></a><span class="co">#&gt; h 0 0.000 0.000 0.000 0.000 0.000 0.000 0.000</span></span></code></pre></div>
+<p>For an arbitrary dimension of the extremal coefficient, we need to create the vector of coordinates and name it according to the names of the nodes. If we want a four variate extremal coefficient of the variables <span class="math inline">\((X_a, X_c, X_d, X_e)\)</span> we need to do</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true"></a>y&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>) </span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true"></a><span class="kw">names</span>(y)&lt;-<span class="st"> </span>letters[<span class="dv">1</span><span class="op">:</span><span class="dv">7</span>]</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true"></a><span class="kw">extrCoeff</span>(bgobj, <span class="fl">0.25</span>, y) </span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true"></a><span class="co">#&gt; [1] 1.88</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true"></a><span class="kw">extrCoeff</span>(tobj, <span class="fl">0.25</span>, y)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true"></a><span class="co">#&gt; [1] 1.328</span></span></code></pre></div>
+<p>If there are latent variables the bivariate extremal coefficients are computed between only observable variables.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true"></a><span class="co"># on the tree </span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true"></a><span class="kw">extrCoeff</span>(tobjU, <span class="fl">0.2</span>)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true"></a><span class="co">#&gt;   c     d     e     f     g     h</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true"></a><span class="co">#&gt; c 0 1.115 1.165 1.150 1.225 1.235</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true"></a><span class="co">#&gt; d 0 0.000 1.160 1.160 1.245 1.250</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true"></a><span class="co">#&gt; e 0 0.000 0.000 1.185 1.220 1.270</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true"></a><span class="co">#&gt; f 0 0.000 0.000 0.000 1.235 1.250</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true"></a><span class="co">#&gt; g 0 0.000 0.000 0.000 0.000 1.270</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true"></a><span class="co">#&gt; h 0 0.000 0.000 0.000 0.000 0.000</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true"></a></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true"></a><span class="co"># on the block graph</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true"></a>XBU&lt;-<span class="st"> </span>XB[, <span class="dv">-3</span>] </span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true"></a>bgobjU&lt;-<span class="st"> </span><span class="kw">BlockGraph</span>(bg, XBU)</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true"></a><span class="co">#&gt; From validate.Network: Edges have been assigned names</span></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true"></a><span class="co">#&gt; From validate.Network: There are nodes with latent variables</span></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true"></a><span class="co">#&gt; From validate.Network: Edges have been assigned names</span></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true"></a><span class="co">#&gt; From validate.Network: There are nodes with latent variables</span></span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true"></a><span class="kw">extrCoeff</span>(bgobjU, <span class="fl">0.3</span>)</span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true"></a><span class="co">#&gt;   a        b        d        e        f        g</span></span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true"></a><span class="co">#&gt; a 0 1.203333 1.466667 1.470000 1.546667 1.520000</span></span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true"></a><span class="co">#&gt; b 0 0.000000 1.446667 1.453333 1.516667 1.510000</span></span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true"></a><span class="co">#&gt; d 0 0.000000 0.000000 1.410000 1.530000 1.473333</span></span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true"></a><span class="co">#&gt; e 0 0.000000 0.000000 0.000000 1.540000 1.513333</span></span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true"></a><span class="co">#&gt; f 0 0.000000 0.000000 0.000000 0.000000 1.506667</span></span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true"></a><span class="co">#&gt; g 0 0.000000 0.000000 0.000000 0.000000 0.000000</span></span></code></pre></div>
+<p>Note that for the parameters to be all identifiable on the tree, only variables on nodes <span class="math inline">\(a,b\)</span> can be latent. On the block graph only variable <span class="math inline">\(c\)</span> can be latent. This respects the requirement that all latent variables should be connected to at least three cliques <span class="citation">Asenova, Mazo, and Segers (2021)</span>.</p>
+<p>If we want an extremal coefficient of other dimension we need to pass a vector with non-zero coordinates only for observed variables.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true"></a>v&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true"></a><span class="kw">names</span>(v)&lt;-<span class="st"> </span>letters[<span class="dv">1</span><span class="op">:</span><span class="dv">8</span>]</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true"></a><span class="kw">extrCoeff</span>(tobjU, <span class="fl">0.2</span>, v)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true"></a><span class="co">#&gt; [1] 1.395</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true"></a></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true"></a>v&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true"></a><span class="kw">names</span>(v)&lt;-<span class="st"> </span>letters[<span class="dv">1</span><span class="op">:</span><span class="dv">7</span>]</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true"></a><span class="kw">extrCoeff</span>(bgobjU, <span class="fl">0.15</span>, v)</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true"></a><span class="co">#&gt; [1] 2.046667</span></span></code></pre></div>
+</div>
+<div id="parametric-extremal-coefficients" class="section level4">
+<h4>Parametric extremal coefficients</h4>
+<p>The method <code>extrCoeff.HRMtree</code> is used for models on trees.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true"></a><span class="kw">extrCoeff</span>(hrm) <span class="co"># bivariate</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true"></a><span class="co">#&gt;   a        b        c        d        e        f        g        h</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true"></a><span class="co">#&gt; a 0 1.039878 1.079656 1.119235 1.163330 1.201239 1.238977 1.284146</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true"></a><span class="co">#&gt; b 0 0.000000 1.089021 1.125633 1.158519 1.197413 1.235823 1.286697</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true"></a><span class="co">#&gt; c 0 0.000000 0.000000 1.143065 1.181231 1.215809 1.251150 1.273661</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true"></a><span class="co">#&gt; d 0 0.000000 0.000000 0.000000 1.201239 1.232620 1.265478 1.306198</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true"></a><span class="co">#&gt; e 0 0.000000 0.000000 0.000000 0.000000 1.251150 1.281568 1.324294</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true"></a><span class="co">#&gt; f 0 0.000000 0.000000 0.000000 0.000000 0.000000 1.303842 1.343254</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true"></a><span class="co">#&gt; g 0 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 1.364744</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true"></a><span class="co">#&gt; h 0 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true"></a>v&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>)</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true"></a><span class="kw">names</span>(v)&lt;-<span class="st"> </span>letters[<span class="dv">1</span><span class="op">:</span><span class="dv">8</span>]</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true"></a><span class="kw">extrCoeff</span>(hrm, v) <span class="co"># for a particular set of variables </span></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true"></a><span class="co">#&gt; From setRootDepSet.RootDepSet: The order of the subset must correspond to the</span></span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true"></a><span class="co">#&gt;             order of its corresponding root</span></span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true"></a><span class="co">#&gt;        c </span></span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true"></a><span class="co">#&gt; 1.518263 </span></span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true"></a><span class="co">#&gt; attr(,&quot;error&quot;)</span></span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true"></a><span class="co">#&gt; [1] 8.849459e-05</span></span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true"></a><span class="co">#&gt; attr(,&quot;msg&quot;)</span></span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true"></a><span class="co">#&gt; [1] &quot;Normal Completion&quot;</span></span></code></pre></div>
+<p>The method <code>extrCoeff.HRMBG</code> is used for models on block graphs.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true"></a><span class="kw">extrCoeff</span>(hrbg) <span class="co"># bivariate</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true"></a><span class="co">#&gt;   a       b        c        d        e        f        g</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true"></a><span class="co">#&gt; a 0 1.24817 1.416118 1.597216 1.628907 1.705734 1.682689</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true"></a><span class="co">#&gt; b 0 0.00000 1.345279 1.561422 1.597216 1.682689 1.657218</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true"></a><span class="co">#&gt; c 0 0.00000 0.000000 1.472911 1.520500 1.628907 1.597216</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true"></a><span class="co">#&gt; d 0 0.00000 0.000000 0.000000 1.561422 1.726678 1.705734</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true"></a><span class="co">#&gt; e 0 0.00000 0.000000 0.000000 0.000000 1.745787 1.726678</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true"></a><span class="co">#&gt; f 0 0.00000 0.000000 0.000000 0.000000 0.000000 1.657218</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true"></a><span class="co">#&gt; g 0 0.00000 0.000000 0.000000 0.000000 0.000000 0.000000</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true"></a>v&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>)</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true"></a><span class="kw">names</span>(v)&lt;-<span class="st"> </span>letters[<span class="dv">1</span><span class="op">:</span><span class="dv">7</span>]</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true"></a><span class="kw">extrCoeff</span>(hrbg, v) <span class="co"># for a particular set of variables </span></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true"></a><span class="co">#&gt; From setRootDepSet.RootDepSet: The order of the subset must correspond to the</span></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true"></a><span class="co">#&gt;             order of its corresponding root</span></span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true"></a><span class="co">#&gt; From setRootDepSet.RootDepSet: The order of the subset must correspond to the</span></span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true"></a><span class="co">#&gt;             order of its corresponding root</span></span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true"></a><span class="co">#&gt; From setRootDepSet.RootDepSet: The order of the subset must correspond to the</span></span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true"></a><span class="co">#&gt;             order of its corresponding root</span></span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true"></a><span class="co">#&gt;        c </span></span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true"></a><span class="co">#&gt; 2.062956 </span></span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true"></a><span class="co">#&gt; attr(,&quot;error&quot;)</span></span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true"></a><span class="co">#&gt; [1] 1e-15</span></span>
+<span id="cb16-23"><a href="#cb16-23" aria-hidden="true"></a><span class="co">#&gt; attr(,&quot;msg&quot;)</span></span>
+<span id="cb16-24"><a href="#cb16-24" aria-hidden="true"></a><span class="co">#&gt; [1] &quot;Normal Completion&quot;</span></span></code></pre></div>
+</div>
+</div>
+<div id="tail-dependence-coefficients-for-models-on-trees" class="section level2">
+<h2>Tail dependence coefficients for models on trees</h2>
+<p>The tail dependence coefficient (tdc) of a subset <span class="math inline">\(W\subseteq V\)</span> and a node <span class="math inline">\(u\notin W\)</span> is defined as <span class="math display">\[
+        \lim_{t\rightarrow\infty}\chi_{W|u}(t) :=
+        \lim_{t\rightarrow\infty}\Pr(X_W &gt; t \mid X_u &gt; t) \qquad u \not\in W, t&gt;1.
+\]</span> The event <span class="math inline">\(\{X_W &gt; t\}\)</span> is to be read as the intersection <span class="math inline">\(\bigcap_{w \in W}\{X_w &gt; t\}\)</span>. When <span class="math inline">\(X\)</span> has unit Pareto univariate margins <span class="math inline">\(\Pr(X_u &gt; t) = 1/t\)</span> for <span class="math inline">\(t &gt; 1\)</span>, so that <span class="math display">\[
+        \Pr(X_W &gt; t \mid X_u &gt; t)= t \, \Pr(X_{W \cup u} &gt; t)
+    \]</span> If we set <span class="math inline">\(\overline{W}:=W\cup u\)</span> we have <span class="math display">\[\begin{equation}
+    \label{eq:chiW}
+        \chi_{\overline{W}} = \lim_{t \to \infty} \chi_{\overline{W}}(t)
+    \end{equation}\]</span> as a bivariate or multivariate tail dependence coefficient (tdc). In terms of the stable tail dependence function <span class="math inline">\(l\)</span> of <span class="math inline">\(X_U\)</span>, the inclusion–exclusion formula yields <span class="math display">\[
+        \chi_{\overline{W}}
+        =
+        \sum_{i=1}^{|\overline{W}|}
+        (-1)^{i-1}
+        \sum_{J \subseteq \overline{W}, |J|=i} 
+        l(1_J),
+    \]</span> where <span class="math inline">\(1_J = (1_{j \in J}, j \in U)\)</span> is a vector of zeroes and ones. Note that <span class="math inline">\(l(1_J)\)</span> is the extremal coefficient as considered above.</p>
+<p>The parametric estimate of <span class="math inline">\(\chi_{\overline{W}}\)</span> involves the parametric expressions of the stdf evaluated at a particular estimate of the parameter vector <span class="math inline">\(\theta=(\theta_e, e\in E)\)</span>.</p>
+<p>Non-parametrically we estimate <span class="math inline">\(\chi_{\overline{W}}(t)\)</span> at <span class="math inline">\(t = n/k\)</span> via <span class="math display">\[
+    \hat{\chi}_{\overline{W}} 
+    =
+    \frac{n}{k} \frac{1}{n} \sum_{i=1}^n
+    1 \left\{ 
+    n\hat{F}_{v,n}(X_{v,i})&gt;n-k, \, \forall v \in \overline{W} 
+    \right\}.
+    \]</span></p>
+<p>For the set <span class="math inline">\(\overline{W}=(a,c,d,e)\)</span> we should do</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true"></a>v&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true"></a><span class="kw">names</span>(v)&lt;-<span class="st"> </span>letters[<span class="dv">1</span><span class="op">:</span><span class="dv">8</span>]</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true"></a><span class="kw">suppressMessages</span>(<span class="kw">taildepCoeff</span>(hrm, v)) <span class="co"># parametric tdc</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true"></a><span class="co">#&gt;         a </span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true"></a><span class="co">#&gt; 0.7420236 </span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true"></a><span class="co">#&gt; attr(,&quot;error&quot;)</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true"></a><span class="co">#&gt; [1] 0</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true"></a><span class="co">#&gt; attr(,&quot;msg&quot;)</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true"></a><span class="co">#&gt; [1] &quot;univariate: using pnorm&quot;</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true"></a><span class="kw">taildepCoeff</span>(tobj, <span class="fl">0.2</span>, v) <span class="co"># non-parametric tdc</span></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true"></a><span class="co">#&gt; [1] 0.745</span></span></code></pre></div>
+</div>
+<div id="confidence-intervals-for-pairwise-ece---models-on-trees" class="section level2">
+<h2>Confidence intervals for pairwise ECE - models on trees</h2>
+<p>Confidence intervals can be computed for the edge weights for models on trees if the <strong>pairwise</strong> extremal coefficients estimator is used. This is thanks to the distribution available of this estimator in <span class="citation">Einmahl, Kiriliouk, and Segers (2017)</span>. The method that computes the confidence intervals is <code>confInt.EKS</code>.</p>
+<p>Let <span class="math inline">\(\hat{\theta}_{n,k} = \hat{\theta}_{n,k}^{\mathrm{ECE}}\)</span> denote the pairwise (bivariate) extremal coefficient estimator and let <span class="math inline">\(\theta_0\)</span> denote the true vector of parameters. By Theorem 2 in <span class="citation">Einmahl, Kiriliouk, and Segers (2017)</span> with <span class="math inline">\(\Omega\)</span> equal to the identity matrix, the ECE is asymptotically normal, <span class="math display">\[
+ \sqrt{k}(\hat{\theta}_{n,k}-\theta_0)\sim \mathcal{N}_{|E|}\bigl(0, M(\theta_0)\bigr), \qquad n \to \infty,
+\]</span> The asymptotic covariance matrix takes the form <span class="math display">\[
+    M(\theta_0)
+    = (\dot{L}^\top\dot{L})^{-1}
+    \dot{L}^\top\Sigma_L\dot{L}
+    (\dot{L}^\top\dot{L})^{-1}\, .
+\]</span> The matrices <span class="math inline">\(\dot{L}\)</span> and <span class="math inline">\(\Sigma_L\)</span> depend on <span class="math inline">\(\theta_0\)</span> and are based on partial derivatives of the stable tail dependence function.</p>
+<p>For every <span class="math inline">\(k\)</span> and every <span class="math inline">\(e \in E\)</span>, an asymptotic 95% confidence interval for the edge parameter <span class="math inline">\(\theta_{0,e}\)</span> is given by <span class="math display">\[
+    \theta_{0,e} \in \left[\hat{\theta}_{k,n;e}\pm 1.96\sqrt{\{M(\hat{\theta}_{k,n})\}_{ee}/k}\right] .
+\]</span></p>
+<p>For more details on this interval we refer to section A.5 in <span class="citation">Asenova, Mazo, and Segers (2021)</span>.</p>
+<p>In the example below we suppose that the estimates obtained from the pairwise extremal coefficient estimator are given by the sequence <span class="math inline">\((0.1, 0.2, \ldots, 0.8)\)</span> and the matrix of evaluation points based on pairs is the one based on all pairs. We suppose also that the estimates are based on <span class="math inline">\(k=150\)</span>.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true"></a><span class="co"># create the matrix of evaluation points </span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true"></a>tup&lt;-<span class="st"> </span><span class="kw">Tuples</span>()</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true"></a>x&lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="dv">1</span>, <span class="dv">8</span>)</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true"></a><span class="kw">names</span>(x)&lt;-<span class="st"> </span>letters[<span class="dv">1</span><span class="op">:</span><span class="dv">8</span>]</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true"></a>pair&lt;-<span class="st"> </span><span class="kw">evalPoints</span>(tup, tobj, x)</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true"></a><span class="co"># create an object of class EKS with the supposed estimates of the parameters</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true"></a>eks&lt;-<span class="st"> </span><span class="kw">EKS</span>(seg)</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true"></a><span class="co">#&gt; From HRMnetwork: Edges have been assigned names</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true"></a>eks&lt;-<span class="st"> </span><span class="kw">setParams</span>(eks, <span class="kw">seq</span>(<span class="fl">0.1</span>, <span class="fl">0.8</span>, <span class="fl">0.1</span>))</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true"></a><span class="co">#&gt; From setParams.HRMtree: Names have been attributed to the vector &#39;value&#39; in the order corresponding to the order of the edges: The fist element has the name of the first edge, the second element the name of the second edge, etc.</span></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true"></a><span class="co">#&gt; From setParams.HRMtree: The parameters have been attached to the edges according to their names</span></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true"></a><span class="kw">suppressMessages</span>(<span class="kw">confInt</span>(eks, pair, <span class="dv">150</span>))</span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true"></a><span class="co">#&gt;          [,1]      [,2]</span></span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true"></a><span class="co">#&gt; e1 0.04325027 0.1567497</span></span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true"></a><span class="co">#&gt; e2 0.12489856 0.2751014</span></span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true"></a><span class="co">#&gt; e3 0.20902181 0.3909782</span></span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true"></a><span class="co">#&gt; e4 0.29546776 0.5045322</span></span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true"></a><span class="co">#&gt; e5 0.38320826 0.6167917</span></span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true"></a><span class="co">#&gt; e6 0.47152624 0.7284738</span></span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true"></a><span class="co">#&gt; e7 0.55790126 0.8420987</span></span></code></pre></div>
+<p>When there are latent variables we should use a matrix of evaluation points where all pairs are between observed variables only. Hence we should use this matrix that should have been used in estimation for computing the confidence intervals too.</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true"></a>x&lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="dv">1</span>, <span class="dv">6</span>)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true"></a><span class="kw">names</span>(x)&lt;-<span class="st"> </span>letters[<span class="dv">3</span><span class="op">:</span><span class="dv">8</span>]</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true"></a>pairU&lt;-<span class="st"> </span><span class="kw">evalPoints</span>(tup, tobjU, x )</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true"></a><span class="kw">suppressMessages</span>(<span class="kw">confInt</span>(eks, pairU, <span class="dv">150</span>))</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true"></a><span class="co">#&gt;           [,1]      [,2]</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true"></a><span class="co">#&gt; e1 -0.18531748 0.3853175</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true"></a><span class="co">#&gt; e2  0.08120552 0.3187945</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true"></a><span class="co">#&gt; e3  0.19467712 0.4053229</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true"></a><span class="co">#&gt; e4  0.28501475 0.5149852</span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true"></a><span class="co">#&gt; e5  0.37880410 0.6211959</span></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true"></a><span class="co">#&gt; e6  0.46950981 0.7304902</span></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true"></a><span class="co">#&gt; e7  0.55860240 0.8413976</span></span></code></pre></div>
+</div>
+<div id="references" class="section level2 unnumbered">
+<h2 class="unnumbered">References</h2>
+<div id="refs" class="references hanging-indent">
+<div id="ref-asenova2021">
+<p>Asenova, Stefka, Gildas Mazo, and Johan Segers. 2021. “Inference on Extremal Dependence in the Domain of Attraction of a Structured Hüsler–Reiss Distribution Motivated by a Markov Tree with Latent Variables.” <em>Extremes</em>. <a href="https://doi.org/10.1007/s10687-021-00407-5">https://doi.org/10.1007/s10687-021-00407-5</a>.</p>
+</div>
+<div id="ref-beirlant2004statistics">
+<p>Beirlant, J., Y. Goegebeur, J. Segers, J. L. Teugels, D. De Waal, and C. Ferro. 2004. <em>Statistics of Extremes: Theory and Applications</em>. Wiley Series in Probability and Statistics. Wiley. <a href="https://books.google.bg/books?id=GtIYLAlTcKEC">https://books.google.bg/books?id=GtIYLAlTcKEC</a>.</p>
+</div>
+<div id="ref-mev">
+<p>Belzile, Leo, Jennifer L. Wadsworth, Paul J. Northrop, Scott D. Grimshaw, and Raphael Huser. 2020. <em>Mev: Multivariate Extreme Value Distributions</em>. <a href="https://CRAN.R-project.org/package=mev">https://CRAN.R-project.org/package=mev</a>.</p>
+</div>
+<div id="ref-drees1998">
+<p>Drees, Holger, and Xin Huang. 1998. “Best Attainable Rates of Convergence for Estimators of the Stable Tail Dependence Function.” <em>Journal of Multivariate Analysis</em> 64 (1): 25–46. <a href="https://doi.org/https://doi.org/10.1006/jmva.1997.1708">https://doi.org/https://doi.org/10.1006/jmva.1997.1708</a>.</p>
+</div>
+<div id="ref-eks16">
+<p>Einmahl, J., A. Kiriliouk, and J. Segers. 2017. “A Continuous Updating Weighted Least Squares Estimator of Tail Dependence in High Dimensions.” <em>Extremes</em>.</p>
+</div>
+<div id="ref-de2007extreme">
+<p>Haan, L. de, and A. Ferreira. 2007. <em>Extreme Value Theory: An Introduction</em>. Springer Series in Operations Research and Financial Engineering. Springer New York. <a href="https://books.google.bg/books?id=t6tfXnykazEC">https://books.google.bg/books?id=t6tfXnykazEC</a>.</p>
+</div>
+</div>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
