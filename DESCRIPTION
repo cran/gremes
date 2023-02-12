@@ -1,6 +1,6 @@
 Package: gremes
 Title: Estimation of Tail Dependence in Graphical Models
-Version: 0.1.0
+Version: 0.1.1
 Author: Stefka Asenova [aut, cre]
 Maintainer: Stefka Asenova <stefkakirilova@yahoo.com>
 Authors@R: person(given = "Stefka", family = "Asenova", email = "stefkakirilova@yahoo.com", role = c("aut", "cre"))
@@ -8,13 +8,13 @@ Description: Provides tools for estimation of edge weights on graphical models w
 License: GPL-2
 Encoding: UTF-8
 RoxygenNote: 7.0.2
-Imports: gRbase (>= 1.8-6.4), gRim (>= 0.2.1), abind (>= 1.4.5), copula
-        (>= 0.999.19), quadprog (>= 1.5.5), mvtnorm (>= 1.0.8),
-        methods, mev (>= 1.13.1)
+biocViews:
+Imports: abind (>= 1.4.5), copula (>= 0.999.19), quadprog (>= 1.5.5),
+        mvtnorm (>= 1.0.8), methods, mev (>= 1.13.1)
 Depends: R (>= 3.5.0), igraph
 Suggests: knitr, rmarkdown, corrplot, testthat
 VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2021-12-20 11:01:08 UTC; asenova
+Packaged: 2023-02-11 19:12:54 UTC; asenova
 Repository: CRAN
-Date/Publication: 2021-12-20 16:00:08 UTC
+Date/Publication: 2023-02-12 14:22:07 UTC

@@ -62,7 +62,7 @@ There are two versions of the MLE. The two versions give similar estimates, but 
 
 The two versions are applicable both in the case of no latent variables in the data and in the case of latent variables.
 
-There is a version called "Covariance Selection Model" and it represents a maximum likelihood estimate too but it is based on a different method. The method is applicable only when all variables are observed. 
+
 
 ## Vignettes "Estimation - Note 3" and "Code - Note 3"
 provide the theoretical description and the code used to compute estimates based on extremal coefficients. The model is a Markov **tree** parameterized cliquewise by Huesler-Reiss distributions.    
@@ -151,7 +151,7 @@ Regarding a model for $X$ as being Markov with respect to a **tree** and being p
 
 - computes MME of edge weights based on asymptotic result about $\ln (X/X_u)\mid X_u>t$ - use method `estimate.MME`; applicable when there are latent variables too. 
 
-- computes MLEs based on asymptotic result about $\ln (X/X_u)\mid X_u>t$ - use method `estimate.MLE`, `estimate.MLE1`, `estimate.MLE2`; `estimate.MLE`is not applicable when there are latent variables, `estimate.MLE1`, `estimate.MLE2` are applicable when there are latent variables.
+- computes MLEs based on asymptotic result about $\ln (X/X_u)\mid X_u>t$ - use methods `estimate.MLE1`, `estimate.MLE2`. They are applicable when there are latent variables.
 
 - computes ECE based on the result that such a model is in the domain of attraction of a Huesler-Reiss distribution with some parameter matrix derived from edge weights - use method `estimate.EKS`, `estimate.EKS_part`; both are applicable when there are latent variables. 
 

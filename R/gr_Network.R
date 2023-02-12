@@ -80,23 +80,7 @@ GTree<- function(g, Data)
 
 
 
-#' Creates object of class \code{CovSelectTree}
-#' @export CovSelectTree
-#' @param g should be the graph, an object of class \code{igraph} with named nodes
-#' @param Data is the dataset with named columns
-#' @return An object containing the graph and the data whose columns are associated to the nodes.
-#' @examples
-#' g<- graph(c(1,2,2,3), directed=FALSE)
-#' g<- set.vertex.attribute(g, "name", V(g), c("a", "b", "c")) # name the nodes of the graph
-#' data<- matrix(rnorm(10*3), 10,3)
-#' colnames(data)<- c("a", "b", "c") # name the columns of the data
-#' cst<- CovSelectTree(g = g, Data = data)
-CovSelectTree<- function(g, Data)
-{
-  obj<- Tree(g, Data)
-  class(obj)<- append(class(obj), "CovSelectTree")
-  return(obj)
-}
+
 
 
 

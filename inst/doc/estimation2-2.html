@@ -12,7 +12,7 @@
 
 <meta name="author" content="Stefka Asenova" />
 
-<meta name="date" content="2021-12-20" />
+<meta name="date" content="2023-02-11" />
 
 <title>Estimation - Note 2</title>
 
@@ -229,7 +229,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <h1 class="title toc-ignore">Estimation - Note 2</h1>
 <h3 class="subtitle">Likelihood based estimation for models on trees</h3>
 <h4 class="author">Stefka Asenova</h4>
-<h4 class="date">2021-12-20</h4>
+<h4 class="date">2023-02-11</h4>
 
 
 
@@ -347,39 +347,8 @@ L\big(\theta; \{\Delta_{uv,i}: v\in W_u\setminus u, i\in I_u, u\in U\}\big)
 \end{equation}\]</span></p>
 <p>The assumption under this definition is that for any <span class="math inline">\(u,v \in U\)</span> we have <span class="math inline">\(\Delta_{W_u\setminus u}\perp \Delta_{W_v\setminus v}\)</span>, which is clearly not true for overlapping vertex sets <span class="math inline">\(W_u\)</span> and <span class="math inline">\(W_v\)</span>. However this simplifies the joint likelihood function and simulation results show that the estimator has comparable qualities to the moment estimator or the one based on extremal coefficients.</p>
 </div>
-<div id="covariance-selection-model" class="section level2">
-<h2>Covariance selection model</h2>
-<p>Let <span class="math inline">\(G(W_u)\)</span> is the subgarph induced on the node set <span class="math inline">\(W_u\)</span>. This graph must be connected. The ML estimator of <span class="math inline">\(\theta\in (0,\infty)^{|E|}\)</span> is obtained in a two-step procedure similar to the MM estimator, but using the MLE of <span class="math inline">\(\Sigma_{\cdot\setminus u}(\theta)\)</span> instead.</p>
-<p>As a first step a maximum likelihood approach is used to obtain an estimator of <span class="math inline">\(\Sigma_{\cdot\setminus u}(\theta)\)</span> and then a least squares procedure is used to estimate <span class="math inline">\(\theta\)</span> in the second step. The first step is an implementation of the Iterative Proportional Scaling algorithm from the R package <code>gRim</code> by <span class="citation">Højsgaard (2017)</span>. For description of the IPS we refer to <span class="citation">Lauritzen (1996)</span>.</p>
-<ul>
-<li><p>Step 1: For every <span class="math inline">\(u\in V\)</span> obtain: <span class="math display">\[\begin{equation}
-      \begin{split}
-          \widehat{\Sigma^{-1}}_{W_u\setminus u}
-          =
-          \arg\max_{(\Sigma^{-1})_{W_u\setminus u}}
-          L\Big(\hat{\mu}_{W_u\setminus u}, (\Sigma^{-1})_{W_u\setminus u}; 
-          \{\Delta_{uv,i}: v\in W_u\setminus u, i\in I_u\}\Big)
-      \end{split}
-  \end{equation}\]</span></p></li>
-<li><p>Step 2: Solve the problem: <span class="math display">\[\begin{equation} 
-  \hat{\theta}^{MLE}_{k,n}
-  =
-  \arg\min_{\theta\in [0,\infty)^{|E|}}
-  \sum_{W_u \subseteq V, u\in V}
-  \Big\|\widehat{\Sigma^{-1}}_{W_u\setminus u}-\Sigma_{W_u\setminus u}(\theta)\Big\|_F^2
- \end{equation}\]</span></p></li>
-</ul>
-</div>
-<div id="references" class="section level2 unnumbered">
-<h2 class="unnumbered">References</h2>
-<div id="refs" class="references hanging-indent">
-<div id="ref-grim">
-<p>Højsgaard, Søren. 2017. <em>GRim: Graphical Interaction Models</em>. <a href="https://CRAN.R-project.org/package=gRim">https://CRAN.R-project.org/package=gRim</a>.</p>
-</div>
-<div id="ref-laurit">
-<p>Lauritzen, Steffen. 1996. <em>Graphical Models</em>. Oxford University Press.</p>
-</div>
-</div>
+<div id="references" class="section level2">
+<h2>References</h2>
 </div>
 
 

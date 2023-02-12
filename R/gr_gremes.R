@@ -81,7 +81,7 @@
 #'   \code{estimate} on an object from one of the following classes:
 #'
 #'
-#'   \code{MME, MLE, MLE1, MLE2, EKS, EKS_part, EngHitz, MMEave, MLEave} in which case it estimates the
+#'   \code{MME, MLE1, MLE2, EKS, EKS_part, EngHitz, MMEave, MLEave} in which case it estimates the
 #'   edge weights of a graphical model on a tree. See Vignettes "Code - Node" 1-4 and 6.
 #'
 #'   \code{HRMBG} in which case it estimates the edge weights of a graphical model on a tree.

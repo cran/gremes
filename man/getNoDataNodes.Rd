@@ -13,7 +13,7 @@ getNoDataNodes(obj, ...)
 \method{getNoDataNodes}{Network}(obj, ...)
 }
 \arguments{
-\item{obj}{Object of class \code{Network} or its subclasses \code{Tree, GTree, CovSelectTree, BlockGraph}}
+\item{obj}{Object of class \code{Network} or its subclasses \code{Tree, GTree, BlockGraph}}
 
 \item{...}{additional arguments}
 }

@@ -77,31 +77,6 @@ MME<- function(g)
 
 
 
-#' Object of class \code{MLE}
-#'
-#' Creates an object with two slots: \code{$graph} containing the graph and \code{$depParams} containing
-#' the edge weights which are initialized with zero values.
-#' It is intended to be used for edge weights estimation using the Covariance selection model.
-#' Consult also Vignettes "Code - Note 2" and "Estimation - Note 2".
-#' @param g must be an \code{igraph} object, a tree.
-#' @return Object of class \code{MLE} with two slots:  \code{$graph} containing the graph and \code{$depParams}
-#' containing the edge weights corresponding to the dependence parameters.
-#' The edge weights are initialized with zero values.
-#' @export
-#' @examples
-#' g<- make_tree(8,3, mode="undirected")
-#' g<- set.vertex.attribute(g, "name", V(g), letters[1:8])
-#' mle<- MLE(g)
-MLE<- function(g)
-{
-
-  obj<- HRMtree(g)
-  class(obj)<- append(class(obj), "MLE")
-  return(obj)
-}
-
-
-
 #' Object of class \code{MLE1}
 #'
 #' It creates an object with two slots: \code{$graph} containing the graph and \code{$depParams} containing

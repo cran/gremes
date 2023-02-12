@@ -13,7 +13,7 @@ getNodesWithData(obj, ...)
 \method{getNodesWithData}{Network}(obj, ...)
 }
 \arguments{
-\item{obj}{Object of class 'Network' or its subclasses \code{Tree, GTree, CovSelectTree, BlockGraph}}
+\item{obj}{Object of class 'Network' or its subclasses \code{Tree, GTree, BlockGraph}}
 
 \item{...}{additional arguments}
 }

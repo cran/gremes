@@ -12,7 +12,7 @@
 
 <meta name="author" content="Stefka Asenova" />
 
-<meta name="date" content="2021-12-20" />
+<meta name="date" content="2023-02-11" />
 
 <title>Detailed Contents</title>
 
@@ -228,7 +228,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 <h1 class="title toc-ignore">Detailed Contents</h1>
 <h4 class="author">Stefka Asenova</h4>
-<h4 class="date">2021-12-20</h4>
+<h4 class="date">2023-02-11</h4>
 
 
 
@@ -262,7 +262,6 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <p>Theoretical background on the model can be found in <span class="citation">Asenova, Mazo, and Segers (2021)</span>.</p>
 <p>There are two versions of the MLE. The two versions give similar estimates, but the first version is faster for bigger graphs. The second version may be quite slow on big problems.</p>
 <p>The two versions are applicable both in the case of no latent variables in the data and in the case of latent variables.</p>
-<p>There is a version called “Covariance Selection Model” and it represents a maximum likelihood estimate too but it is based on a different method. The method is applicable only when all variables are observed.</p>
 </div>
 <div id="vignettes-estimation---note-3-and-code---note-3" class="section level2">
 <h2>Vignettes “Estimation - Note 3” and “Code - Note 3”</h2>
@@ -330,7 +329,7 @@ We show how to compute confidence intervals for the extremal coefficients estima
 <p>Regarding a model for <span class="math inline">\(X\)</span> as being Markov with respect to a <strong>tree</strong> and being parameterized cliquewise by Huesler-Reiss copulas with unit Fréchet margins:</p>
 <ul>
 <li><p>computes MME of edge weights based on asymptotic result about <span class="math inline">\(\ln (X/X_u)\mid X_u&gt;t\)</span> - use method <code>estimate.MME</code>; applicable when there are latent variables too.</p></li>
-<li><p>computes MLEs based on asymptotic result about <span class="math inline">\(\ln (X/X_u)\mid X_u&gt;t\)</span> - use method <code>estimate.MLE</code>, <code>estimate.MLE1</code>, <code>estimate.MLE2</code>; <code>estimate.MLE</code>is not applicable when there are latent variables, <code>estimate.MLE1</code>, <code>estimate.MLE2</code> are applicable when there are latent variables.</p></li>
+<li><p>computes MLEs based on asymptotic result about <span class="math inline">\(\ln (X/X_u)\mid X_u&gt;t\)</span> - use methods <code>estimate.MLE1</code>, <code>estimate.MLE2</code>. They are applicable when there are latent variables.</p></li>
 <li><p>computes ECE based on the result that such a model is in the domain of attraction of a Huesler-Reiss distribution with some parameter matrix derived from edge weights - use method <code>estimate.EKS</code>, <code>estimate.EKS_part</code>; both are applicable when there are latent variables.</p></li>
 <li><p>computes cliquewise estimator by <span class="citation">Engelke and Hitz (2020)</span> based on an asymptotic result about <span class="math inline">\((X/t)\mid \max_{v\in V}X_v&gt;t\)</span> - use method <code>estimate.MME</code>; applicable when there are latent variables.</p></li>
 <li><p>computes MME and MLE based on an asymptotic result about <span class="math inline">\((\ln X_v- \overline{\ln X})\mid \overline{\ln X}&gt;t\)</span> - use method <code>estimate.MME_ave</code> or <code>estimate.MLE_ave</code>; applicable when there are latent variables.</p></li>

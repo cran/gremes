@@ -1,13 +1,12 @@
 #' Provides estimation of parameters
 #'
 #' Estimates the edge weights or edge parameters of a model parameterized cliquewise by Huesler-Reiss
-#' distributions. For description of the model please consult the Vignette "Introduction".
+#' distributions. For description of the model, please consult the Vignette "Introduction".
 #' @export
-#' @param obj object of on of the following classes \code{MME, MLE, MLE1, MLE2, EKS, EKS_part, EngHitz, MME_ave, MLE_ave, HRMBG}.
-#' The classes \code{MME, MLE, MLE1, MLE2, EKS, EKS_part, EngHitz} are subclasses of class \code{HRMtree},
+#' @param obj object of on of the following classes \code{MME, MLE1, MLE2, EKS, EKS_part, EngHitz, MME_ave, MLE_ave, HRMBG}.
+#' The classes \code{MME, MLE1, MLE2, EKS, EKS_part, EngHitz} are subclasses of class \code{HRMtree},
 #' hence if no other method is available, the method for \code{HRMtree} applies.
-#' @param Data the dataset, it should have named columns. For \code{estimate.MLE} all variables on the tree should
-#' be observed, i.e., \code{Data} should have nonempty column for every node in the tree.
+#' @param Data the dataset, it should have named columns.
 #' @param subsets object of class \code{RootDepSet} containing the roots and the respective subsets.
 #' When \code{obj} is of class \code{EngHitz} the argument \code{subsets} should be a list of subsets,
 #' not a \code{RootDepSet} object. When \code{obj} is of class \code{EngHitz} the union of all subsets should cover
@@ -24,7 +23,7 @@
 #' @param ... additional arguments
 #' @rdname  estimate
 #' @return An object of the same class as the argument \code{obj} where the slot \code{$depParams} are the estimates
-#' of edge weights. For objects \code{MME} and \code{MLE} it returns the squared
+#' of edge weights. For objects \code{MME} it returns the squared
 #' values of the parameters.
 #' @details For an object of class \code{EKS_part} for a fixed subset all coordinates based on both tuples and triples
 #' are taken.
@@ -78,8 +77,8 @@ estimate.HRMtree<- function(obj, Data, subsets, k_ratio, xx=NULL, ...)
  #  # # # # #-------
 
 
-  x<- createObj(obj, Data) # by default it creates a GTree (CovSelectTree is in case .MLE,
-  # and BlockGraph in case of HRMBG)
+  x<- createObj(obj, Data) # by default it creates a GTree,
+  # and BlockGraph in case of HRMBG
   g1<- getGraph(x)
   pn<- get.edge.attribute(g1, "name", E(g1))
   e<- ecount(g1)
@@ -114,8 +113,8 @@ estimate.HRMtree<- function(obj, Data, subsets, k_ratio, xx=NULL, ...)
 #' @export
 estimate.MME<- function(obj, Data, subsets, k_ratio, obj2, Ubar, par_names,  gr, ...)
 {
-  #obj MME, MLE, ..
-  #obj2 GTree, CovSelectTree, BlockGraph
+  #obj MME, ..
+  #obj2 GTree, BlockGraph
 
   h1<- h(subsets, U_bar = Ubar)
   s<- ArgumentHvec(sum(h1*(h1+1)/2))
@@ -327,22 +326,6 @@ estimate.EKS<- function(obj, Data, coord, k_ratio,... )
 
 
 
-
-
-
-
-#' @export
-estimate.MLE<- function(obj, Data, subsets, k_ratio, obj2, Ubar, par_names, gr, ...)
-{
-  h1<- h(subsets, U_bar = Ubar)
-  s<- ArgumentHvec(sum(h1*(h1+1)/2))
-  s<- for_u_in_U(obj=s, obj2=obj2, subsets, k_ratio=k_ratio, h1=h1, Ubar=Ubar)
-
-
-  A<- ArgumentSS( c(sum(h1*(h1+1)/2),ecount(gr)), par_names)
-  A<- for_u_in_U(obj=A, obj2=obj, subsets, k_ratio=k_ratio, h1=h1, Ubar=Ubar )
-  return(list(A=A, s=s))
-}
 
 
 

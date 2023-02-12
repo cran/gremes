@@ -1,15 +1,14 @@
-#' COvariance matrix
+#' Covariance matrix
 #'
 #' It computes either a non-parametric estimate of the covariance matrix or a parametric form of the
 #' covariance matrix.
-#' @param obj Object of class \code{GTree} or \code{CovSelectTree} or \code{HRMtree}
+#' @param obj Object of class \code{GTree} or \code{HRMtree}
 #' @param ... additional arguments
 #' @return A matrix of non-parametric estimates or a matrix of zeros and ones, say A, such that A*theta is
 #' the halfvectorized Sigma,
 #'  where Sigma is the parametric covariance matrix.
 #'  If the first argument is of class \code{GTree} the method returns the empirical covariance matrix
-#'  of the data in the GTree object.  If the first argument is of class \code{CovSelectTree} the method returns the covariance matrix
-#' of the corresponding Gaussian graphical model associated to the object.
+#'  of the data in the GTree object.
 #' If the first argument is of class \code{HRMtree} the method returns
 #' a matrix of ones and zeros which corresponds to \eqn{hvec(\Sigma(\theta))=A\theta}
 #' @note It is not intendend for independent use.
@@ -66,28 +65,6 @@ sigma.GTree<- function(obj, s, ...)
 
 #' @export
 sigma.BlockGraph<- sigma.GTree
-
-
-
-#' @export
-#' @importFrom gRim ggmfit
-#' @importFrom gRbase getCliques
-#' @importFrom methods as
-sigma.CovSelectTree<- function(obj, s, set, ...)
-{
-   which_vars<- base::setdiff(getValue(set), getRoot(set))
-   root<- obj$noDataNodes
-   W_<- base::setdiff(obj$nodesWithData, root)
-   S_hat<- augmentMatrix1(s, root)
-  message("Calling 'ggmfit' from package 'gRim' ")
-  clq<- gRbase::getCliques(as(obj$graph,"graphNEL"))
-
-  K_hat<- gRim::ggmfit(S_hat+1, n.obs = nrow(obj$data), glist = clq)$K
-  S_hat<- solve(K_hat) - 1
-  S_hat<- S_hat[which_vars, which_vars]
-
-  return(S_hat)
-}
 
 
 

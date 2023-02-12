@@ -13,7 +13,7 @@ setParams(obj, value, ...)
 \method{setParams}{HRMtree}(obj, value, ...)
 }
 \arguments{
-\item{obj}{An object of class \code{HRMnetwork} or its subclasses \code{HRMtree, MME, MLE, MLE1, MLE2, EKS,
+\item{obj}{An object of class \code{HRMnetwork} or its subclasses \code{HRMtree, MME, MLE1, MLE2, EKS,
 EKS_part, EngHitz, HRMBG, MMEave, MLEave}}
 
 \item{value}{A named vector with names corresponding to the names of the edges.

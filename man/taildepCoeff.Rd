@@ -15,7 +15,7 @@ taildepCoeff(obj, ...)
 }
 \arguments{
 \item{obj}{should be of class \code{Network} or \code{HRMtree} or a subclass of these, such as
-\code{Tree, BlochGraph} as subclasses of \code{Network} or subclasses \code{MME, MLE, MLE1, MLE2, EKS, EKS_part,
+\code{Tree, BlochGraph} as subclasses of \code{Network} or subclasses \code{MME, MLE1, MLE2, EKS, EKS_part,
 EngHitz, MLEave, MMEave} of class \code{HRMtree}.}
 
 \item{...}{additional arguments}

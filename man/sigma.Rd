@@ -2,12 +2,12 @@
 % Please edit documentation in R/gr_mySigma.R
 \name{sigma}
 \alias{sigma}
-\title{COvariance matrix}
+\title{Covariance matrix}
 \usage{
 sigma(obj, ...)
 }
 \arguments{
-\item{obj}{Object of class \code{GTree} or \code{CovSelectTree} or \code{HRMtree}}
+\item{obj}{Object of class \code{GTree} or \code{HRMtree}}
 
 \item{...}{additional arguments}
 }
@@ -16,8 +16,7 @@ A matrix of non-parametric estimates or a matrix of zeros and ones, say A, such 
 the halfvectorized Sigma,
  where Sigma is the parametric covariance matrix.
  If the first argument is of class \code{GTree} the method returns the empirical covariance matrix
- of the data in the GTree object.  If the first argument is of class \code{CovSelectTree} the method returns the covariance matrix
-of the corresponding Gaussian graphical model associated to the object.
+ of the data in the GTree object.
 If the first argument is of class \code{HRMtree} the method returns
 a matrix of ones and zeros which corresponds to \eqn{hvec(\Sigma(\theta))=A\theta}
 }

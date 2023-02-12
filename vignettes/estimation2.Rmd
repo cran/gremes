@@ -113,52 +113,6 @@ mle2$depParams
 ```
 
 
-## The Covariance selection method 
-
-The Covariance Selection Method in @grim is not applicable when there are latent variables.
-To illustrate the Covariance Selection method using the dataset on Seine we create a graph without nodes with latent variables.
-
-```{r}
-seg_short<- graph(c(1,2,
-              2,3,
-              2,4,
-              2,5), directed = FALSE)
-name_stat<- c("Paris", "Melun", "Meaux", "Nemours", "Sens")
-seg_short<- set.vertex.attribute(seg_short, "name", V(seg_short), name_stat) # 
-
-```
-
-Extract the nodes for which we do not observe realizations.
-
-```{r}
-tobj<- Tree(seg_short, Seine)
-Uc<- getNoDataNodes(tobj)
-
-```
-
-Create the subsets.
-```{r}
-subs_short<- Neighborhood()
-subs_short<- subset(subs, 2, seg_short, Uc) # neighborhood of level three
-
-```
-
-Estimate using Covariance Selection Model. 
-
-```{r}
-mle<- MLE(seg_short)
-mle<- estimate(mle, Seine, subs_short,  k_ratio=0.2)
-
-```
-
-The messages are informative. They inform you about certain things but as long as they do not stop the estimation they are not errors.
-
-The estimates are squares of the parameters, hence take the square root.
-
-```{r}
-sqrt(mle$depParams)
-
-```
 
 ## References
 

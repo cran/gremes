@@ -22,14 +22,13 @@ estimate(obj, ...)
 \method{estimate}{MLEave}(obj, Data, k_ratio, ...)
 }
 \arguments{
-\item{obj}{object of on of the following classes \code{MME, MLE, MLE1, MLE2, EKS, EKS_part, EngHitz, MME_ave, MLE_ave, HRMBG}.
-The classes \code{MME, MLE, MLE1, MLE2, EKS, EKS_part, EngHitz} are subclasses of class \code{HRMtree},
+\item{obj}{object of on of the following classes \code{MME, MLE1, MLE2, EKS, EKS_part, EngHitz, MME_ave, MLE_ave, HRMBG}.
+The classes \code{MME, MLE1, MLE2, EKS, EKS_part, EngHitz} are subclasses of class \code{HRMtree},
 hence if no other method is available, the method for \code{HRMtree} applies.}
 
 \item{...}{additional arguments}
 
-\item{Data}{the dataset, it should have named columns. For \code{estimate.MLE} all variables on the tree should
-be observed, i.e., \code{Data} should have nonempty column for every node in the tree.}
+\item{Data}{the dataset, it should have named columns.}
 
 \item{subsets}{object of class \code{RootDepSet} containing the roots and the respective subsets.
 When \code{obj} is of class \code{EngHitz} the argument \code{subsets} should be a list of subsets,
@@ -54,12 +53,12 @@ For creation of coordinates based on tuples, triples, and adjacent nodes see cla
 }
 \value{
 An object of the same class as the argument \code{obj} where the slot \code{$depParams} are the estimates
-of edge weights. For objects \code{MME} and \code{MLE} it returns the squared
+of edge weights. For objects \code{MME} it returns the squared
 values of the parameters.
 }
 \description{
 Estimates the edge weights or edge parameters of a model parameterized cliquewise by Huesler-Reiss
-distributions. For description of the model please consult the Vignette "Introduction".
+distributions. For description of the model, please consult the Vignette "Introduction".
 }
 \details{
 For an object of class \code{EKS_part} for a fixed subset all coordinates based on both tuples and triples

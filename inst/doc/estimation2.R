@@ -58,31 +58,3 @@ mle1$depParams
 mle2$depParams
 
 
-## -----------------------------------------------------------------------------
-seg_short<- graph(c(1,2,
-              2,3,
-              2,4,
-              2,5), directed = FALSE)
-name_stat<- c("Paris", "Melun", "Meaux", "Nemours", "Sens")
-seg_short<- set.vertex.attribute(seg_short, "name", V(seg_short), name_stat) # 
-
-
-## -----------------------------------------------------------------------------
-tobj<- Tree(seg_short, Seine)
-Uc<- getNoDataNodes(tobj)
-
-
-## -----------------------------------------------------------------------------
-subs_short<- Neighborhood()
-subs_short<- subset(subs, 2, seg_short, Uc) # neighborhood of level three
-
-
-## -----------------------------------------------------------------------------
-mle<- MLE(seg_short)
-mle<- estimate(mle, Seine, subs_short,  k_ratio=0.2)
-
-
-## -----------------------------------------------------------------------------
-sqrt(mle$depParams)
-
-

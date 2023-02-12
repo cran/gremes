@@ -148,7 +148,7 @@ We suppose that $(X_{Paris}, X_2)$ have bivariate Huesler-Reiss distribution wit
 
 To estimate tail dependence in $X$ we need to estimate $(t1, \ldots, t6)$ (aliases for $\theta_1, \ldots, \theta_6$).
 
-For estimation we need to choose between one of the following methods - `estimate.MME`, `estimate.MLE`, `estimate.MLE1`, `estimate.MLE2`, `estimate.EKS`, `estimate.EKS_part`, `estimate.EngHitz`, `estimate.MMEave`, `estimate.MLEave`. 
+For estimation we need to choose between one of the following methods - `estimate.MME`, `estimate.MLE1`, `estimate.MLE2`, `estimate.EKS`, `estimate.EKS_part`, `estimate.EngHitz`, `estimate.MMEave`, `estimate.MLEave`. 
 
 
 ### Block graphs
@@ -231,18 +231,18 @@ A key principle is the following:
 
 The main goal of the package is estimation, therefore the method \code{estimate} is the key functionality of the tools provided in the package. Estimation in `gremes` happens by using the method `estimate` on an object from one of the following classes: 
 
-- `MME`, `MLE`, `MLE1`, `MLE2`, `EKS`, `EKS_part`, `EngHitz`, `MMEave`, `MLEave` in which case it estimates the edge weights $(\theta_e, e\in E)$ according to a **tree**. See Vignettes "Code - Node" 1-4 and 6.
+- `MME`, `MLE1`, `MLE2`, `EKS`, `EKS_part`, `EngHitz`, `MMEave`, `MLEave` in which case it estimates the edge weights $(\theta_e, e\in E)$ according to a **tree**. See Vignettes "Code - Node" 1-4 and 6.
 
 - `HRMBG` in which case it estimates the edge weights $(\delta_e^2, \in E)$ according to a **block graph**. See Vignettes "Code - Node 5".
 
 ## In summary:
 
-<!--- Estimation of edge weights according to a **tree** use one of the following classes `MME`, `MLE`, `MLE1`, `MLE2`, `EKS`, `EKS_part`, `EngHitz`, `MMEave`, `MLEave`. -->
+<!--- Estimation of edge weights according to a **tree** use one of the following classes `MME`, `MLE1`, `MLE2`, `EKS`, `EKS_part`, `EngHitz`, `MMEave`, `MLEave`. -->
 For models on **trees**:
 
 - `MME` provides method of moments estimates and it is based on the asymptotics in 1. See Vignettes "Estimation - Note 1" and "Code - Note 1".
 
-- `MLE`, `MLE1`, `MLE2` provide maximum Likelihood estimates and are based on the asymptotics in 1. See Vignettes "Estimation - Note 2" and "Code - Note 2".
+- `MLE1`, `MLE2` provide maximum Likelihood estimates and are based on the asymptotics in 1. See Vignettes "Estimation - Note 2" and "Code - Note 2".
 
 - `EKS`, `EKS_part` provide estimates based on extremal coefficients and are based on the asymptotics in 2. See Vignettes "Estimation - Note 3" and "Code - Note 3".
 

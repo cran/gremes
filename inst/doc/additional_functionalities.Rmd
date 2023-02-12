@@ -47,7 +47,7 @@ hrm<- HRMtree(seg) # initialize the object of of class HRMtree
 hrm<- setParams(hrm, seq(0.1, 0.7, 0.1)) # set its parameters
 X<- rHRM(hrm, 1000) # generate a random sample 
 round(head(X), 4)
-XX<- rHRM(hrm, 1000, noise = TRUE) # generate a random samle with independent normal noise
+XX<- rHRM(hrm, 1000, noise = TRUE) # generate a random sample with independent normal noise
 round(head(XX), 4)
 plot(seg)
 

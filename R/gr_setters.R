@@ -115,7 +115,7 @@ setRootDepSet.RootDepSet<- function(obj, subset, root, ...)
 #'
 #' It assigns values to the vector of edge weights in the slot \code{$depParams} of object of class
 #' \code{HRMnetwork} and its subclasses.
-#' @param obj An object of class \code{HRMnetwork} or its subclasses \code{HRMtree, MME, MLE, MLE1, MLE2, EKS,
+#' @param obj An object of class \code{HRMnetwork} or its subclasses \code{HRMtree, MME, MLE1, MLE2, EKS,
 #' EKS_part, EngHitz, HRMBG, MMEave, MLEave}
 #' @param value A named vector with names corresponding to the names of the edges.
 #' The vector represents the edge weights: thetas in case of models on trees and deltas in case of

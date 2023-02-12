@@ -40,7 +40,7 @@ pot.default<- function(obj, newg, newd, ...)
 
 #pot
 # Peaks over threshold graph and data
-# obj Object of class \code{GTree} or \code{CovSelectTree} or \code{HRMtree}
+# obj Object of class \code{GTree} or \code{HRMtree}
 # obj2 Object of class \code{RootDepSet}. If multiple subsets are passed only the first is considered.
 # k_ratio The number of the upper order statistics as a percentage of the sample size
 # ... additional arguments
@@ -128,18 +128,6 @@ pot.BlockGraph<- function(newg, newd, ...)
 }
 
 
-
-
-
-
-
-
-#' @export
-pot.CovSelectTree<- function(obj, obj2, k_ratio, newg, newd, ...)
-{
-  obj1<- CovSelectTree(newg, newd)
-  return(obj1)
-}
 
 
 

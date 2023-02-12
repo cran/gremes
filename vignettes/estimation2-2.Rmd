@@ -169,32 +169,7 @@ The assumption under this definition is that for any $u,v \in U$ we have $\Delta
 
 
 
-## Covariance selection model
-    
-Let $G(W_u)$ is the subgarph induced on the node set $W_u$. This graph must be connected. The ML estimator of $\theta\in (0,\infty)^{|E|}$ is obtained in a two-step procedure similar to the MM estimator, but using the MLE of $\Sigma_{\cdot\setminus u}(\theta)$ instead.
 
-As a first step a maximum likelihood approach is used to obtain an estimator of $\Sigma_{\cdot\setminus u}(\theta)$ and then a least squares procedure is used to estimate $\theta$ in the second step. The first step is an implementation of the Iterative Proportional Scaling algorithm from the R package `gRim` by @grim. For description of the IPS we refer to @laurit. 
-
-- Step 1: For every $u\in V$ obtain:
-    \begin{equation}
-        \begin{split}
-            \widehat{\Sigma^{-1}}_{W_u\setminus u}
-            =
-            \arg\max_{(\Sigma^{-1})_{W_u\setminus u}}
-            L\Big(\hat{\mu}_{W_u\setminus u}, (\Sigma^{-1})_{W_u\setminus u}; 
-            \{\Delta_{uv,i}: v\in W_u\setminus u, i\in I_u\}\Big)
-        \end{split}
-    \end{equation}
-    
-- Step 2: Solve the problem:
-    \begin{equation} 
-    \hat{\theta}^{MLE}_{k,n}
-    =
-    \arg\min_{\theta\in [0,\infty)^{|E|}}
-    \sum_{W_u \subseteq V, u\in V}
-    \Big\|\widehat{\Sigma^{-1}}_{W_u\setminus u}-\Sigma_{W_u\setminus u}(\theta)\Big\|_F^2
-   \end{equation}
-    
     
 ## References
 

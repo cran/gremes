@@ -33,7 +33,7 @@ for_u_in_U.default<- function(obj,...)
 
 
 # obj Object of class \code{Argument}
-# obj2 Object of class \code{HRMtree, GTree, CovSelectTree}
+# obj2 Object of class \code{HRMtree, GTree}
 # subsets Object of class \code{RootDepSet}
 # k_ratio The fraction of the upper order statistics in the sample size
 # h1 A numeric vector with the length of the subsets for each root, after removing the corresponding root and the nodes with missing data.

@@ -16,16 +16,6 @@ createObj.default<- function(obj, data,...)
 
 
 
-#' @export
-createObj.MLE<- function(obj, data)
-{
-  myobj<- CovSelectTree(obj$graph, Data = data)
-  Ubar<- getNoDataNodes(myobj)
-  if (length(Ubar)!=0)
-    stop("Covariance Selection Model estimation is impossible with missing variables in the data.")
-
-  return(myobj)
-}
 
 
 

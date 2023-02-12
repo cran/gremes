@@ -110,7 +110,7 @@ getData.Network<- function(obj,...)
 #' It retrieves the value of the slot \code{$noDataNodes}, the set of nodes for which there are no data available
 #'  for an object of class \code{Network}.
 #' @rdname getNoDataNodes
-#' @param obj Object of class \code{Network} or its subclasses \code{Tree, GTree, CovSelectTree, BlockGraph}
+#' @param obj Object of class \code{Network} or its subclasses \code{Tree, GTree, BlockGraph}
 #' @param ... additional arguments
 #' @return The content of the slot \code{$noDataNodes} of the \code{obj}.
 #' @export
@@ -145,7 +145,7 @@ getNoDataNodes.Network<- function(obj, ...)
 #' It retrieves the value of the slot \code{$nodesWithData}, the set of nodes for which there are data available
 #'  for an object of class \code{Network}.
 #' @rdname getNodesWithData
-#' @param obj Object of class 'Network' or its subclasses \code{Tree, GTree, CovSelectTree, BlockGraph}
+#' @param obj Object of class 'Network' or its subclasses \code{Tree, GTree, BlockGraph}
 #' @param ... additional arguments
 #' @return The content of the slot \code{$nodesWithData} of \code{obj}.
 #' @export
